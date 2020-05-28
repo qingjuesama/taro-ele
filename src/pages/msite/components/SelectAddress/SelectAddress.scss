@@ -1,0 +1,22 @@
+.selectaddress {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f4f4f4;
+  color: $color;
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+.start {
+  transform: translateX(100vw);
+}
+.end {
+  transform: translateX(0);
+}
+.add {
+  position: absolute;
+  right: 20px;
+  top: 24px;
+}

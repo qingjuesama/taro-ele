@@ -1,0 +1,19 @@
+// 左侧列表
+.selectcity-main-content-city {
+  height: calc(100vh - 200px);
+  .selectcity-main-content-city-item {
+    .selectcity-main-content-city-a {
+      background: #f5f5f5;
+      padding: 20px;
+      color: #666;
+      border-bottom: 1px #eee solid;
+    }
+
+    .selectcity-main-content-city-name {
+      color: #333;
+      margin: 0 20px;
+      padding: 20px 0;
+      border-bottom: 1px #f5f5f5 solid;
+    }
+  }
+}

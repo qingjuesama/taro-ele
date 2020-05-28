@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import configStore from './redux/store'
+
+import './assets/style/custom-theme.scss'
+import './assets/style/iconfont/iconfont.css'
 import './app.scss'
 
 const store = configStore()
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   componentDidShow() {}
 

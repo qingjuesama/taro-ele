@@ -1,3 +1,11 @@
 import { combineReducers } from 'redux'
 
-export default combineReducers({})
+import address from './address'
+import token from './token'
+import { userAddress } from './user'
+
+export default combineReducers({
+  address,
+  token,
+  userAddress,
+})

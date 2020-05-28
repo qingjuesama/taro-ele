@@ -1,0 +1,32 @@
+  // 收货地址
+  .profile {
+    .profile-title {
+      padding: 20px;
+    }
+
+    .profile-main {
+      background: #fff;
+      padding: 0 20px;
+      .profile-item {
+        border-bottom: 1px #eeeeee solid;
+        padding: 15px 0;
+        .item-top {
+          display: flex;
+          align-items: center;
+          .ming {
+            color: #333;
+            font-weight: 600;
+          }
+          .sex {
+            padding: 0 10px;
+            font-size: 24px;
+          }
+          .iphone {
+            font-size: 24px;
+          }
+        }
+        .item-address {
+        }
+      }
+    }
+  }

@@ -1,0 +1,32 @@
+.advertising {
+  display: flex;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 30px;
+  margin-top: 20px;
+  .advertising-left {
+    .title {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .detail {
+      color: #777777;
+      padding: 10px 0;
+    }
+
+    .href {
+      color: #af8260;
+      padding: 10px 0 0 0;
+    }
+  }
+
+  .advertising-right {
+    width: 282px;
+    height: 188px;
+    .image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

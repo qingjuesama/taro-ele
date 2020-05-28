@@ -1,0 +1,26 @@
+.msite {
+  margin-bottom: 130px;
+  .content {
+    margin: 0 20px;
+  }
+  .list-title {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+      content: '';
+      width: 50px;
+      height: 2px;
+      background: #999;
+      margin-right: 30px;
+    }
+    &::after {
+      content: '';
+      width: 50px;
+      height: 2px;
+      background: #999;
+      margin-left: 30px;
+    }
+  }
+}

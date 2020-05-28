@@ -1,0 +1,50 @@
+.selectaddress-search {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  height: 108px;
+  .search-left {
+    width: 128px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    .search-left-text {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #333;
+      width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .search-right {
+    flex: 1;
+    display: flex;
+    background: #f2f2f2;
+    margin-right: 20px;
+    align-items: center;
+    margin-left: 20px;
+    .search-right-icon {
+      margin-left: 20px;
+      .icon {
+        font-size: 30px;
+      }
+    }
+    .search-right-input {
+      flex: 1;
+      padding: 18px;
+    }
+    .search-right-close {
+      width: 80px;
+      display: flex;
+      justify-content: center;
+      .icon {
+        font-size: 25px;
+      }
+    }
+  }
+}

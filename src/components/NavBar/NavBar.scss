@@ -1,0 +1,28 @@
+.navbar {
+  height: 85px;
+  background: $bgcolor;
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  .navbar-icon {
+    position: absolute;
+    z-index: 1;
+    margin-left: 20px;
+    .icon{
+      font-size: 30px;
+    }
+  }
+  .title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 34px;
+  }
+
+}

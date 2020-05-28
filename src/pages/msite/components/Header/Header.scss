@@ -1,0 +1,46 @@
+.header {
+  background-image: $bgcolor;
+  padding: 30px 20px 20px 20px;
+  color: $color;
+  .address {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .daohang {
+      .icon{
+        color: #fff;
+        font-size: 30px;
+      }
+    }
+    .header-title {
+      max-width: 320px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 32px;
+      margin: 0 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .jiantou {
+      .icon{
+        color:#fff;
+        font-size: 15px;
+      }
+    }
+  }
+  .search {
+    margin: 20px 0 0 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    .search-name {
+      padding: 0 10px;
+    }
+    .icon{
+      font-size: 30px;
+    }
+  }
+}
