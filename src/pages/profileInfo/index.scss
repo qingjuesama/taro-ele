@@ -1,0 +1,47 @@
+.profileinfo {
+  color: #333;
+  background: #f5f5f5;
+  height: 100vh;
+  .profileinfo-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px #f8f8f8 solid;
+    background: #fff;
+    .left-title {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .center-info {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 20px;
+      .info-image {
+        width: 120px;
+        height: 120px;
+        .user-image {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .out-login {
+    margin-top: 20px;
+    .out-button {
+      background: #fff;
+      border: none;
+      outline: none;
+      color: #ff5339;
+      font-weight: 600;
+      &:active {
+        color: #ff7c68;
+      }
+    }
+  }
+}
