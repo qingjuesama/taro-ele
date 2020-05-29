@@ -1,0 +1,62 @@
+.login {
+  margin-top: 30px;
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    .logo-content {
+      width: 300px;
+      height: 120px;
+      .logo-image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .form {
+    margin: 0 50px;
+    display: block;
+    .input-row {
+      margin-bottom: 20px;
+      position: relative;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      .input {
+        flex: 1;
+        border: 1px #eee solid;
+        outline: none;
+        padding: 20px 0 20px 20px;
+      }
+      .inputactive {
+        border: 1px #0089dc solid;
+      }
+    }
+
+    .tiptext {
+      padding: 40px 0;
+      color: $color;
+      .text {
+        color: #23a2ff;
+      }
+    }
+
+    .submit {
+      border: 0;
+      box-shadow: none;
+      background: #4cd96f;
+      color: #fff;
+      outline: none;
+      &:active {
+        background: #3cc95f;
+      }
+    }
+
+    .register {
+      text-align: center;
+      color: #ccc;
+      padding-top: 20px;
+    }
+  }
+}
