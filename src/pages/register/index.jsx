@@ -150,7 +150,7 @@ const Register = () => {
               })}
               type='number'
               placeholderClass='placeholder'
-              maxLength={11}
+              maxlength={11}
               onInput={handleSetPhone}
               onFocus={() => handleFocus('usernameActive', 1)}
               onBlur={() => handleBlur('usernameActive', 2)}
@@ -163,7 +163,7 @@ const Register = () => {
               value={password}
               type='password'
               placeholderClass='placeholder'
-              maxLength={11}
+              maxlength={11}
               className={classnames('input', {
                 inputactive: inpActive.passwordActive === 1,
                 pass: verifypwass,
@@ -181,7 +181,7 @@ const Register = () => {
               type='password'
               value={password2}
               placeholderClass='placeholder'
-              maxLength={11}
+              maxlength={11}
               className={classnames('input', {
                 inputactive: inpActive.password2Active === 1,
                 pass: verifypwass && comparePassWord,
@@ -206,7 +206,7 @@ const Register = () => {
           <Navigator
             url='/pages/login/index'
             openType='redirect'
-            className='register'
+            className='login'
           >
             已有帐号？ 点此登录
           </Navigator>
