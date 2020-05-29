@@ -75,7 +75,7 @@
 				{
 					"id": 3,
 					"name": "用户信息",
-					"pathName": "pages/profileinfo/index",
+					"pathName": "pages/profileInfo/index",
 					"query": "",
 					"scene": null
 				},
@@ -91,12 +91,6 @@
 					"name": "编辑地址",
 					"pathName": "pages/profileAddressEdit/index",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/test/index",
-					"pathName": "pages/test/index",
 					"scene": null
 				}
 			]

@@ -1,8 +1,8 @@
 // 个人信息
-import Taro, { useEffect, useState, useCallback } from '@tarojs/taro'
-import React from 'react'
+import Taro from '@tarojs/taro'
+import React, { useEffect, useState, useCallback } from 'react'
 import { View, Button, Image } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
+import { connect } from 'react-redux'
 import defaultHead from '../../assets/images/default-head.png'
 import { reqUserInfo } from '../../api'
 import { removeToken } from '../../redux/actions/token'
