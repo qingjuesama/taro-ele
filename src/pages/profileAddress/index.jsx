@@ -2,8 +2,7 @@
 import Taro from '@tarojs/taro'
 import React, { useEffect, useCallback, useState } from 'react'
 import { View } from '@tarojs/components'
-import { AtIcon } from 'taro-ui'
-import { connect } from '@tarojs/redux'
+import { connect } from 'react-redux'
 import { reqUserAddress } from '../../api'
 import { atUserAddress } from '../../redux/actions/user'
 import AddressRow from './components/AddressRow/AddressRow'
@@ -53,7 +52,7 @@ const ProfileAddress = ({ atUserAddress }) => {
         })}
       </View>
       <View className='profileaddress-add'>
-        <AtIcon prefixClass='icon' value='tianjia' size='24' color='#3190e8' />
+        {/* <AtIcon prefixClass='icon' value='tianjia' size='24' color='#3190e8' /> */}
         <View className='profileaddress-add-text'>新增收获地址</View>
       </View>
     </View>

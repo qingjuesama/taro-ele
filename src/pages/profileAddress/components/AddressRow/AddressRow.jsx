@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
+import React from 'react'
 import { View } from '@tarojs/components'
-import { AtIcon } from 'taro-ui'
 
 import './AddressRow.scss'
 
@@ -22,15 +22,15 @@ const AddressRow = ({ address, onDelAddress, onEditAddress }) => {
           className='addressrow-right-icon'
           onClick={() => onEditAddress(address)}
         >
-          <AtIcon prefixClass='icon' value='bianji' size='16' />
+          {/* <AtIcon prefixClass='icon' value='bianji' size='16' /> */}
         </View>
         <View className='addressrow-right-icon'>
-          <AtIcon
+          {/* <AtIcon
             prefixClass='icon'
             value='guanbi'
             size='16'
             onClick={() => onDelAddress(address.id)}
-          />
+          /> */}
         </View>
       </View>
     </View>
