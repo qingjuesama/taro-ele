@@ -5,6 +5,7 @@ export default {
     'pages/order/index',
     'pages/login/index',
     'pages/register/index',
+    'pages/profile/index',
   ],
   window: {
     backgroundTextStyle: 'light',

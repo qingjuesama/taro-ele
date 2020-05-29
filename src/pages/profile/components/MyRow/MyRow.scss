@@ -1,0 +1,31 @@
+.myrow {
+  display: flex;
+  align-items: center;
+  color: #333;
+  background: #fff;
+  padding: 0 20px;
+  .myrow-img {
+    width: 60px;
+    height: 60px;
+    .myrow-imgage {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .myrow-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px #f0f0f0 solid;
+    padding: 20px 0;
+    .myrow-address {
+      flex: 1;
+      margin-left: 10px;
+    }
+    .myrow-icon {
+      .icon {
+        color: #bbb;
+      }
+    }
+  }
+}
