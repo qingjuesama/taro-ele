@@ -1,8 +1,8 @@
 // 个人信息
 import Taro, { useEffect, useState, useCallback } from '@tarojs/taro'
+import React from 'react'
 import { View, Button, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtIcon } from 'taro-ui'
 import defaultHead from '../../assets/images/default-head.png'
 import { reqUserInfo } from '../../api'
 import { removeToken } from '../../redux/actions/token'
@@ -72,17 +72,17 @@ const ProfileInfo = ({ removeToken, token }) => {
             />
           </View>
         </View>
-        <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' />
+        {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
       </View>
       <View className='profileinfo-head'>
         <View className='left-title'>用户名</View>
         <View className='center-info'>{userInfo.userName}</View>
-        <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' />
+        {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
       </View>
       <View className='profileinfo-head'>
         <View className='left-title'>手机</View>
         <View className='center-info'>{userInfo.phone}</View>
-        <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' />
+        {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
       </View>
 
       <View className='out-login' onClick={logOut}>
