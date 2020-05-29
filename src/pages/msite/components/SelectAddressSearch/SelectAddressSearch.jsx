@@ -1,7 +1,6 @@
 // 选择城市,搜索地址
 import React from 'react'
 import { View, Input, Text } from '@tarojs/components'
-// import { AtIcon } from 'taro-ui'
 import './SelectAddressSearch.scss'
 
 const SelectAddressSearch = ({

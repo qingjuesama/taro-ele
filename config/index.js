@@ -58,7 +58,6 @@ const config = {
         },
       },
     },
-    esnextModules: ['taro-ui'],
     router: {
       mode: 'browser', // 或者是 'hash'
     },

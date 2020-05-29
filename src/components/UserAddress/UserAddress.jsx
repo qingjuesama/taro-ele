@@ -1,7 +1,5 @@
-import Taro from '@tarojs/taro'
 import React from 'react'
 import { View, Input, Button } from '@tarojs/components'
-// import { AtIcon } from 'taro-ui'
 import './UserAddress.scss'
 
 const UserAddress = ({ userAddress, onForm }) => {

@@ -10,8 +10,9 @@
     align-items: center;
     margin-left: 20px;
     .search-left-text {
-      display: flex;
+      flex:1;
       align-items: center;
+      text-align: center;
       font-size: 24px;
       color: #333;
       width: 80px;
