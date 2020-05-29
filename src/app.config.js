@@ -1,5 +1,5 @@
 export default {
-  pages: ['pages/msite/index', '/pages/discover/index'],
+  pages: ['pages/msite/index', 'pages/discover/index', 'pages/order/index'],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
