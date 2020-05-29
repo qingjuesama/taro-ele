@@ -4,6 +4,7 @@ export default {
     'pages/discover/index',
     'pages/order/index',
     'pages/profile/index',
+    'pages/profileAddress/index',
     'pages/login/index',
     'pages/register/index',
   ],

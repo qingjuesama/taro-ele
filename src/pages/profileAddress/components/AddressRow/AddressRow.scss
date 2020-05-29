@@ -1,0 +1,37 @@
+.addressrow {
+  display: flex;
+  color: #6f6f6f;
+  border-bottom: 1px #f0f0f0 solid;
+  padding: 20px 0;
+  background: #fff;
+  .addressrow-left {
+    flex: 1;
+    padding-left: 20px;
+    .myinfo {
+      display: flex;
+      align-items: center;
+      .myname {
+        font-size: 34px;
+        color: #333;
+        font-weight: 600;
+      }
+      .mysex {
+        margin-left: 10px;
+      }
+      .myphone {
+        font-size: 32px;
+        margin-left: 20px;
+      }
+    }
+    .myaddress {
+    }
+  }
+
+  .addressrow-right {
+    display: flex;
+    align-items: center;
+    .addressrow-right-icon {
+      padding: 0 20px;
+    }
+  }
+}
