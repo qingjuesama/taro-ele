@@ -3,9 +3,9 @@ export default {
     'pages/msite/index',
     'pages/discover/index',
     'pages/order/index',
+    'pages/profile/index',
     'pages/login/index',
     'pages/register/index',
-    'pages/profile/index',
   ],
   window: {
     backgroundTextStyle: 'light',
