@@ -14,10 +14,14 @@
     align-items: center;
     justify-content: center;
     height: 100px;
+    color: #3190e8;
     .profileaddress-add-text {
-      color: #3190e8;
       font-size: 32px;
       padding-left: 10px;
+    }
+    .icon {
+      font-size: 40px;
+      margin-top: 4px;
     }
   }
 }

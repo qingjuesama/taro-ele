@@ -1,11 +1,12 @@
 // 我的
-import Taro from '@tarojs/taro'
-import React, { useState, useEffect, useCallback } from 'react'
+import Taro, { useDidShow } from '@tarojs/taro'
+import React, { useState, useEffect } from 'react'
 import { View, Image } from '@tarojs/components'
+import { reqUserInfo } from '@/src/api'
+import FooterBar from '@/src/components/FooterBar/FooterBar'
+
 import './index.scss'
 
-import { reqUserInfo } from '../../api'
-import FooterBar from '../../components/FooterBar/FooterBar'
 import UserHead from './components/UserHead/UserHead'
 import MyRow from './components/MyRow/MyRow'
 
@@ -17,35 +18,44 @@ import commendImg from '../../assets/images/commend.svg'
 import serviceImg from '../../assets/images/service.svg'
 import downloadImg from '../../assets/images/download.svg'
 import ruleImg from '../../assets/images/rule.svg'
+import defaultHead from '../../assets/images/default-head.png'
 
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState()
+  const [userInfo, setUserInfo] = useState({
+    phone: '登录后享受更多权限',
+    userName: '登录/注册',
+    headImg: defaultHead,
+  })
 
   // 获取用户信息
-  const getUserInfo = useCallback(async () => {
+  const getUserInfo = async () => {
     const result = await reqUserInfo()
     if (result.code === 0) {
       setUserInfo(result.data)
     }
-  }, [])
-
-  // 跳转
-  const onLink = () => {
-    Taro.navigateTo({ url: '/pages/profileinfo/index' })
   }
 
-  useEffect(() => {
+  useDidShow(() => {
     getUserInfo()
-  }, [getUserInfo])
+  }, [])
+
+  // 跳转到用户信息 或者 登录
+  const onLink = () => {
+    if (userInfo.id) {
+      Taro.navigateTo({ url: '/pages/profile/pages/info/index' })
+    } else {
+      Taro.redirectTo({ url: '/pages/login/index' })
+    }
+  }
 
   // 跳转到我的地址
   const goAddress = () => {
-    Taro.navigateTo({ url: '/pages/profileAddress/index' })
+    Taro.navigateTo({ url: '/pages/profile/pages/address/index' })
   }
 
   return (
     <View className='profile'>
-      <UserHead userInfo={userInfo} onLink={userInfo && onLink} />
+      <UserHead userInfo={userInfo} onLink={onLink} />
       <View className='user-money'>
         <View className='money-red'>
           <View className='money-imgs'>

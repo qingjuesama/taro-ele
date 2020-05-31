@@ -34,3 +34,11 @@ export const reqUserInfo = () => ajax(BASEURL + '/userinfo')
 
 // 获取用户地址
 export const reqUserAddress = () => ajax(BASEURL + '/userAddress')
+
+// 用户搜索地址
+export const reqUseSearchAddress = params =>
+  ajax(BASEURL + '/useSearchAddress', params)
+
+// 编辑用户地址
+export const reqSetUserAddress = params =>
+  ajax(BASEURL + '/setUserAddress', params, 'POST')

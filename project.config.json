@@ -73,23 +73,30 @@
 					"scene": null
 				},
 				{
-					"id": 3,
-					"name": "用户信息",
-					"pathName": "pages/profileInfo/index",
+					"id": -1,
+					"name": "个人信息",
+					"pathName": "pages/profile/pages/info/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "我的地址",
-					"pathName": "pages/profileAddress/index",
+					"pathName": "pages/profile/pages/address/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "编辑地址",
-					"pathName": "pages/profileAddressEdit/index",
+					"pathName": "pages/profile/pages/edit/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索地址",
+					"pathName": "pages/profile/pages/search/index",
 					"query": "",
 					"scene": null
 				}

@@ -2,14 +2,13 @@ import Taro from '@tarojs/taro'
 import React from 'react'
 import { View, Image, Text } from '@tarojs/components'
 import './UserHead.scss'
-import defaultHead from '../../../../assets/images/default-head.png'
 
 const UserHead = ({ userInfo, onLink }) => {
   return (
     <View className='user' onClick={onLink}>
       <View className='user-content'>
         <View className='user-left'>
-          <Image className='user-image' src={userInfo.headImg || defaultHead} />
+          <Image className='user-image' src={userInfo.headImg} />
         </View>
         <View className='user-right'>
           <View className='user-title'>{userInfo.userName}</View>
@@ -22,17 +21,6 @@ const UserHead = ({ userInfo, onLink }) => {
       </View>
     </View>
   )
-}
-
-UserHead.defaultProps = {
-  userInfo: {
-    userName: '登录/注册',
-    phone: '登录后享受更多权限',
-    headImg: defaultHead,
-  },
-  onLink: () => {
-    Taro.redirectTo({ url: '/pages/login/index' })
-  },
 }
 
 export default UserHead

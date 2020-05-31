@@ -10,7 +10,7 @@ import {
   Navigator,
 } from '@tarojs/components'
 import classnames from 'classnames'
-import { reqRegister } from '../../api'
+import { reqRegister } from '@/src/api'
 
 import './index.scss'
 

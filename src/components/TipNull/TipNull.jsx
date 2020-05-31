@@ -1,5 +1,4 @@
 // 未选择地址
-import Taro from '@tarojs/taro'
 import React from 'react'
 import { View, Image, Button } from '@tarojs/components'
 

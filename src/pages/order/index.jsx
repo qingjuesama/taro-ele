@@ -1,7 +1,7 @@
 // 订单
 import React from 'react'
 import { View } from '@tarojs/components'
-import FooterBar from '../../components/FooterBar/FooterBar'
+import FooterBar from '@/src/components/FooterBar/FooterBar'
 import './index.scss'
 
 const Order = () => {

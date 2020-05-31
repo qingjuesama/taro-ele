@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { View } from '@tarojs/components'
 import classnames from 'classnames'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAddress } from '../../../../redux/actions/address'
-import { reqCityList } from '../../../../api/index'
-import NavBar from '../../../../components/NavBar/NavBar'
+import { setAddress } from '@/src/redux/actions/address'
+import { reqCityList } from '@/src/api'
+import NavBar from '@/src/components/NavBar/NavBar'
 import SelectCitySearch from '../SelectCitySearch/SelectCitySearch'
 import SelectCityABC from '../SelectCityABC/SelectCityABC'
 import SelectCityList from '../SelectCityList/SelectCityList'
@@ -52,13 +52,15 @@ const SelectCity = props => {
     const localCityList = Taro.getStorageSync('cityList')
     // 本地没有保存数据
     if (!localCityList) {
-      return getCity()
+      getCity()
+      return
     }
     // 对比时间戳
     const atNow = Date.now()
     const { now } = localCityList
     if (atNow > now) {
-      return getCity()
+      getCity()
+      return
     }
     // 从本地获取数据
     _cityList(localCityList)

@@ -3,8 +3,8 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { View, Image, Form, Input, Button, Navigator } from '@tarojs/components'
 import { useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { reqLogin } from '../../api'
-import { setToken } from '../../redux/actions/token'
+import { reqLogin } from '@/src/api'
+import { setToken } from '@/src/redux/actions/token'
 import './index.scss'
 
 const Login = () => {

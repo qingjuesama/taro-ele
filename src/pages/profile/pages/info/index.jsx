@@ -1,33 +1,35 @@
 // 个人信息
-import Taro from '@tarojs/taro'
+import Taro, { useDidShow } from '@tarojs/taro'
 import React, { useEffect, useState, useCallback } from 'react'
 import { View, Button, Image } from '@tarojs/components'
-import { connect } from 'react-redux'
-import defaultHead from '../../assets/images/default-head.png'
-import { reqUserInfo } from '../../api'
-import { removeToken } from '../../redux/actions/token'
+import { useSelector, useDispatch } from 'react-redux'
+import { reqUserInfo } from '@/src/api'
+import { removeToken } from '@/src/redux/actions/token'
+import defaultHead from '../../../../assets/images/default-head.png'
 import './index.scss'
 
-const ProfileInfo = ({ removeToken, token }) => {
+const ProfileInfo = () => {
+  const token = useSelector(state => state.token)
+  const dispatch = useDispatch()
   const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
     if (!token) {
-      Taro.redirectTo({ url: '/pages/msite/index' })
+      Taro.redirectTo({ url: '/pages/profile/index' })
     }
   }, [token])
 
   // 获取用户信息
-  const getUserInfo = useCallback(async () => {
+  const getUserInfo = async () => {
     const result = await reqUserInfo()
     if (result.code === 0) {
       setUserInfo(result.data)
     }
-  }, [])
+  }
 
-  useEffect(() => {
+  useDidShow(() => {
     getUserInfo()
-  }, [getUserInfo])
+  }, [])
 
   const handleOpenImage = async () => {
     const result = await Taro.chooseImage({
@@ -57,7 +59,8 @@ const ProfileInfo = ({ removeToken, token }) => {
   }
 
   const logOut = () => {
-    removeToken()
+    dispatch(removeToken())
+    Taro.navigateBack({ delta: 1 })
   }
 
   return (
@@ -85,16 +88,13 @@ const ProfileInfo = ({ removeToken, token }) => {
         {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
       </View>
 
-      <View className='out-login' onClick={logOut}>
-        <Button className='out-button'>退出登录</Button>
+      <View className='out-login'>
+        <Button className='out-button' onClick={logOut}>
+          退出登录
+        </Button>
       </View>
     </View>
   )
 }
 
-export default connect(
-  // reducers
-  state => ({ token: state.token }),
-  // actions
-  { removeToken }
-)(ProfileInfo)
+export default ProfileInfo

@@ -3,11 +3,11 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { View } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { reqNavList } from '../../api'
-import { initAddress } from '../../redux/actions/address'
+import { reqNavList } from '@/src/api'
+import { initAddress } from '@/src/redux/actions/address'
+import FooterBar from '@/src/components/FooterBar/FooterBar'
+import TipNull from '@/src/components/TipNull/TipNull'
 
-import FooterBar from '../../components/FooterBar/FooterBar'
-import TipNull from '../../components/TipNull/TipNull'
 import MsiteHeader from './components/Header/Header'
 import MsiteSelectAddress from './components/SelectAddress/SelectAddress'
 import MsiteSelectCity from './components/SelectCity/SelectCity'
@@ -115,10 +115,7 @@ const Msite = () => {
       />
 
       {/* 选择城市 */}
-      <MsiteSelectCity
-        cityShow={cityShow}
-        onSetCityShow={onSetCityShow}
-      />
+      <MsiteSelectCity cityShow={cityShow} onSetCityShow={onSetCityShow} />
 
       {/* 底部bar */}
       <FooterBar />

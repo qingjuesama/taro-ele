@@ -20,6 +20,9 @@ const config = {
   sass: {
     resource: path.join(__dirname, '../src/assets/style/theme.scss'),
   },
+  alias: {
+    '@/src': path.resolve(__dirname, '..', 'src'),
+  },
   framework: 'react',
   mini: {
     postcss: {
