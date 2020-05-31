@@ -1,5 +1,5 @@
 // 首页
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { View } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -53,7 +53,7 @@ const Msite = () => {
     }
   }, [address])
 
-  // 获取ip地址 经纬度
+  // 获取ip地址 经纬度 
   useEffect(() => {
     // 不存在地址则重新获取
     if (!address.latitude && !address.longitude) {

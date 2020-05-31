@@ -1,5 +1,5 @@
 import Taro, { Current } from '@tarojs/taro'
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import classnames from 'classnames'
 import { useSelector, useDispatch } from 'react-redux'

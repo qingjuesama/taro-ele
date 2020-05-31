@@ -1,6 +1,6 @@
 // 个人信息
 import Taro, { useDidShow } from '@tarojs/taro'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Button, Image } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import { reqUserInfo } from '@/src/api'

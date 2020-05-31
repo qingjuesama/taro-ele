@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { View, Text, Input, ScrollView } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import { reqUseSearchAddress } from '@/src/api'

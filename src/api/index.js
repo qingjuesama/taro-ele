@@ -39,6 +39,10 @@ export const reqUserAddress = () => ajax(BASEURL + '/userAddress')
 export const reqUseSearchAddress = params =>
   ajax(BASEURL + '/useSearchAddress', params)
 
-// 编辑用户地址
+// 编辑用户收货地址
 export const reqSetUserAddress = params =>
   ajax(BASEURL + '/setUserAddress', params, 'POST')
+
+// 添加用户收货地址
+export const reqAddUserAddress = params =>
+  ajax(BASEURL + '/addUserAddress', params, 'POST')

@@ -29,7 +29,7 @@ const UserAddress = ({ userAddress, onForm }) => {
 
   // 跳往搜索地址
   const onGoSearch = () => {
-    Taro.navigateTo({ url: '/pages/profilesearch/index' })
+    Taro.navigateTo({ url: '/pages/profile/pages/search/index' })
   }
 
   // 提交

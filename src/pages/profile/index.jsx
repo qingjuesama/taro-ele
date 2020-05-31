@@ -1,6 +1,6 @@
 // 我的
 import Taro, { useDidShow } from '@tarojs/taro'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import { reqUserInfo } from '@/src/api'
 import FooterBar from '@/src/components/FooterBar/FooterBar'

@@ -1,5 +1,5 @@
-import Taro, { Current } from '@tarojs/taro'
-import React, { useState, useEffect } from 'react'
+import Taro, { Current, useDidShow } from '@tarojs/taro'
+import React, { useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import classnames from 'classnames'
 
@@ -16,7 +16,7 @@ import './FooterBar.scss'
 const FooterBar = () => {
   // 路由地址
   const [path, setPath] = useState('')
-  
+
   const [bars] = useState([
     {
       id: 0,
@@ -48,7 +48,7 @@ const FooterBar = () => {
     },
   ])
 
-  useEffect(() => {
+  useDidShow(() => {
     // 获取路由路径
     const page = Current.page
     if (page.path) {
@@ -80,7 +80,10 @@ const FooterBar = () => {
               })}
             >
               <View className='item-icon'>
-                <Image className='item-icon-img' src={path === bar.path ? bar.active_icon : bar.icon} />
+                <Image
+                  className='item-icon-img'
+                  src={path === bar.path ? bar.active_icon : bar.icon}
+                />
               </View>
               <View className='item-name'>{bar.name}</View>
             </View>

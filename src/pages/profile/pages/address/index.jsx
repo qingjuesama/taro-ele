@@ -1,6 +1,6 @@
 // 我的地址
 import Taro, { useDidShow } from '@tarojs/taro'
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text } from '@tarojs/components'
 import { useDispatch } from 'react-redux'
 import { reqUserAddress } from '@/src/api'
@@ -11,24 +11,28 @@ import './index.scss'
 
 const ProfileAddress = () => {
   const dispatch = useDispatch()
-
   const [userAddress, setUserAddress] = useState([])
 
   // 获取收货地址
-  const getAddress = useCallback(async () => {
+  const getAddress = async () => {
     const result = await reqUserAddress()
     if (result.code === 0) {
       setUserAddress(result.data)
     }
-  }, [])
+  }
 
   // 获取收货地址
   useDidShow(() => {
     getAddress()
-  }, [getAddress])
+  }, [])
 
   // 删除收货地址
   const delAddress = id => {}
+
+  // 跳转添加收货地址
+  const goAdd = () => {
+    Taro.navigateTo({ url: '/pages/profile/pages/add/index' })
+  }
 
   // 跳转编辑地址
   const editAddress = useAddress => {
@@ -55,7 +59,9 @@ const ProfileAddress = () => {
       </View>
       <View className='profileaddress-add'>
         <Text className='icon icon-tianjia'></Text>
-        <View className='profileaddress-add-text'>新增收获地址</View>
+        <View className='profileaddress-add-text' onClick={goAdd}>
+          新增收货地址
+        </View>
       </View>
     </View>
   )
