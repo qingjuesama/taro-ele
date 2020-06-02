@@ -1,0 +1,39 @@
+.username {
+  height: 100vh;
+  background: #f5f5f5;
+  .username-main {
+    padding-top: 20px;
+    margin: 0 20px;
+    .username-input {
+      display: flex;
+      background: #fff;
+      height: 80px;
+      align-items: center;
+      padding-left: 20px;
+    }
+
+    .username-text {
+      color: #a9a9a9;
+      font-size: 24px;
+      padding: 10px 0;
+    }
+
+    .username-button {
+      background: #00d762;
+      color: #fff;
+      font-weight: 600;
+      &:active{
+        background: #0dec72;
+      }
+    }
+
+    .username-button[disabled] {
+      background: #c7c7c7;
+      font-weight: 600;
+      border: none;
+      &::after {
+        border: none;
+      }
+    }
+  }
+}

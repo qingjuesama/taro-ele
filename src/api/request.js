@@ -40,12 +40,12 @@ const ajax = (url, data = {}, method, param) => {
       fail(res) {
         if (res.status === 401) {
           resolve({
-            code: 1,
+            code: 5,
             message: '请先登录',
           })
         } else {
           resolve({
-            code: 2,
+            code: 6,
             message: '服务期繁忙',
           })
         }

@@ -3,8 +3,8 @@ import Taro, { useDidShow } from '@tarojs/taro'
 import React, { useState } from 'react'
 import { View, Text } from '@tarojs/components'
 import { useDispatch } from 'react-redux'
-import { reqUserAddress } from '@/src/api'
-import { atUserAddress } from '@/src/redux/actions/user'
+import { reqUserAddress, reqDelUserAddress } from '@/src/api'
+import { atUserAddress, removeUserAddress } from '@/src/redux/actions/user'
 import NavBar from '@/src/components/NavBar/NavBar'
 import AddressRow from './components/AddressRow/AddressRow'
 import './index.scss'
@@ -18,6 +18,8 @@ const ProfileAddress = () => {
     const result = await reqUserAddress()
     if (result.code === 0) {
       setUserAddress(result.data)
+    } else {
+      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }
 
@@ -27,10 +29,27 @@ const ProfileAddress = () => {
   }, [])
 
   // 删除收货地址
-  const delAddress = id => {}
+  const delAddress = id => {
+    Taro.showModal({
+      title: '删除地址',
+      content: '确定删除该地址',
+      success: async res => {
+        if (res.confirm) {
+          const result = await reqDelUserAddress({ id })
+          if (result.code === 0) {
+            getAddress()
+          } else {
+            Taro.showToast({ title: result.message, icon: 'none' })
+          }
+        }
+      },
+    })
+  }
 
-  // 跳转添加收货地址
+  // 跳转新增收货地址
   const goAdd = () => {
+    // 清空收货地址
+    dispatch(removeUserAddress())
     Taro.navigateTo({ url: '/pages/profile/pages/add/index' })
   }
 

@@ -1,4 +1,5 @@
 // 选择收货地址
+import Taro from '@tarojs/taro'
 import React, { useState, useRef, useMemo } from 'react'
 import { View } from '@tarojs/components'
 import classnames from 'classnames'
@@ -54,6 +55,8 @@ const SelectAddress = ({
 
     if (resultDetail.code === 0) {
       setDetailList(resultDetail.data)
+    } else {
+      Taro.showToast({ title: resultDetail.message, icon: 'none' })
     }
   }
 

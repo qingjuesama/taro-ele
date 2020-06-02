@@ -9,6 +9,8 @@ export default {
     'pages/profile/pages/edit/index',
     'pages/profile/pages/add/index',
     'pages/profile/pages/search/index',
+    'pages/profile/pages/username/index',
+    'pages/profile/pages/password/index',
     'pages/login/index',
     'pages/register/index',
   ],

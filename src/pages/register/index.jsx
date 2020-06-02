@@ -90,11 +90,8 @@ const Register = () => {
             }, 1000)
           },
         })
-      } else if (result.code === 1) {
-        Taro.showToast({
-          title: result.message,
-          icon: 'none',
-        })
+      } else {
+        Taro.showToast({ title: result.message, icon: 'none' })
       }
     } else {
       let title

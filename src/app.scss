@@ -29,3 +29,12 @@ a {
 .ele-hide {
   display: none;
 }
+
+.clearfix {
+  &::after,
+  &::before {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}

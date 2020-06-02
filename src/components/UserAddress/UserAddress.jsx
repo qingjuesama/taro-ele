@@ -34,7 +34,7 @@ const UserAddress = ({ userAddress, onForm }) => {
 
   // 提交
   const submit = () => {
-    const { address, city, latitude, longitude } = userAddress
+    const { address, address_detail, city, latitude, longitude } = userAddress
     if (!myAddress.name) {
       Taro.showToast({ title: '联系人不能为空', icon: 'none' })
     } else if (!myAddress.phone) {
@@ -48,7 +48,7 @@ const UserAddress = ({ userAddress, onForm }) => {
         latitude,
         longitude,
         name: myAddress.name,
-        address_detail: myAddress.address_detail,
+        address_detail: myAddress.address_detail || address_detail,
         sex: myAddress.sex,
         phone: myAddress.phone,
         id: myAddress.id,

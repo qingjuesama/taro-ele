@@ -13,9 +13,11 @@ const AddAddress = () => {
   const userAddress = useSelector(state => state.userAddress)
   const onForm = async form => {
     const result = await reqAddUserAddress(form)
-    console.log(result)
     if (result.code === 0) {
-      console.log(result.data)
+      // console.log(result.data)
+      Taro.navigateBack({ delta: 1 })
+    } else {
+      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }
   return (

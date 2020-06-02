@@ -46,3 +46,14 @@ export const reqSetUserAddress = params =>
 // 添加用户收货地址
 export const reqAddUserAddress = params =>
   ajax(BASEURL + '/addUserAddress', params, 'POST')
+
+// 删除用户收货地址
+export const reqDelUserAddress = id => ajax(BASEURL + '/delUserAddress', id)
+
+// 修改用户名
+export const reqSetUserName = username =>
+  ajax(BASEURL + '/setUserName', username, 'POST')
+
+// 修改用户密码
+export const reqSetPassWord = params =>
+  ajax(BASEURL + '/setPassWord', params, 'POST')

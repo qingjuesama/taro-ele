@@ -1,10 +1,11 @@
 // 个人信息
 import Taro, { useDidShow } from '@tarojs/taro'
 import React, { useState, useEffect } from 'react'
-import { View, Button, Image } from '@tarojs/components'
+import { View, Button, Image, Text } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import { reqUserInfo } from '@/src/api'
 import { removeToken } from '@/src/redux/actions/token'
+import Row from '@/src/components/Row/Row'
 import defaultHead from '../../../../assets/images/default-head.png'
 import './index.scss'
 
@@ -24,6 +25,8 @@ const ProfileInfo = () => {
     const result = await reqUserInfo()
     if (result.code === 0) {
       setUserInfo(result.data)
+    } else {
+      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }
 
@@ -58,6 +61,17 @@ const ProfileInfo = () => {
       })
   }
 
+  // 修改用户名
+  const editUserName = () => {
+    Taro.navigateTo({ url: '/pages/profile/pages/username/index' })
+  }
+
+  // 修改登录密码
+  const goPassword = () => {
+    Taro.navigateTo({ url: '/pages/profile/pages/password/index' })
+  }
+
+  // 退出登录
   const logOut = () => {
     dispatch(removeToken())
     Taro.navigateBack({ delta: 1 })
@@ -65,29 +79,35 @@ const ProfileInfo = () => {
 
   return (
     <View className='profileinfo'>
-      <View className='profileinfo-head' onClick={handleOpenImage}>
-        <View className='left-title'>头像</View>
-        <View className='center-info'>
-          <View className='info-image'>
-            <Image
-              src={userInfo.headImg || defaultHead}
-              className='user-image'
-            />
-          </View>
-        </View>
-        {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
-      </View>
-      <View className='profileinfo-head'>
-        <View className='left-title'>用户名</View>
-        <View className='center-info'>{userInfo.userName}</View>
-        {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
-      </View>
-      <View className='profileinfo-head'>
-        <View className='left-title'>手机</View>
-        <View className='center-info'>{userInfo.phone}</View>
-        {/* <AtIcon prefixClass='icon' value='jiantou1' size='12' color='#adadad' /> */}
-      </View>
-
+      <Row
+        leftText='头像'
+        border
+        imageUrl={userInfo.headImg || defaultHead}
+        onRowClick={handleOpenImage}
+        rightIcon
+      />
+      <Row
+        leftText='用户名'
+        rightText={userInfo.userName}
+        rightIcon
+        onRowClick={editUserName}
+      />
+      <Row
+        title='账号绑定'
+        leftText='手机'
+        renderIcon={
+          <Text className='icon icon-shouji profileinfo-phone'></Text>
+        }
+        rightText={userInfo.phone}
+      />
+      <Row
+        title='安全设置'
+        leftText='登录密码'
+        rightText='修改'
+        rightTextColor='#0097ff'
+        rightIcon
+        onRowClick={goPassword}
+      />
       <View className='out-login'>
         <Button className='out-button' onClick={logOut}>
           退出登录

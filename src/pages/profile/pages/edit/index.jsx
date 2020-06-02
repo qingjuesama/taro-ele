@@ -16,6 +16,8 @@ const ProfileAddressEdit = () => {
     const result = await reqSetUserAddress(myAddress)
     if (result.code === 0) {
       Taro.navigateBack({ delta: 1 })
+    } else {
+      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }
 

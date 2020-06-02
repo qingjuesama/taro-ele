@@ -4,6 +4,7 @@ import { View, Text, Input, ScrollView } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import { reqUseSearchAddress } from '@/src/api'
 import { setAtUserAddress } from '@/src/redux/actions/user'
+import { initAddress } from '@/src/redux/actions/address'
 import NavBar from '@/src/components/NavBar/NavBar'
 import './index.scss'
 
@@ -17,16 +18,24 @@ const Search = () => {
 
   // 获取搜索地址
   const getAddressList = useCallback(async () => {
-    const parmas = {
-      key: value,
-      longitude: address.longitude,
-      latitude: address.latitude,
+    // 如果redux没有数据 重新获取ip地址信息
+    if (!address.longitude && !address.latitude) {
+      dispatch(initAddress())
+      console.log('ip1')
+    } else {
+      const parmas = {
+        key: value,
+        longitude: address.longitude,
+        latitude: address.latitude,
+      }
+      const result = await reqUseSearchAddress(parmas)
+      if (result.code === 0) {
+        setAddressList(result.data)
+      } else {
+        Taro.showToast({ title: result.message, icon: 'none' })
+      }
     }
-    const result = await reqUseSearchAddress(parmas)
-    if (result.code === 0) {
-      setAddressList(result.data)
-    }
-  }, [value, address])
+  }, [value, address, dispatch])
 
   useEffect(() => {
     getAddressList()

@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import React, { useMemo, memo } from 'react'
 import { View, Image, Text } from '@tarojs/components'
 
@@ -27,7 +28,10 @@ MyRow.defaultProps = {
   imgUrl: '',
   addressText: '',
   border: true,
-  onGo: () => {},
+  onGo: () => {
+    // 未开发
+    Taro.showToast({ title: '暂未开放', icon: 'none' })
+  },
 }
 
 export default memo(MyRow)

@@ -45,6 +45,8 @@ const SelectCity = props => {
         data: result.data,
       })
       _cityList(result)
+    } else {
+      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }, [])
 

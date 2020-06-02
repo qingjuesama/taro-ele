@@ -32,6 +32,8 @@ const Profile = () => {
     const result = await reqUserInfo()
     if (result.code === 0) {
       setUserInfo(result.data)
+    } else {
+      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }
 
@@ -50,20 +52,29 @@ const Profile = () => {
 
   // 跳转到我的地址
   const goAddress = () => {
-    Taro.navigateTo({ url: '/pages/profile/pages/address/index' })
+    if (userInfo.id) {
+      Taro.navigateTo({ url: '/pages/profile/pages/address/index' })
+    } else {
+      Taro.showToast({ title: '请先登录', icon: 'none' })
+    }
+  }
+
+  // 未开发
+  const tipNull = () => {
+    Taro.showToast({ title: '暂未开放', icon: 'none' })
   }
 
   return (
     <View className='profile'>
       <UserHead userInfo={userInfo} onLink={onLink} />
       <View className='user-money'>
-        <View className='money-red'>
+        <View className='money-red' onClick={tipNull}>
           <View className='money-imgs'>
             <Image src={red} className='money-image' />
           </View>
           <View className='money-txt'>红包</View>
         </View>
-        <View className='money-red'>
+        <View className='money-red' onClick={tipNull}>
           <View className='money-imgs'>
             <Image src={gold} className='money-image' />
           </View>

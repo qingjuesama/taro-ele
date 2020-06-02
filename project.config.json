@@ -99,6 +99,19 @@
 					"pathName": "pages/profile/pages/search/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改用户名",
+					"pathName": "pages/profile/pages/username/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改密码",
+					"pathName": "pages/profile/pages/password/index",
+					"scene": null
 				}
 			]
 		}

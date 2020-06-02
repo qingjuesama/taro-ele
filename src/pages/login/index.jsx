@@ -64,7 +64,7 @@ const Login = () => {
             }, 1000)
           },
         })
-      } else if (code === 1) {
+      } else {
         Taro.showToast({ title: message, icon: 'none' })
       }
       return
