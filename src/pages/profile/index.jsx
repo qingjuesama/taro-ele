@@ -32,8 +32,6 @@ const Profile = () => {
     const result = await reqUserInfo()
     if (result.code === 0) {
       setUserInfo(result.data)
-    } else {
-      Taro.showToast({ title: result.message, icon: 'none' })
     }
   }
 
