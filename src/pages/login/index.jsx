@@ -4,7 +4,7 @@ import { View, Image, Form, Input, Button, Navigator } from '@tarojs/components'
 import { useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import { reqLogin } from '@/src/api'
-import { setToken } from '@/src/redux/actions/token'
+import { setToken } from '@/src/redux/actions/user'
 import './index.scss'
 
 const Login = () => {
@@ -58,9 +58,7 @@ const Login = () => {
           success() {
             setTimeout(() => {
               Taro.hideLoading()
-              Taro.redirectTo({
-                url: '/pages/profile/index',
-              })
+              Taro.redirectTo({ url: '/pages/profile/index' })
             }, 1000)
           },
         })

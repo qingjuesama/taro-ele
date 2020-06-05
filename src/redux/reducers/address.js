@@ -16,4 +16,4 @@ const address = (state = initAddress, action) => {
   }
 }
 
-export default address
+export default { address }

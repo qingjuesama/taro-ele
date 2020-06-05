@@ -21,6 +21,7 @@ import './index.scss'
 const Msite = () => {
   // reducers
   const address = useSelector(state => state.address)
+  const token = useSelector(state => state.token)
   // dispatch
   const dispatch = useDispatch()
   // 导航数据
@@ -69,6 +70,11 @@ const Msite = () => {
     getNavSwiper()
   }, [getNavSwiper])
 
+  // 跳转登录
+  const goLogin = () => {
+    Taro.redirectTo({ url: '/pages/login/index' })
+  }
+
   return (
     <View className='msite'>
       {/* 头部地址,搜索 */}
@@ -91,13 +97,15 @@ const Msite = () => {
           {/* 推荐商家 */}
           <View className='list-title'>推荐商家</View>
 
-          <TipNull
-            img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
-            title='没有结果'
-            contentText='登录后查看更多商家'
-            buttonText='登录'
-            onButtonClick={() => onSetAddressShow(true)}
-          />
+          {!token && (
+            <TipNull
+              img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
+              title='没有结果'
+              contentText='登录后查看更多商家'
+              buttonText='登录'
+              onButtonClick={goLogin}
+            />
+          )}
         </View>
       ) : (
         // 无收货地址

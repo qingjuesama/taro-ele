@@ -1,16 +1,46 @@
+import Taro from '@tarojs/taro'
 import {
   USER,
   USERADDRESS,
   SETUSERADDRESS,
   REMOVEUSERADDRESS,
+  GETUSERADDRESSLIST,
+  SETTOKEN,
+  REMOVETOKEN,
 } from '../action-types'
 
+// 用户token
+const initToken = Taro.getStorageSync('token') || ''
+ const token = (state = initToken, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case SETTOKEN:
+      return payload
+    case REMOVETOKEN:
+      return ''
+    default:
+      return state
+  }
+}
+
 const initUser = {}
-export const user = (state = initUser, action) => {
+ const user = (state = initUser, action) => {
   const { type, payload } = action
   switch (type) {
     case USER:
       return state
+    default:
+      return state
+  }
+}
+
+// 收货地址列表
+const initAddressList = []
+ const userAddressList = (state = initAddressList, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case GETUSERADDRESSLIST:
+      return payload
     default:
       return state
   }
@@ -28,7 +58,7 @@ const initUserAddress = {
   latitude: 0,
   longitude: 0,
 }
-export const userAddress = (state = initUserAddress, action) => {
+ const userAddress = (state = initUserAddress, action) => {
   const { type, payload } = action
   switch (type) {
     case USERADDRESS:
@@ -43,4 +73,11 @@ export const userAddress = (state = initUserAddress, action) => {
     default:
       return state
   }
+}
+
+export default {
+  token,
+  user,
+  userAddressList,
+  userAddress,
 }

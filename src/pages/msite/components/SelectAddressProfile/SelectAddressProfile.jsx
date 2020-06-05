@@ -3,35 +3,27 @@ import { View } from '@tarojs/components'
 
 import './SelectAddressProfile.scss'
 
-const SelectAddressProfile = () => {
+const SelectAddressProfile = ({ userAddressList, onClick }) => {
   return (
     <View className='profile'>
       <View className='profile-title'>收货地址</View>
       <View className='profile-main'>
-        <View className='profile-item'>
-          <View className='item-top'>
-            <View className='ming'>任仲帅</View>
-            <View className='sex'>先生</View>
-            <View className='iphone'>18500255303</View>
-          </View>
-          <View className='item-address'>世茂维拉10号楼</View>
-        </View>
-        <View className='profile-item'>
-          <View className='item-top'>
-            <View className='ming'>任仲帅</View>
-            <View className='sex'>先生</View>
-            <View className='iphone'>18500255303</View>
-          </View>
-          <View className='item-address'>世茂维拉10号楼</View>
-        </View>
-        <View className='profile-item'>
-          <View className='item-top'>
-            <View className='ming'>任仲帅</View>
-            <View className='sex'>先生</View>
-            <View className='iphone'>18500255303</View>
-          </View>
-          <View className='item-address'>世茂维拉10号楼</View>
-        </View>
+        {userAddressList.map(item => {
+          return (
+            <View
+              className='profile-item'
+              key={item.id}
+              onClick={() => onClick(item)}
+            >
+              <View className='item-top'>
+                <View className='ming'>{item.name}</View>
+                <View className='sex'>{item.sex === '1' ? '男' : '女'}</View>
+                <View className='iphone'>{item.phone}</View>
+              </View>
+              <View className='item-address'>{item.address_detail}</View>
+            </View>
+          )
+        })}
       </View>
     </View>
   )

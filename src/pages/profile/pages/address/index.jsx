@@ -1,32 +1,31 @@
 // 我的地址
 import Taro, { useDidShow } from '@tarojs/taro'
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text } from '@tarojs/components'
-import { useDispatch } from 'react-redux'
-import { reqUserAddress, reqDelUserAddress } from '@/src/api'
-import { atUserAddress, removeUserAddress } from '@/src/redux/actions/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { reqDelUserAddress } from '@/src/api'
+import {
+  atUserAddress,
+  removeUserAddress,
+  getUserAddressList,
+} from '@/src/redux/actions/user'
 import NavBar from '@/src/components/NavBar/NavBar'
 import AddressRow from './components/AddressRow/AddressRow'
 import './index.scss'
 
 const ProfileAddress = () => {
   const dispatch = useDispatch()
-  const [userAddress, setUserAddress] = useState([])
+  const userAddressList = useSelector(state => state.userAddressList)
 
   // 获取收货地址
-  const getAddress = async () => {
-    const result = await reqUserAddress()
-    if (result.code === 0) {
-      setUserAddress(result.data)
-    } else {
-      Taro.showToast({ title: result.message, icon: 'none' })
-    }
+  const getAddress = () => {
+    dispatch(getUserAddressList())
   }
 
   // 获取收货地址
   useDidShow(() => {
     getAddress()
-  }, [])
+  })
 
   // 删除收货地址
   const delAddress = id => {
@@ -65,7 +64,7 @@ const ProfileAddress = () => {
     <View className='profileaddress'>
       <NavBar title='我的地址' />
       <View className='profileaddress-list'>
-        {userAddress.map(item => {
+        {userAddressList.map(item => {
           return (
             <AddressRow
               key={item.id}

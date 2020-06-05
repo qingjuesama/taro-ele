@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Button, Image, Text } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import { reqUserInfo } from '@/src/api'
-import { removeToken } from '@/src/redux/actions/token'
+import { removeToken } from '@/src/redux/actions/user'
 import Row from '@/src/components/Row/Row'
 import defaultHead from '../../../../assets/images/default-head.png'
 import './index.scss'
@@ -74,7 +74,7 @@ const ProfileInfo = () => {
   // 退出登录
   const logOut = () => {
     dispatch(removeToken())
-    Taro.navigateBack({ delta: 1 })
+    Taro.redirectTo({ url: '/pages/profile/index' })
   }
 
   return (

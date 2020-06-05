@@ -3,14 +3,14 @@ import React, { memo } from 'react'
 import { View, Text } from '@tarojs/components'
 import './NavBar.scss'
 
-const NavBar = ({ onClose, title, children }) => {
+const NavBar = ({ onClose, title, renderRight }) => {
   return (
     <View className='navbar'>
       <View className='navbar-icon' onClick={() => onClose(false)}>
         <Text className='icon icon-fanhui'></Text>
       </View>
       <View className='title'>{title}</View>
-      {children}
+      {renderRight}
     </View>
   )
 }

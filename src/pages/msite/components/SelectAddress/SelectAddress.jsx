@@ -1,10 +1,11 @@
 // 选择收货地址
 import Taro from '@tarojs/taro'
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useMemo, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAddress } from '@/src/redux/actions/address'
+import { getUserAddressList } from '@/src/redux/actions/user'
 import { reqAddressDetail } from '@/src/api'
 import NavBar from '@/src/components/NavBar/NavBar'
 
@@ -22,6 +23,8 @@ const SelectAddress = ({
 }) => {
   const dispatch = useDispatch()
   const address = useSelector(state => state.address)
+  const userAddressList = useSelector(state => state.userAddressList)
+
   // 搜索关键字
   const [searchValue, setSearchValue] = useState('')
   // 搜索地址列表
@@ -90,6 +93,10 @@ const SelectAddress = ({
     onSetAddressShow(false)
   }
 
+  useEffect(() => {
+    dispatch(getUserAddressList())
+  }, [dispatch])
+
   // 当前地址
   const atAddress = useMemo(() => {
     if (address) {
@@ -105,6 +112,11 @@ const SelectAddress = ({
     console.log(1)
   }
 
+  // 用户选择地址
+  const handleUserAddress = userAddress => {
+    console.log(userAddress)
+  }
+
   return (
     <View
       className={classnames('selectaddress', {
@@ -113,11 +125,15 @@ const SelectAddress = ({
       })}
     >
       {/* navbar */}
-      <NavBar onClose={onSetAddressShow} title='选择收货地址'>
-        <View className='add' onClick={onAddAddress}>
-          新增地址
-        </View>
-      </NavBar>
+      <NavBar
+        onClose={onSetAddressShow}
+        title='选择收货地址'
+        renderRight={
+          <View className='add' onClick={onAddAddress}>
+            新增地址
+          </View>
+        }
+      ></NavBar>
 
       {/* 选择城市,搜索地址 */}
       <SelectAddressSearch
@@ -141,7 +157,12 @@ const SelectAddress = ({
       />
 
       {/* 收货地址 */}
-      <SelectAddressProfile />
+      {userAddressList.length > 0 && (
+        <SelectAddressProfile
+          userAddressList={userAddressList}
+          onClick={handleUserAddress}
+        />
+      )}
     </View>
   )
 }

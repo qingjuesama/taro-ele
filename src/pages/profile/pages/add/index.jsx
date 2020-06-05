@@ -14,7 +14,6 @@ const AddAddress = () => {
   const onForm = async form => {
     const result = await reqAddUserAddress(form)
     if (result.code === 0) {
-      // console.log(result.data)
       Taro.navigateBack({ delta: 1 })
     } else {
       Taro.showToast({ title: result.message, icon: 'none' })

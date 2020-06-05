@@ -15,7 +15,7 @@ const ProfileAddressEdit = () => {
   const onForm = async myAddress => {
     const result = await reqSetUserAddress(myAddress)
     if (result.code === 0) {
-      Taro.navigateBack({ delta: 1 })
+      Taro.navigateTo({ url: '/pages/profile/pages/address/index' })
     } else {
       Taro.showToast({ title: result.message, icon: 'none' })
     }
