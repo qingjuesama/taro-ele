@@ -3,7 +3,7 @@ import { ScrollView, View } from '@tarojs/components'
 
 import './SelectCityList.scss'
 
-const SelectCityList = ({ atScrollTop, address, cityList, onSelectCity }) => {
+const SelectCityList = ({ atScrollTop, currentAddress, cityList, onSelectCity }) => {
 
   return (
     <ScrollView
@@ -14,7 +14,7 @@ const SelectCityList = ({ atScrollTop, address, cityList, onSelectCity }) => {
       <View className='selectcity-main-content-city-item dom'>
         <View className='selectcity-main-content-city-a'>当前定位城市</View>
         <View className='selectcity-main-content-city-name'>
-          {address.city ? address.city : '定位当前城市失败'}
+          {currentAddress.city ? currentAddress.city : '定位当前城市失败'}
         </View>
       </View>
       {cityList.map(cityItem => {

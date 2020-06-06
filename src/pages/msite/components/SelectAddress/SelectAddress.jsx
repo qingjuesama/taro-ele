@@ -1,11 +1,10 @@
 // 选择收货地址
-import Taro from '@tarojs/taro'
-import React, { useState, useRef, useMemo, useEffect } from 'react'
-import { View } from '@tarojs/components'
+import Taro, { useDidShow } from '@tarojs/taro'
+import React, { useState, useRef, useMemo } from 'react'
+import { View, ScrollView } from '@tarojs/components'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAddress } from '@/src/redux/actions/address'
-import { getUserAddressList } from '@/src/redux/actions/user'
+import { getUserAddressList, setCurrentAddress } from '@/src/redux/actions/user'
 import { reqAddressDetail } from '@/src/api'
 import NavBar from '@/src/components/NavBar/NavBar'
 
@@ -22,7 +21,9 @@ const SelectAddress = ({
   onLocationCity,
 }) => {
   const dispatch = useDispatch()
-  const address = useSelector(state => state.address)
+  // 当前地址
+  const currentAddress = useSelector(state => state.currentAddress)
+  // 收货地址列表
   const userAddressList = useSelector(state => state.userAddressList)
 
   // 搜索关键字
@@ -47,7 +48,7 @@ const SelectAddress = ({
 
   // 发送请求获取详细地址
   const getDetila = async value => {
-    const { latitude, longitude } = address
+    const { latitude, longitude } = currentAddress
     const resultDetail = await reqAddressDetail({
       keyword: value,
       offset: 0,
@@ -82,8 +83,8 @@ const SelectAddress = ({
     const { name, latitude, longitude } = detail
     // 更新收货地址
     dispatch(
-      setAddress({
-        detail: name,
+      setCurrentAddress({
+        address: name,
         latitude,
         longitude,
       })
@@ -93,32 +94,34 @@ const SelectAddress = ({
     onSetAddressShow(false)
   }
 
-  useEffect(() => {
+  useDidShow(() => {
     dispatch(getUserAddressList())
-  }, [dispatch])
+  })
 
   // 当前地址
   const atAddress = useMemo(() => {
-    if (address) {
-      if (!address.city && !address.detail) {
+    if (currentAddress) {
+      if (!currentAddress.city && !currentAddress.address) {
         return '未能获取地址'
       }
-      return address.detail
+      return currentAddress.address
     }
-  }, [address])
+  }, [currentAddress])
 
   // 跳转到新增地址
   const onAddAddress = () => {
-    console.log(1)
+    Taro.navigateTo({ url: '/pages/profile/pages/add/index' })
   }
 
   // 用户选择地址
   const handleUserAddress = userAddress => {
-    console.log(userAddress)
+    // 关闭选择收货地址
+    onSetAddressShow(false)
+    dispatch(setCurrentAddress(userAddress))
   }
 
   return (
-    <View
+    <ScrollView scrollY
       className={classnames('selectaddress', {
         end: addressShow,
         start: !addressShow,
@@ -140,7 +143,7 @@ const SelectAddress = ({
         onOpenCity={onOpenCity}
         onSearchValue={onSearchValue}
         onInitDetail={onInitDetail}
-        address={address}
+        currentAddress={currentAddress}
         searchValue={searchValue}
       />
 
@@ -163,7 +166,7 @@ const SelectAddress = ({
           onClick={handleUserAddress}
         />
       )}
-    </View>
+    </ScrollView>
   )
 }
 
@@ -173,7 +176,7 @@ SelectAddress.defaultProps = {
   onSetAddressShow: () => {},
   onSetCityShow: () => {},
   onLocationCity: () => {},
-  setAddress: () => {},
+  setCurrentAddress: () => {},
 }
 
 export default SelectAddress

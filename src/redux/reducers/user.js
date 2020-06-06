@@ -7,11 +7,12 @@ import {
   GETUSERADDRESSLIST,
   SETTOKEN,
   REMOVETOKEN,
+  CURRENTADDRESS,
 } from '../action-types'
 
 // 用户token
 const initToken = Taro.getStorageSync('token') || ''
- const token = (state = initToken, action) => {
+const token = (state = initToken, action) => {
   const { type, payload } = action
   switch (type) {
     case SETTOKEN:
@@ -24,7 +25,7 @@ const initToken = Taro.getStorageSync('token') || ''
 }
 
 const initUser = {}
- const user = (state = initUser, action) => {
+const user = (state = initUser, action) => {
   const { type, payload } = action
   switch (type) {
     case USER:
@@ -34,9 +35,31 @@ const initUser = {}
   }
 }
 
+// 当前收货地址
+const initCurrentAddress = {
+  id: '',
+  city: '', // 城市名称
+  address: '', //详细地址
+  address_detail: '', // 门牌号
+  latitude: '', // 纬度
+  longitude: '', // 经度
+  name: '', // 收货人
+  phone: '', // 收货人手机
+  sex: '', // 性别
+}
+const currentAddress = (state = initCurrentAddress, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case CURRENTADDRESS:
+      return { ...state, ...payload }
+    default:
+      return state
+  }
+}
+
 // 收货地址列表
 const initAddressList = []
- const userAddressList = (state = initAddressList, action) => {
+const userAddressList = (state = initAddressList, action) => {
   const { type, payload } = action
   switch (type) {
     case GETUSERADDRESSLIST:
@@ -48,17 +71,17 @@ const initAddressList = []
 
 // 编辑收货地址
 const initUserAddress = {
-  id: 0,
-  name: '',
-  sex: 0,
-  phone: '',
-  address: '',
-  address_detail: '',
-  city: '',
-  latitude: 0,
-  longitude: 0,
+  id: '',
+  city: '', // 城市名称
+  address: '', //详细地址
+  address_detail: '', // 门牌号
+  latitude: '', // 纬度
+  longitude: '', // 经度
+  name: '', // 收货人
+  phone: '', // 收货人手机
+  sex: '', // 性别
 }
- const userAddress = (state = initUserAddress, action) => {
+const userAddress = (state = initUserAddress, action) => {
   const { type, payload } = action
   switch (type) {
     case USERADDRESS:
@@ -80,4 +103,5 @@ export default {
   user,
   userAddressList,
   userAddress,
+  currentAddress,
 }

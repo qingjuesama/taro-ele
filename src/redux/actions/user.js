@@ -7,8 +7,9 @@ import {
   GETUSERADDRESSLIST,
   SETTOKEN,
   REMOVETOKEN,
+  CURRENTADDRESS,
 } from '../action-types'
-
+import { reqIpAddress } from '../../api'
 // 设置token
 export const setToken = token => {
   token = `Bearer ${token}`
@@ -20,6 +21,31 @@ export const setToken = token => {
 export const removeToken = () => {
   Taro.removeStorageSync('token')
   return { type: REMOVETOKEN }
+}
+
+// 设置地址信息
+export const setCurrentAddress = address => ({
+  type: CURRENTADDRESS,
+  payload: address,
+})
+
+// 初始化ip定位地址
+export const initCurrentAddress = () => {
+  return async dispatch => {
+    const result = await reqIpAddress()
+    if (result.code === 0) {
+      const { city, latitude, longitude, recommend } = result.data
+      // 保存地址到redux
+      dispatch(
+        setCurrentAddress({
+          city,
+          address: recommend,
+          latitude,
+          longitude,
+        })
+      )
+    }
+  }
 }
 
 // 编辑用户收货地址

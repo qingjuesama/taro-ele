@@ -8,6 +8,7 @@
   color: $color;
   transition: transform 0.4s ease;
   z-index: 2;
+  height: 100vh;
 }
 .start {
   transform: translateX(100vw);

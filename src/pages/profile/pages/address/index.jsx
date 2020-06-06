@@ -60,9 +60,14 @@ const ProfileAddress = () => {
     })
   }
 
+  // 返回个人中心
+  const goProfile = () => {
+    Taro.redirectTo({ url: '/pages/profile/index' })
+  }
+
   return (
     <View className='profileaddress'>
-      <NavBar title='我的地址' />
+      <NavBar title='我的地址' onClose={goProfile} />
       <View className='profileaddress-list'>
         {userAddressList.map(item => {
           return (

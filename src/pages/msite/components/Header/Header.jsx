@@ -4,7 +4,7 @@ import { View, Text } from '@tarojs/components'
 
 import './Header.scss'
 
-const Header = ({ onSetAddressShow, address }) => {
+const Header = ({ onSetAddressShow, currentAddress }) => {
   // 跳转搜索页面
   const handleGoSearch = () => {}
 
@@ -16,7 +16,7 @@ const Header = ({ onSetAddressShow, address }) => {
           <Text className='icon icon-daohangdizhi'></Text>
         </View>
         <View className='header-title' onClick={() => onSetAddressShow(true)}>
-          {address.detail ? address.detail : '定位失败,请手动选择'}
+          {currentAddress.address ? currentAddress.address : '定位失败,请手动选择'}
         </View>
         <View className='jiantou'>
           <Text className='icon icon-xiajiantou'></Text>
@@ -36,7 +36,7 @@ const Header = ({ onSetAddressShow, address }) => {
 
 Header.defaultProps = {
   onSetAddressShow: () => {},
-  address: {},
+  currentAddress: {},
 }
 
 export default Header

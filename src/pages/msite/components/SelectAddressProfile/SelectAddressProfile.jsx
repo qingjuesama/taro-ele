@@ -17,10 +17,10 @@ const SelectAddressProfile = ({ userAddressList, onClick }) => {
             >
               <View className='item-top'>
                 <View className='ming'>{item.name}</View>
-                <View className='sex'>{item.sex === '1' ? '男' : '女'}</View>
+                <View className='sex'>{item.sex === '1' ? '先生' : '女士'}</View>
                 <View className='iphone'>{item.phone}</View>
               </View>
-              <View className='item-address'>{item.address_detail}</View>
+              <View className='item-address'>{item.address}</View>
             </View>
           )
         })}

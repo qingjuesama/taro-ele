@@ -3,7 +3,7 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import classnames from 'classnames'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAddress } from '@/src/redux/actions/address'
+import { setCurrentAddress } from '@/src/redux/actions/user'
 import { reqCityList } from '@/src/api'
 import NavBar from '@/src/components/NavBar/NavBar'
 import SelectCitySearch from '../SelectCitySearch/SelectCitySearch'
@@ -15,7 +15,7 @@ import './SelectCity.scss'
 
 const SelectCity = props => {
   const { cityShow, onSetCityShow } = props
-  const address = useSelector(state => state.address)
+  const currentAddress = useSelector(state => state.currentAddress)
   const dispatch = useDispatch()
   // 城市列表数据
   const [cityList, setCityList] = useState([])
@@ -95,9 +95,9 @@ const SelectCity = props => {
     const { name, latitude, longitude } = city
     // 保存当前城市信息到redux
     dispatch(
-      setAddress({
+      setCurrentAddress({
         city: name,
-        detail: name,
+        address: name,
         latitude,
         longitude,
       })
@@ -175,7 +175,7 @@ const SelectCity = props => {
           <SelectCityList
             onSelectCity={onSelectCity}
             atScrollTop={atScrollTop}
-            address={address}
+            currentAddress={currentAddress}
             cityList={cityList}
           />
 

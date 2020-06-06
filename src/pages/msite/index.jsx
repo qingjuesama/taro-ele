@@ -5,7 +5,7 @@ import { View } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { reqNavList } from '@/src/api'
-import { initAddress } from '@/src/redux/actions/address'
+import { initCurrentAddress } from '@/src/redux/actions/user'
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import TipNull from '@/src/components/TipNull/TipNull'
 
@@ -20,7 +20,7 @@ import './index.scss'
 
 const Msite = () => {
   // reducers
-  const address = useSelector(state => state.address)
+  const currentAddress = useSelector(state => state.currentAddress)
   const token = useSelector(state => state.token)
   // dispatch
   const dispatch = useDispatch()
@@ -42,28 +42,27 @@ const Msite = () => {
 
   // 获取城市 经纬度及城市
   const onLocationCity = useCallback(() => {
-    dispatch(initAddress())
+    dispatch(initCurrentAddress())
   }, [dispatch])
 
   // 获取导航
   const getNavSwiper = useCallback(async () => {
-    const { latitude, longitude } = address
+    const { latitude, longitude } = currentAddress
     const result = await reqNavList({ latitude, longitude })
     if (result.code === 0) {
-      const { entries } = result.data[1]
-      setNavList(entries)
+      setNavList(result.data)
     } else {
       Taro.showToast({ title: result.message, icon: 'none' })
     }
-  }, [address])
+  }, [currentAddress])
 
   // 获取ip地址 经纬度
   useEffect(() => {
     // 不存在地址则重新获取
-    if (!address.latitude && !address.longitude) {
+    if (!currentAddress.latitude && !currentAddress.longitude) {
       onLocationCity()
     }
-  }, [onLocationCity, address])
+  }, [onLocationCity, currentAddress])
 
   // 获取导航数据
   useEffect(() => {
@@ -78,9 +77,12 @@ const Msite = () => {
   return (
     <View className='msite'>
       {/* 头部地址,搜索 */}
-      <MsiteHeader onSetAddressShow={onSetAddressShow} address={address} />
+      <MsiteHeader
+        onSetAddressShow={onSetAddressShow}
+        currentAddress={currentAddress}
+      />
 
-      {address.city ? (
+      {currentAddress.city ? (
         <View className='content'>
           {/* switch 导航 */}
           <MsiteSwiper navList={navList} />
@@ -135,7 +137,7 @@ const Msite = () => {
 }
 
 Msite.defaultProps = {
-  setAddress: () => {},
+  setCurrentAddress: () => {},
   address: {},
 }
 

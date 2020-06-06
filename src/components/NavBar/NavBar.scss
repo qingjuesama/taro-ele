@@ -5,11 +5,16 @@
   display: flex;
   align-items: center;
   color: #fff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   .navbar-icon {
     position: absolute;
     z-index: 1;
     margin-left: 20px;
-    .icon{
+    .icon {
       font-size: 30px;
     }
   }
@@ -24,5 +29,4 @@
     align-items: center;
     font-size: 34px;
   }
-
 }

@@ -40,12 +40,18 @@
     "@tarojs/runtime": "3.0.0-rc.2",
     "@tarojs/taro": "3.0.0-rc.2",
     "classnames": "^2.2.6",
-    "react": "^16.10.0",
+    "react": "16.3.1",
     "react-dom": "^16.10.0",
     "react-redux": "^7.0.0",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "@tarojs/components-rn": "^3.0.0-rc.3",
+    "@tarojs/taro-rn": "^3.0.0-rc.3",
+    "@tarojs/taro-router-rn": "^3.0.0-rc.3",
+    "@tarojs/taro-redux-rn": "^3.0.0-rc.3",
+    "react-native": "0.55.4",
+    "tslib": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

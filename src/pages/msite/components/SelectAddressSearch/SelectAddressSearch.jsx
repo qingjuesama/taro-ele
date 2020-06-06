@@ -5,7 +5,7 @@ import './SelectAddressSearch.scss'
 
 const SelectAddressSearch = ({
   onOpenCity,
-  address,
+  currentAddress,
   searchValue,
   onSearchValue,
   onInitDetail,
@@ -15,7 +15,7 @@ const SelectAddressSearch = ({
       {/* 选择城市 */}
       <View className='search-left' onClick={onOpenCity}>
         <View className='search-left-text'>
-          {address.city ? address.city : '选择城市'}
+          {currentAddress.city ? currentAddress.city : '选择城市'}
         </View>
         <View className='search-left-icon'>
           <Text className='icon icon-xiajiantou'></Text>
