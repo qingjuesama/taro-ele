@@ -57,3 +57,7 @@ export const reqSetUserName = username =>
 // 修改用户密码
 export const reqSetPassWord = params =>
   ajax(BASEURL + '/setPassWord', params, 'POST')
+
+// 获取首页筛选条数据
+export const reqGetBatchFilter = params =>
+  ajax(BASEURL + '/getBatchFilter', params)

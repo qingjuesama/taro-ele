@@ -1,0 +1,37 @@
+.filtershops {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 9;
+  .filtershops-head {
+    display: flex;
+    align-items: center;
+    color: #666666;
+    .filtershops-head-item {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:last-child {
+        flex: none;
+        width: 150px;
+      }
+      .filtershops-xiajiantou {
+        font-size: 12px;
+      }
+      .filtershops-funnel {
+        font-size: 30px;
+      }
+      .active {
+        color: #333333;
+        font-weight: 600;
+      }
+      .atactive {
+        color: #3190e8;
+        font-weight: 600;
+      }
+      .title {
+      }
+    }
+  }
+}

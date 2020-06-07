@@ -6,3 +6,4 @@ export const USERADDRESS = 'USERADDRESS' // 用户当前编辑地址信息
 export const SETUSERADDRESS = 'SETUSERADDRESS' // 更新当前用户地址信息
 export const REMOVEUSERADDRESS = 'REMOVEUSERADDRESS' // 清空用户地址信息
 export const GETUSERADDRESSLIST = 'GETUSERADDRESSLIST' // 获取用户收货地址列表
+export const BATCHFILTER = 'BATCHFILTER ' // 首页筛选条数据
