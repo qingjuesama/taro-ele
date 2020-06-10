@@ -7,3 +7,7 @@ export const SETUSERADDRESS = 'SETUSERADDRESS' // 更新当前用户地址信息
 export const REMOVEUSERADDRESS = 'REMOVEUSERADDRESS' // 清空用户地址信息
 export const GETUSERADDRESSLIST = 'GETUSERADDRESSLIST' // 获取用户收货地址列表
 export const BATCHFILTER = 'BATCHFILTER ' // 首页筛选条数据
+export const UPNAVSORT = 'UPNAVSORT' // 更新首页综合筛选
+export const UPDISTANCE = 'UPDISTANCE' // 更新距离最近
+export const UPSALES = 'UPSALES' // 更新销量最高
+export const UPFILTER = 'UPFILTER' // 更新筛选条件

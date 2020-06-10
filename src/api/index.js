@@ -61,3 +61,7 @@ export const reqSetPassWord = params =>
 // 获取首页筛选条数据
 export const reqGetBatchFilter = params =>
   ajax(BASEURL + '/getBatchFilter', params)
+
+// 获取首页商品数据列表
+export const reqGetMsiteShopList = params =>
+  ajax(BASEURL + '/getMsiteShopList', params)

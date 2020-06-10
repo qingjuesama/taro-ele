@@ -24,10 +24,17 @@ a {
 
 // 其他
 .ele-show {
-  display: block;
+  display: block !important;
 }
 .ele-hide {
-  display: none;
+  display: none !important;
+}
+
+.ele-hidden {
+  visibility: hidden !important;
+}
+.ele-visible {
+  visibility: visible !important;
 }
 
 .clearfix {

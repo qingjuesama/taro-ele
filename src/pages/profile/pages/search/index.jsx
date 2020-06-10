@@ -20,7 +20,6 @@ const Search = () => {
     // 如果redux没有数据 重新获取ip地址信息
     if (!currentAddress.longitude && !currentAddress.latitude) {
       dispatch(initCurrentAddress())
-      console.log('ip1')
     } else {
       const parmas = {
         key: value,
