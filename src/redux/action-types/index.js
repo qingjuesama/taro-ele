@@ -11,3 +11,4 @@ export const UPNAVSORT = 'UPNAVSORT' // 更新首页综合筛选
 export const UPDISTANCE = 'UPDISTANCE' // 更新距离最近
 export const UPSALES = 'UPSALES' // 更新销量最高
 export const UPFILTER = 'UPFILTER' // 更新筛选条件
+export const SHOPPARAMS = 'SHOPPARAMS' // 设置商家列表请求参数

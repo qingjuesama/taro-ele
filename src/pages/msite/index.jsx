@@ -6,7 +6,10 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { reqNavList, reqGetMsiteShopList } from '@/src/api'
 import { initCurrentAddress } from '@/src/redux/actions/user'
-import { actionGetBatchFilter } from '@/src/redux/actions/filterShop'
+import {
+  actionGetBatchFilter,
+  actionShopParams,
+} from '@/src/redux/actions/filterShop'
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import TipNull from '@/src/components/TipNull/TipNull'
 import Shop from '@/src/components/Shop/Shop'
@@ -27,6 +30,8 @@ const Msite = () => {
   // 首页筛选条数据
   const batchFilter = useSelector(state => state.batchFilter)
   const token = useSelector(state => state.token)
+  // 请求商品列表参数
+  const shopParams = useSelector(state => state.shopParams)
   // dispatch
   const dispatch = useDispatch()
   // 导航数据
@@ -42,7 +47,13 @@ const Msite = () => {
   const [top, setTop] = useState(0)
   // 滚动/禁止滚动
   const [weiScroll, setWeiScroll] = useState(true)
-  const [shopPage, setShopPage] = useState(1)
+  // 节流
+  const [bottomFlag, setBottomFlag] = useState(false)
+
+  // 用户是否登录,是否有收货地址,是否加载商家筛选条
+  const isLogin = useMemo(() => {
+    return token && batchFilter.sort.length && currentAddress.latitude
+  }, [token, batchFilter, currentAddress])
 
   // 收货地址 显示/隐藏
   const onSetAddressShow = flag => {
@@ -58,17 +69,6 @@ const Msite = () => {
     dispatch(initCurrentAddress())
   }, [dispatch])
 
-  // 获取导航
-  const getNavSwiper = useCallback(async () => {
-    const { latitude, longitude } = currentAddress
-    const result = await reqNavList({ latitude, longitude })
-    if (result.code === 0) {
-      setNavList(result.data)
-    } else {
-      Taro.showToast({ title: result.message, icon: 'none' })
-    }
-  }, [currentAddress])
-
   // 获取ip地址 经纬度
   useEffect(() => {
     // 不存在地址则重新获取
@@ -77,6 +77,24 @@ const Msite = () => {
     }
   }, [onLocationCity, currentAddress])
 
+  // ip地址定位收货地址
+  useEffect(() => {
+    const { latitude, longitude } = currentAddress
+    isLogin && dispatch(actionShopParams({ latitude, longitude }))
+  }, [dispatch, currentAddress, isLogin])
+
+  // 获取导航
+  const getNavSwiper = useCallback(async () => {
+    const { latitude, longitude } = currentAddress
+    if (latitude && longitude) {
+      const result = await reqNavList({ latitude, longitude })
+      if (result.code === 0) {
+        setNavList(result.data)
+      } else {
+        Taro.showToast({ title: result.message, icon: 'none' })
+      }
+    }
+  }, [currentAddress])
   // 获取导航数据
   useEffect(() => {
     getNavSwiper()
@@ -143,64 +161,36 @@ const Msite = () => {
 
   // 获取商家列表
   const getShopList = useCallback(async () => {
-    const { latitude, longitude } = currentAddress
-    const { sort, distance, sales } = batchFilter.nav
-    // 商家服务
-    const serveActive = batchFilter.filter.serve.main.reduce((pre, item) => {
-      if (item.active) {
-        pre.push(item.value)
-      }
-      return pre
-    }, [])
-    // 优惠活动
-    const activityActive = batchFilter.filter.activity.main.find(
-      item => item.active
-    )
-    // 人均消费
-    const expenditureActive = batchFilter.filter.expenditure.main.find(
-      item => item.active
-    )
-
-    const params = {
-      latitude,
-      longitude,
-      page: shopPage,
-      limit: 8,
-      terminal: 'h5',
-      // 排序
-      sort: sort.value,
-      // 距离
-      distance: distance.active ? distance.value : '',
-      // 销量
-      sales: sales.active ? sales.value : '',
-      // 筛选
-      // 商家服务
-      serves: serveActive,
-      // 优惠活动
-      activity: activityActive ? activityActive.value : '',
-      // 人均消费
-      expenditure: expenditureActive ? expenditureActive.value : '',
-    }
-
-    const result = await reqGetMsiteShopList(params)
-    if (result.code === 0) {
-      if (shopPage === 1) {
-        setShopList(result.data)
-      } else {
-        setShopList(data => {
-          return [...data, ...result.data]
-        })
+    if (isLogin && shopParams.latitude && shopParams.longitude) {
+      const result = await reqGetMsiteShopList(shopParams)
+      if (result.code === 0) {
+        if (shopParams.offset === 0) {
+          setShopList(result.data)
+        } else {
+          setShopList(data => [...data, ...result.data])
+        }
+        setBottomFlag(true)
       }
     }
-  }, [batchFilter, currentAddress, shopPage])
+  }, [isLogin, shopParams])
+
   useEffect(() => {
-    token && getShopList()
-  }, [token, getShopList])
+    getShopList()
+  }, [getShopList])
 
-  // 滚动到底部
-  const scrolltolower = () => {
-    setShopPage(mypage => mypage + 1)
-  }
+  // 滚动到底部加载更多商家列表 
+  const scrolltolower = useCallback(() => {
+    if (bottomFlag && isLogin) {
+      dispatch(
+        // 0 8 16 24 32 40
+        actionShopParams({ offset: shopParams.offset + shopParams.limit })
+      )
+      setBottomFlag(false)
+    }
+  }, [dispatch, isLogin, bottomFlag, shopParams])
+
+  // 初始化条数
+  const setInitMyOffset = () => {}
 
   return (
     <ScrollView
@@ -233,7 +223,7 @@ const Msite = () => {
 
         <View className='list-title'>推荐商家</View>
         {/*登录渲染商家筛选及列表 */}
-        {token && batchFilter.sort.length > 0 && (
+        {isLogin && (
           <>
             <FilterShops
               batchFilter={batchFilter}
@@ -245,17 +235,19 @@ const Msite = () => {
                 shopList.map(shop => {
                   return (
                     <Shop
-                      key={Date.now+ shop.restaurant.id}
+                      key={shop.restaurant.id}
                       restaurant={shop.restaurant}
                     />
                   )
                 })}
+
+              {/* <Loading title='加载中...' /> */}
             </View>
           </>
         )}
 
         {/* 未登录提示登录 */}
-        {!token && (
+        {!isLogin && (
           <TipNull
             img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
             title='没有结果'
@@ -281,6 +273,7 @@ const Msite = () => {
           onSetAddressShow={onSetAddressShow}
           onSetCityShow={onSetCityShow}
           onLocationCity={onLocationCity}
+          onInitMyOffset={setInitMyOffset}
         />
 
         {/* 选择城市 */}

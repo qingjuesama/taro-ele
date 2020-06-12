@@ -1,5 +1,4 @@
-import Taro from '@tarojs/taro'
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import classnames from 'classnames'
 import { View, Text, Image } from '@tarojs/components'
 import imgUrl from '@/src/utils/imgUrl'
@@ -8,6 +7,7 @@ import {
   actionUpDistance,
   actionUpSales,
   actionUpFilter,
+  actionShopParams, 
 } from '@/src/redux/actions/filterShop'
 import { useDispatch } from 'react-redux'
 
@@ -21,7 +21,9 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
     return JSON.parse(str)
   })
   const dispatch = useDispatch()
+  // 排序 状态
   const [sortHide, setSortHide] = useState(true)
+  // 筛选 状态
   const [filterHide, setFilterHide] = useState(true)
 
   // 打开/关闭 综合排序
@@ -37,32 +39,32 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
     // 增加选中状态
     item.active = true
     dispatch(actionUpNavSort(item))
-    setSortHide(true)
-    weSetScroll(true)
+    handleClear()
+    dispatch(actionShopParams({ sort: item.value, offset: 0 }))
   }
 
   // 选中/取消 距离最近
   const handleDistance = () => {
     if (nav.distance.active) {
       dispatch(actionUpDistance({ ...nav.distance, active: false }))
+      dispatch(actionShopParams({ distance: '', offset: 0 }))
     } else {
       dispatch(actionUpDistance({ ...nav.distance, active: true }))
+      dispatch(actionShopParams({ distance: nav.distance.value, offset: 0 }))
     }
-    setSortHide(true)
-    setFilterHide(true)
-    weSetScroll(true)
+    handleClear()
   }
 
   // 选中/取消 销量最高
   const handleSales = () => {
     if (nav.sales.active) {
       dispatch(actionUpSales({ ...nav.sales, active: false }))
+      dispatch(actionShopParams({ sales: '', offset: 0 }))
     } else {
       dispatch(actionUpSales({ ...nav.sales, active: true }))
+      dispatch(actionShopParams({ sales: nav.sales.value, offset: 0 }))
     }
-    setSortHide(true)
-    setFilterHide(true)
-    weSetScroll(true)
+    handleClear()
   }
 
   // 打开/关闭 筛选
@@ -97,7 +99,7 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
     setMyFilter(data => ({ ...data }))
   }
 
-  // 关闭弹出层
+  // 关闭排序,筛选层,恢复滚动条
   const handleClear = () => {
     setSortHide(true)
     setFilterHide(true)
@@ -119,6 +121,25 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
   const filterSubmit = () => {
     dispatch(actionUpFilter(myFilter))
     handleClear()
+
+    // 商家服务
+    const serves = myFilter.serve.main.reduce((pre, item) => {
+      if (item.active) {
+        pre.push(item.value)
+      }
+      return pre
+    }, [])
+    // 优惠活动
+    const activity = myFilter.activity.main.find(item => item.active)
+    // 人均消费
+    const expenditure = myFilter.expenditure.main.find(item => item.active)
+    const filterParams = {
+      serves,
+      activity: activity.value,
+      expenditure: expenditure.value,
+      offset: 0,
+    }
+    dispatch(actionShopParams(filterParams))
   }
 
   // 清空筛选选项

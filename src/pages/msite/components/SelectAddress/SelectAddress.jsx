@@ -19,6 +19,7 @@ const SelectAddress = ({
   onSetAddressShow,
   onSetCityShow,
   onLocationCity,
+  onInitMyOffset,
 }) => {
   const dispatch = useDispatch()
   // 当前地址
@@ -92,6 +93,8 @@ const SelectAddress = ({
     onInitDetail()
     // 关闭选择收货地址
     onSetAddressShow(false)
+    // 初始化商品条数
+    onInitMyOffset()
   }
 
   useDidShow(() => {
@@ -118,10 +121,13 @@ const SelectAddress = ({
     // 关闭选择收货地址
     onSetAddressShow(false)
     dispatch(setCurrentAddress(userAddress))
+    // 初始化商品条数
+    onInitMyOffset()
   }
 
   return (
-    <ScrollView scrollY
+    <ScrollView
+      scrollY
       className={classnames('selectaddress', {
         end: addressShow,
         start: !addressShow,

@@ -47,7 +47,7 @@ const ajax = (url, data = {}, method, param) => {
         } else {
           resolve({
             code: 6,
-            message: '服务期繁忙',
+            message: '服务器繁忙',
           })
         }
       },

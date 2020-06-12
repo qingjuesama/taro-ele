@@ -5,6 +5,7 @@ import {
   UPDISTANCE,
   UPSALES,
   UPFILTER,
+  SHOPPARAMS,
 } from '../action-types'
 
 const actionGetBatchFilterSync = batchFilter => ({
@@ -38,3 +39,9 @@ export const actionUpSales = sales => ({ type: UPSALES, payload: sales })
 
 // 更新筛选条件
 export const actionUpFilter = filter => ({ type: UPFILTER, payload: filter })
+
+// 设置商家列表
+export const actionShopParams = params => ({
+  type: SHOPPARAMS,
+  payload: params,
+})

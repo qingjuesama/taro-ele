@@ -5,7 +5,7 @@ import imgUrl from '@/src/utils/imgUrl'
 import './NavSwiper.scss'
 
 const NavSwiper = ({ navList }) => {
-  const [framework] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  const [framework] = useState(Array(10).fill(1))
 
   return (
     <View className='navswiper'>
@@ -34,7 +34,7 @@ const NavSwiper = ({ navList }) => {
       ) : (
         // 骨架
         <View className='framework'>
-          {framework.map(i => {
+          {framework.map((item, i) => {
             return (
               <View className='framework-item' key={i}>
                 <View className='framework-item-title'></View>

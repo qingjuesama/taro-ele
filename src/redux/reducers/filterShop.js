@@ -4,9 +4,10 @@ import {
   UPDISTANCE,
   UPSALES,
   UPFILTER,
+  SHOPPARAMS,
 } from '../action-types'
 
-// // 获取首页筛选条数据
+// 获取首页筛选条数据
 const initBatchFilter = {
   nav: {
     sort: {},
@@ -56,6 +57,40 @@ const batchFilter = (state = initBatchFilter, action) => {
   }
 }
 
+// 商家列表请求体参数
+const initShopParams = {
+  // 经纬度
+  latitude: '',
+  longitude: '',
+  // 初始条数
+  offset: 0,
+  // 获取商家 数量
+  limit: 8,
+  // 排序
+  sort: '',
+  // 距离
+  distance: '',
+  // 销量
+  sales: '',
+  // 筛选
+  // 商家服务
+  serves: [],
+  // 优惠活动
+  activity: '',
+  // 人均消费
+  expenditure: '',
+}
+const shopParams = (state = initShopParams, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case SHOPPARAMS:
+      return { ...state, ...payload }
+    default:
+      return state
+  }
+}
+
 export default {
   batchFilter,
+  shopParams,
 }
