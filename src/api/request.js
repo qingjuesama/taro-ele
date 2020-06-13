@@ -43,10 +43,11 @@ const ajax = (url, data = {}, method, param) => {
             code: 5,
             message: '请先登录',
           })
+          Taro.removeStorageSync('token')
         } else {
           resolve({
             code: 6,
-            message: '服务期繁忙',
+            message: '服务器繁忙',
           })
         }
       },

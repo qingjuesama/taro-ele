@@ -1,25 +1,11 @@
 import React, { useState } from 'react'
 import { View, Navigator, Image } from '@tarojs/components'
+import imgUrl from '@/src/utils/imgUrl'
 
 import './NavSwiper.scss'
 
 const NavSwiper = ({ navList }) => {
-  const [framework] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-
-  // 处理图片地址
-  const imgUrl = imageHash => {
-    const URL = 'https://cube.elemecdn.com/'
-    let str = ''
-    for (let i = 0; i < imageHash.length; i++) {
-      if (i === 1) {
-        str += '/'
-      } else if (i === 3) {
-        str += '/'
-      }
-      str += imageHash[i]
-    }
-    return URL + str + '.jpeg'
-  }
+  const [framework] = useState(Array(10).fill(1))
 
   return (
     <View className='navswiper'>
@@ -48,7 +34,7 @@ const NavSwiper = ({ navList }) => {
       ) : (
         // 骨架
         <View className='framework'>
-          {framework.map(i => {
+          {framework.map((item, i) => {
             return (
               <View className='framework-item' key={i}>
                 <View className='framework-item-title'></View>

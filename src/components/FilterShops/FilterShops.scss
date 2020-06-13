@@ -1,0 +1,132 @@
+.filtershops {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 3;
+  .filtershops-head {
+    display: flex;
+    align-items: center;
+    color: #666666;
+    height: 80px;
+    .filtershops-head-item {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:last-child {
+        flex: none;
+        width: 150px;
+      }
+      .filtershops-xiajiantou {
+        font-size: 12px;
+      }
+      .filtershops-funnel {
+        font-size: 24px;
+      }
+
+      .title {
+      }
+    }
+  }
+
+  .filtershops-sort {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding-left: 30px;
+    border-top: 1px #f9f9f9 solid;
+    .sort-item {
+      padding: 15px 0;
+    }
+  }
+
+  .filtershops-filter {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px #f9f9f9 solid;
+    .filter-item {
+      padding: 0 20px;
+      .filter-item-title {
+        color: #666666;
+        font-size: 24px;
+        padding: 10px 0 10px 10px;
+      }
+      .filter-item-main {
+        display: flex;
+        flex-wrap: wrap;
+        .filter-item-main-item {
+          background: #fafafa;
+          display: flex;
+          flex: 0 0 30.5%;
+          margin: 5px 10px 5px 10px;
+          padding: 5px 0;
+          justify-content: center;
+          align-items: center;
+          color: #333333;
+          font-size: 26px;
+          .filter-item-main-item-icon {
+            padding: 0 8px;
+            .filter-item-main-item-icon-img {
+              width: 25px;
+              height: 25px;
+            }
+          }
+          .filter-item-main-item-name {
+          }
+        }
+        .filter-active {
+          color: #3190e8;
+          font-weight: 600;
+          background: #edf5ff;
+        }
+      }
+    }
+    .ressub {
+      display: flex;
+      height: 80px;
+      margin-top: 10px;
+      box-shadow: 0 -4px 4px 0 #ededed;
+      .ressub-reset,
+      .ressub-submit {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        height: 100%;
+      }
+      .reset-active {
+        color: #333 !important;
+      }
+      .ressub-reset {
+        color: #dddddd;
+      }
+      .ressub-submit {
+        background: #00d15f;
+        color: #fff;
+      }
+    }
+  }
+  .active {
+    color: #333333;
+    font-weight: 600;
+  }
+  .atactive {
+    color: #3190e8;
+    font-weight: 600;
+  }
+}
+
+.shade {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}

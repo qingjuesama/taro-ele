@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { reqUserAddress } from '@/src/api'
+import { reqUserAddress, reqIpAddress } from '@/src/api'
 import {
   USERADDRESS,
   SETUSERADDRESS,
@@ -9,7 +9,7 @@ import {
   REMOVETOKEN,
   CURRENTADDRESS,
 } from '../action-types'
-import { reqIpAddress } from '../../api'
+import { actionShopParams } from './filterShop'
 // 设置token
 export const setToken = token => {
   token = `Bearer ${token}`
@@ -42,7 +42,8 @@ export const initCurrentAddress = () => {
           address: recommend,
           latitude,
           longitude,
-        })
+        }),
+        actionShopParams({ offset: 0 })
       )
     }
   }
@@ -73,9 +74,8 @@ export const getUserAddressList = () => {
     const result = await reqUserAddress()
     if (result.code === 0) {
       dispatch(getUserAddressListSync(result.data))
-    } else {
-      // dispatch(getUserAddressListSync([]))
-      // dispatch(removeToken())
+    } else if (result.code === 5) {
+      dispatch(removeToken())
     }
   }
 }
