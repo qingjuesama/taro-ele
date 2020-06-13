@@ -9,6 +9,7 @@ import {
   REMOVETOKEN,
   CURRENTADDRESS,
 } from '../action-types'
+import { actionShopParams } from './filterShop'
 // 设置token
 export const setToken = token => {
   token = `Bearer ${token}`
@@ -41,7 +42,8 @@ export const initCurrentAddress = () => {
           address: recommend,
           latitude,
           longitude,
-        })
+        }),
+        actionShopParams({ offset: 0 })
       )
     }
   }

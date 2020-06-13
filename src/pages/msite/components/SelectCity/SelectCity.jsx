@@ -4,6 +4,7 @@ import { View } from '@tarojs/components'
 import classnames from 'classnames'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentAddress } from '@/src/redux/actions/user'
+import { actionShopParams } from '@/src/redux/actions/filterShop'
 import { reqCityList } from '@/src/api'
 import NavBar from '@/src/components/NavBar/NavBar'
 import SelectCitySearch from '../SelectCitySearch/SelectCitySearch'
@@ -94,13 +95,15 @@ const SelectCity = props => {
   const onSelectCity = city => {
     const { name, latitude, longitude } = city
     // 保存当前城市信息到redux
+    console.log(1)
     dispatch(
       setCurrentAddress({
         city: name,
         address: name,
         latitude,
         longitude,
-      })
+      }),
+      dispatch(actionShopParams({ offset: 0 }))
     )
     initCity()
   }

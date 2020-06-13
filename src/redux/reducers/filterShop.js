@@ -59,9 +59,6 @@ const batchFilter = (state = initBatchFilter, action) => {
 
 // 商家列表请求体参数
 const initShopParams = {
-  // 经纬度
-  latitude: '',
-  longitude: '',
   // 初始条数
   offset: 0,
   // 获取商家 数量

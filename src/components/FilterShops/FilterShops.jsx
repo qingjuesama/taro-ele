@@ -7,7 +7,7 @@ import {
   actionUpDistance,
   actionUpSales,
   actionUpFilter,
-  actionShopParams, 
+  actionShopParams,
 } from '@/src/redux/actions/filterShop'
 import { useDispatch } from 'react-redux'
 

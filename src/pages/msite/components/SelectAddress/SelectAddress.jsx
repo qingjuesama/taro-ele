@@ -5,6 +5,7 @@ import { View, ScrollView } from '@tarojs/components'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserAddressList, setCurrentAddress } from '@/src/redux/actions/user'
+import { actionShopParams } from '@/src/redux/actions/filterShop'
 import { reqAddressDetail } from '@/src/api'
 import NavBar from '@/src/components/NavBar/NavBar'
 
@@ -19,7 +20,6 @@ const SelectAddress = ({
   onSetAddressShow,
   onSetCityShow,
   onLocationCity,
-  onInitMyOffset,
 }) => {
   const dispatch = useDispatch()
   // 当前地址
@@ -82,19 +82,21 @@ const SelectAddress = ({
   // 保存选择收货地址
   const onSaveAddress = detail => {
     const { name, latitude, longitude } = detail
-    // 更新收货地址
+    //商家列表更新参数 更新收货地址
     dispatch(
+      actionShopParams({
+        offset: 0,
+      }),
       setCurrentAddress({
         address: name,
         latitude,
         longitude,
       })
     )
+
     onInitDetail()
     // 关闭选择收货地址
     onSetAddressShow(false)
-    // 初始化商品条数
-    onInitMyOffset()
   }
 
   useDidShow(() => {
@@ -118,11 +120,14 @@ const SelectAddress = ({
 
   // 用户选择地址
   const handleUserAddress = userAddress => {
-    // 关闭选择收货地址
+    // 商家列表更新参数  关闭选择收货地址
     onSetAddressShow(false)
-    dispatch(setCurrentAddress(userAddress))
-    // 初始化商品条数
-    onInitMyOffset()
+    dispatch(
+      actionShopParams({
+        offset: 0,
+      }),
+      setCurrentAddress(userAddress)
+    )
   }
 
   return (

@@ -52,7 +52,7 @@ const Msite = () => {
 
   // 用户是否登录,是否有收货地址,是否加载商家筛选条
   const isLogin = useMemo(() => {
-    return token && batchFilter.sort.length && currentAddress.latitude
+    return token && batchFilter.sort.length > 0 && currentAddress.latitude
   }, [token, batchFilter, currentAddress])
 
   // 收货地址 显示/隐藏
@@ -76,12 +76,6 @@ const Msite = () => {
       onLocationCity()
     }
   }, [onLocationCity, currentAddress])
-
-  // ip地址定位收货地址
-  useEffect(() => {
-    const { latitude, longitude } = currentAddress
-    isLogin && dispatch(actionShopParams({ latitude, longitude }))
-  }, [dispatch, currentAddress, isLogin])
 
   // 获取导航
   const getNavSwiper = useCallback(async () => {
@@ -161,24 +155,32 @@ const Msite = () => {
 
   // 获取商家列表
   const getShopList = useCallback(async () => {
-    if (isLogin && shopParams.latitude && shopParams.longitude) {
-      const result = await reqGetMsiteShopList(shopParams)
+    if (isLogin && currentAddress.latitude && currentAddress.longitude) {
+      const result = await reqGetMsiteShopList({
+        latitude: currentAddress.latitude,
+        longitude: currentAddress.longitude,
+        ...shopParams, 
+      })
       if (result.code === 0) {
         if (shopParams.offset === 0) {
           setShopList(result.data)
         } else {
-          setShopList(data => [...data, ...result.data])
+          if (result.data.length) {
+            setShopList(data => [...data, ...result.data])
+          } else {
+            Taro.showToast({ title: '没有更多了', icon: 'none' })
+          }
         }
         setBottomFlag(true)
       }
     }
-  }, [isLogin, shopParams])
+  }, [isLogin, shopParams, currentAddress])
 
   useEffect(() => {
     getShopList()
   }, [getShopList])
 
-  // 滚动到底部加载更多商家列表 
+  // 滚动到底部加载更多商家列表
   const scrolltolower = useCallback(() => {
     if (bottomFlag && isLogin) {
       dispatch(
@@ -188,9 +190,6 @@ const Msite = () => {
       setBottomFlag(false)
     }
   }, [dispatch, isLogin, bottomFlag, shopParams])
-
-  // 初始化条数
-  const setInitMyOffset = () => {}
 
   return (
     <ScrollView
@@ -231,15 +230,11 @@ const Msite = () => {
               weSetScroll={weSetScroll}
             />
             <View className='shop-list'>
-              {shopList.length > 0 &&
-                shopList.map(shop => {
-                  return (
-                    <Shop
-                      key={shop.restaurant.id}
-                      restaurant={shop.restaurant}
-                    />
-                  )
-                })}
+              {shopList.map(shop => {
+                return (
+                  <Shop key={shop.restaurant.id} restaurant={shop.restaurant} />
+                )
+              })}
 
               {/* <Loading title='加载中...' /> */}
             </View>
@@ -273,7 +268,6 @@ const Msite = () => {
           onSetAddressShow={onSetAddressShow}
           onSetCityShow={onSetCityShow}
           onLocationCity={onLocationCity}
-          onInitMyOffset={setInitMyOffset}
         />
 
         {/* 选择城市 */}

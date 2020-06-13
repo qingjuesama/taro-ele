@@ -40,7 +40,7 @@ export const actionUpSales = sales => ({ type: UPSALES, payload: sales })
 // 更新筛选条件
 export const actionUpFilter = filter => ({ type: UPFILTER, payload: filter })
 
-// 设置商家列表
+// 设置商家列表参数
 export const actionShopParams = params => ({
   type: SHOPPARAMS,
   payload: params,
