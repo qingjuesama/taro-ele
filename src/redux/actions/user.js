@@ -35,6 +35,7 @@ export const initCurrentAddress = () => {
     const result = await reqIpAddress()
     if (result.code === 0) {
       const { city, latitude, longitude, recommend } = result.data
+      dispatch(actionShopParams({ offset: 0 }))
       // 保存地址到redux
       dispatch(
         setCurrentAddress({
@@ -42,8 +43,7 @@ export const initCurrentAddress = () => {
           address: recommend,
           latitude,
           longitude,
-        }),
-        actionShopParams({ offset: 0 })
+        })
       )
     }
   }
