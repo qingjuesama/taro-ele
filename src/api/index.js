@@ -65,3 +65,11 @@ export const reqGetBatchFilter = params =>
 // 获取首页商品数据列表
 export const reqGetMsiteShopList = params =>
   ajax(BASEURL + '/getMsiteShopList', params)
+
+// 商家列表头部滑动分类数据
+export const reqGetFoodsPage = ({ latitude, longitude, entry_id }) =>
+  ajax(BASEURL + '/getFoodsPage', { latitude, longitude, entry_id })
+
+// 商家列表头部更多分类
+export const getFoodsClass = ({ latitude, longitude }) =>
+  ajax(BASEURL + '/getFoodsClass', { latitude, longitude })

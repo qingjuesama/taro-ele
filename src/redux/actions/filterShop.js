@@ -6,6 +6,7 @@ import {
   UPSALES,
   UPFILTER,
   SHOPPARAMS,
+  CATEGORIESPAGE,
 } from '../action-types'
 
 const actionGetBatchFilterSync = batchFilter => ({
@@ -44,4 +45,10 @@ export const actionUpFilter = filter => ({ type: UPFILTER, payload: filter })
 export const actionShopParams = params => ({
   type: SHOPPARAMS,
   payload: params,
+})
+
+// 当前筛选分类
+export const actionCategoriesId = name => ({
+  type: CATEGORIESPAGE,
+  payload: name,
 })

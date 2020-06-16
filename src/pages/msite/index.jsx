@@ -9,6 +9,7 @@ import { initCurrentAddress } from '@/src/redux/actions/user'
 import {
   actionGetBatchFilter,
   actionShopParams,
+  actionCategoriesId,
 } from '@/src/redux/actions/filterShop'
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import TipNull from '@/src/components/TipNull/TipNull'
@@ -77,41 +78,41 @@ const Msite = () => {
     }
   }, [onLocationCity, currentAddress])
 
-  // 获取导航
-  const getNavSwiper = useCallback(async () => {
-    const { latitude, longitude } = currentAddress
-    if (latitude && longitude) {
-      const result = await reqNavList({ latitude, longitude })
-      if (result.code === 0) {
-        setNavList(result.data)
-      } else {
-        Taro.showToast({ title: result.message, icon: 'none' })
-      }
-    }
-  }, [currentAddress])
   // 获取导航数据
   useEffect(() => {
-    getNavSwiper()
-  }, [getNavSwiper])
+    const { latitude, longitude } = currentAddress
+    if (latitude && longitude) {
+      reqNavList({ latitude, longitude }).then(res => {
+        if (res.code === 0) {
+          setNavList(res.data)
+        } else {
+          Taro.showToast({ title: res.message, icon: 'none' })
+        }
+      })
+    }
+  }, [currentAddress])
 
   // 跳转登录
   const goLogin = () => {
     Taro.redirectTo({ url: '/pages/login/index' })
   }
 
+  // 跳转商家列表
+  const goFood = navItem => {
+    dispatch(actionCategoriesId(navItem.id))
+    Taro.redirectTo({ url: '/pages/food/index' })
+  }
+
   // 获取首页筛选条数据
-  const getBatchFilter = useCallback(() => {
+  useEffect(() => {
     const { latitude, longitude } = currentAddress
     if (latitude && longitude && !batchFilter.sort.length) {
       dispatch(actionGetBatchFilter({ latitude, longitude }))
     }
   }, [dispatch, currentAddress, batchFilter])
-  useEffect(() => {
-    getBatchFilter()
-  }, [getBatchFilter])
 
   // 获取筛选据顶部距离
-  const getFilterTop = () => {
+  useEffect(() => {
     setTimeout(() => {
       const query = Taro.createSelectorQuery()
       query.select('#filtershops').boundingClientRect()
@@ -125,9 +126,6 @@ const Msite = () => {
         }
       })
     }, 0)
-  }
-  useEffect(() => {
-    getFilterTop()
   })
 
   // 设置滚动条位置,每次要不同值否则无效
@@ -154,31 +152,28 @@ const Msite = () => {
   }
 
   // 获取商家列表
-  const getShopList = useCallback(async () => {
+  useEffect(() => {
     if (isLogin && currentAddress.latitude && currentAddress.longitude) {
-      const result = await reqGetMsiteShopList({
+      reqGetMsiteShopList({
         latitude: currentAddress.latitude,
         longitude: currentAddress.longitude,
-        ...shopParams, 
-      })
-      if (result.code === 0) {
-        if (shopParams.offset === 0) {
-          setShopList(result.data)
-        } else {
-          if (result.data.length) {
-            setShopList(data => [...data, ...result.data])
+        ...shopParams,
+      }).then(res => {
+        if (res.code === 0) {
+          if (shopParams.offset === 0) {
+            setShopList(res.data)
           } else {
-            Taro.showToast({ title: '没有更多了', icon: 'none' })
+            if (res.data.length) {
+              setShopList(data => [...data, ...res.data])
+            } else {
+              Taro.showToast({ title: '没有更多了', icon: 'none' })
+            }
           }
+          setBottomFlag(true)
         }
-        setBottomFlag(true)
-      }
+      })
     }
   }, [isLogin, shopParams, currentAddress])
-
-  useEffect(() => {
-    getShopList()
-  }, [getShopList])
 
   // 滚动到底部加载更多商家列表
   const scrolltolower = useCallback(() => {
@@ -207,7 +202,7 @@ const Msite = () => {
         />
 
         {/* switch 导航 */}
-        <MsiteSwiper navList={navList} />
+        <MsiteSwiper navList={navList} onGoFood={goFood} />
 
         {/* 广告 */}
         <MsiteAdvertising

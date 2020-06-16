@@ -111,6 +111,14 @@
 					"id": -1,
 					"name": "修改密码",
 					"pathName": "pages/profile/pages/password/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商家列表",
+					"pathName": "pages/food/index",
+					"query": "target_name=美食",
 					"scene": null
 				}
 			]

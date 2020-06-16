@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/msite/index',
+    'pages/food/index',
     'pages/discover/index',
     'pages/order/index',
     'pages/profile/index',
@@ -19,6 +20,7 @@ export default {
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
+    enablePullDownRefresh: false,
   },
   permission: {
     'scope.userLocation': {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { View, Navigator, Image } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import imgUrl from '@/src/utils/imgUrl'
 
 import './NavSwiper.scss'
 
-const NavSwiper = ({ navList }) => {
+const NavSwiper = ({ navList, onGoFood }) => {
   const [framework] = useState(Array(10).fill(1))
 
   return (
@@ -16,7 +16,7 @@ const NavSwiper = ({ navList }) => {
             navList.map(navItem => {
               return (
                 <View className='navswiper-main-item' key={navItem.id}>
-                  <Navigator>
+                  <View onClick={() => onGoFood(navItem)}>
                     <View className='navswiper-main-item-image'>
                       <Image
                         className='nav-image'
@@ -26,7 +26,7 @@ const NavSwiper = ({ navList }) => {
                     <View className='navswiper-main-item-title'>
                       {navItem.name}
                     </View>
-                  </Navigator>
+                  </View>
                 </View>
               )
             })}

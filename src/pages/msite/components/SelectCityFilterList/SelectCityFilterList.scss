@@ -2,6 +2,7 @@
 .result-city {
   margin-left: 20px;
   height: 100vh;
+  -webkit-overflow-scrolling: touch; //ios不流畅问题
   .result-city-item {
     padding: 25px 0;
     border-bottom: 1px #eee solid;

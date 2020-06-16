@@ -135,8 +135,8 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
     const expenditure = myFilter.expenditure.main.find(item => item.active)
     const filterParams = {
       serves,
-      activity: activity.value,
-      expenditure: expenditure.value,
+      activity: activity.value ? activity.value : '',
+      expenditure: expenditure.value ? expenditure.value : '',
       offset: 0,
     }
     dispatch(actionShopParams(filterParams))

@@ -6,6 +6,7 @@
 // }
 .msite {
   height: 100vh;
+  -webkit-overflow-scrolling: touch; //ios不流畅问题
   .msite-main {
     margin-bottom: 130px;
     .list-title {
