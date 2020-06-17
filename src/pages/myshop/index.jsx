@@ -13,12 +13,12 @@ const Shop = () => {
     })
   }, [])
   return (
-    <View className='ele-shop'>
-      {/* <View className='ele-shop-top'>
-        <View className='ele-shop-top-bg'></View>
-        <View className='ele-shop-top-main'>12</View>
+    <View className='myshop'>
+      <View className='myshop-top'>
+        <View className='myshop-top-bg'></View>
+        <View className='myshop-top-main'>12</View>
       </View>
-      <View className='ele-shop-content'></View> */}
+      <View className='myshop-content'></View>
     </View>
   )
 }
