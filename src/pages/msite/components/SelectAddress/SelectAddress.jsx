@@ -20,6 +20,7 @@ const SelectAddress = ({
   onSetAddressShow,
   onSetCityShow,
   onLocationCity,
+  onRemoveOffset,
 }) => {
   const dispatch = useDispatch()
   // 当前地址
@@ -83,10 +84,8 @@ const SelectAddress = ({
   const onSaveAddress = detail => {
     const { name, latitude, longitude } = detail
     //商家列表更新参数 更新收货地址
+    onRemoveOffset()
     dispatch(
-      actionShopParams({
-        offset: 0,
-      }),
       setCurrentAddress({
         address: name,
         latitude,
@@ -122,12 +121,8 @@ const SelectAddress = ({
   const handleUserAddress = userAddress => {
     // 商家列表更新参数  关闭选择收货地址
     onSetAddressShow(false)
-    dispatch(
-      actionShopParams({
-        offset: 0,
-      }),
-      setCurrentAddress(userAddress)
-    )
+    onRemoveOffset()
+    dispatch(setCurrentAddress(userAddress))
   }
 
   return (
@@ -151,23 +146,23 @@ const SelectAddress = ({
 
       {/* 选择城市,搜索地址 */}
       <SelectAddressSearch
+        currentAddress={currentAddress}
+        searchValue={searchValue}
         onOpenCity={onOpenCity}
         onSearchValue={onSearchValue}
         onInitDetail={onInitDetail}
-        currentAddress={currentAddress}
-        searchValue={searchValue}
       />
 
       {/* 搜索地址 */}
       <SelectAddressResult
-        onSaveAddress={onSaveAddress}
         detailList={detailList}
+        onSaveAddress={onSaveAddress}
       />
 
       {/* 当前地址 */}
       <SelectAddressAtAddress
-        onLocationCity={onLocationCity}
         atAddress={atAddress}
+        onLocationCity={onLocationCity}
       />
 
       {/* 收货地址 */}

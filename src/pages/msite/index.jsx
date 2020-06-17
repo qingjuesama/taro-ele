@@ -46,6 +46,8 @@ const Msite = () => {
   // 初始化 商家top值
   const [initTop, setInitTop] = useState(0)
   const [top, setTop] = useState(0)
+  // 请求条初始区间 + linmit
+  const [offset, setOffset] = useState(0)
   // 滚动/禁止滚动
   const [weiScroll, setWeiScroll] = useState(true)
   // 节流
@@ -67,6 +69,7 @@ const Msite = () => {
 
   // 获取城市 经纬度及城市
   const onLocationCity = useCallback(() => {
+    removeOffset()
     dispatch(initCurrentAddress())
   }, [dispatch])
 
@@ -130,11 +133,11 @@ const Msite = () => {
 
   // 设置滚动条位置,每次要不同值否则无效
   const onFilterTop = () => {
-    const myInitTop = initTop - 1
+    const myInitTop = initTop - 0.1
     if (initTop === top) {
       setTop(myInitTop)
     } else {
-      setTop(myInitTop + 1)
+      setTop(myInitTop + 0.1)
     }
   }
 
@@ -151,16 +154,22 @@ const Msite = () => {
     setWeiScroll(flag)
   }
 
+  // 清空offset
+  const removeOffset = () => {
+    setOffset(0)
+  }
+
   // 获取商家列表
   useEffect(() => {
-    if (isLogin && currentAddress.latitude && currentAddress.longitude) {
+    if (isLogin) {
       reqGetMsiteShopList({
         latitude: currentAddress.latitude,
         longitude: currentAddress.longitude,
         ...shopParams,
+        offset,
       }).then(res => {
         if (res.code === 0) {
-          if (shopParams.offset === 0) {
+          if (offset === 0) {
             setShopList(res.data)
           } else {
             if (res.data.length) {
@@ -173,18 +182,17 @@ const Msite = () => {
         }
       })
     }
-  }, [isLogin, shopParams, currentAddress])
+  }, [isLogin, shopParams, currentAddress, offset])
 
   // 滚动到底部加载更多商家列表
   const scrolltolower = useCallback(() => {
     if (bottomFlag && isLogin) {
-      dispatch(
-        // 0 8 16 24 32 40
-        actionShopParams({ offset: shopParams.offset + shopParams.limit })
-      )
+      setOffset(num => {
+        return num + shopParams.limit
+      })
       setBottomFlag(false)
     }
-  }, [dispatch, isLogin, bottomFlag, shopParams])
+  }, [isLogin, bottomFlag, shopParams])
 
   return (
     <ScrollView
@@ -223,6 +231,7 @@ const Msite = () => {
               batchFilter={batchFilter}
               onFilterTop={onFilterTop}
               weSetScroll={weSetScroll}
+              onRemoveOffset={removeOffset}
             />
             <View className='shop-list'>
               {shopList.map(shop => {
@@ -263,10 +272,15 @@ const Msite = () => {
           onSetAddressShow={onSetAddressShow}
           onSetCityShow={onSetCityShow}
           onLocationCity={onLocationCity}
+          onRemoveOffset={removeOffset}
         />
 
         {/* 选择城市 */}
-        <MsiteSelectCity cityShow={cityShow} onSetCityShow={onSetCityShow} />
+        <MsiteSelectCity
+          cityShow={cityShow}
+          onSetCityShow={onSetCityShow}
+          onRemoveOffset={removeOffset}
+        />
 
         {/* 底部bar */}
         <FooterBar />

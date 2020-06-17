@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import classnames from 'classnames'
 import { View, Text, Image } from '@tarojs/components'
 import imgUrl from '@/src/utils/imgUrl'
@@ -13,7 +13,10 @@ import { useDispatch } from 'react-redux'
 
 import './FilterShops.scss'
 
-const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
+const FilterShops = (
+  { batchFilter, onFilterTop, weSetScroll, onRemoveOffset },
+  ref
+) => {
   const { nav, sort, filter } = batchFilter
   const [myFilter, setMyFilter] = useState(() => {
     // 深拷贝
@@ -38,19 +41,22 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
   const handleSortItem = item => {
     // 增加选中状态
     item.active = true
+    onRemoveOffset()
     dispatch(actionUpNavSort(item))
     handleClear()
-    dispatch(actionShopParams({ sort: item.value, offset: 0 }))
+    dispatch(actionShopParams({ sort: item.value }))
   }
 
   // 选中/取消 距离最近
   const handleDistance = () => {
     if (nav.distance.active) {
+      onRemoveOffset()
       dispatch(actionUpDistance({ ...nav.distance, active: false }))
-      dispatch(actionShopParams({ distance: '', offset: 0 }))
+      dispatch(actionShopParams({ distance: '' }))
     } else {
+      onRemoveOffset()
       dispatch(actionUpDistance({ ...nav.distance, active: true }))
-      dispatch(actionShopParams({ distance: nav.distance.value, offset: 0 }))
+      dispatch(actionShopParams({ distance: nav.distance.value }))
     }
     handleClear()
   }
@@ -58,11 +64,13 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
   // 选中/取消 销量最高
   const handleSales = () => {
     if (nav.sales.active) {
+      onRemoveOffset()
       dispatch(actionUpSales({ ...nav.sales, active: false }))
-      dispatch(actionShopParams({ sales: '', offset: 0 }))
+      dispatch(actionShopParams({ sales: '' }))
     } else {
+      onRemoveOffset()
       dispatch(actionUpSales({ ...nav.sales, active: true }))
-      dispatch(actionShopParams({ sales: nav.sales.value, offset: 0 }))
+      dispatch(actionShopParams({ sales: nav.sales.value }))
     }
     handleClear()
   }
@@ -106,6 +114,13 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
     weSetScroll(true)
   }
 
+  // 往父级暴露
+  useImperativeHandle(ref, () => ({
+    onClear: () => {
+      handleClear()
+    },
+  }))
+
   // 筛选是否有被选中的的都选项
   const isFilterActive = atFilter => {
     const newList = [
@@ -119,6 +134,7 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
 
   // 提交筛选
   const filterSubmit = () => {
+    onRemoveOffset()
     dispatch(actionUpFilter(myFilter))
     handleClear()
 
@@ -135,8 +151,8 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
     const expenditure = myFilter.expenditure.main.find(item => item.active)
     const filterParams = {
       serves,
-      activity: activity.value ? activity.value : '',
-      expenditure: expenditure.value ? expenditure.value : '',
+      activity: activity ? activity.value : '',
+      expenditure: expenditure ? expenditure.value : '',
       offset: 0,
     }
     dispatch(actionShopParams(filterParams))
@@ -336,4 +352,4 @@ const FilterShops = ({ batchFilter, onFilterTop, weSetScroll }) => {
   )
 }
 
-export default FilterShops
+export default forwardRef(FilterShops)

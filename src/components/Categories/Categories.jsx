@@ -14,6 +14,8 @@ const Categories = ({
   onfoodPage,
   onSetFoodsPage,
   categoriesId,
+  onFilterClear,
+  onRemoveOffset,
 }) => {
   // 选中的Class分类
   const [activeClass, setActiveClass] = useState({})
@@ -40,23 +42,24 @@ const Categories = ({
   // 打开关闭更多分类
   const openClass = () => {
     setIsShow(flag => !flag)
+    onFilterClear()
   }
 
   // 选中右侧分类更新头部快捷导航及选中项
   const upFoodsPage = (list, item) => {
+    onRemoveOffset()
     onfoodPage(item)
     onSetFoodsPage(list, item)
     openClass()
     setTest('categorie' + item.id)
   }
 
-  // 选中头部分类导航
+  // 选中头部page分类导航
   const activeFood = categorie => {
+    onRemoveOffset()
     onfoodPage(categorie)
     setTest('categorie' + categorie.id)
   }
-
-
 
   return (
     <View className='categories'>

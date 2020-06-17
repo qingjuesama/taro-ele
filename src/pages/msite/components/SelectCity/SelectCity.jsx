@@ -15,7 +15,7 @@ import SelectCityFilterList from '../SelectCityFilterList/SelectCityFilterList'
 import './SelectCity.scss'
 
 const SelectCity = props => {
-  const { cityShow, onSetCityShow } = props
+  const { cityShow, onSetCityShow, onRemoveOffset } = props
   const currentAddress = useSelector(state => state.currentAddress)
   const dispatch = useDispatch()
   // 城市列表数据
@@ -94,16 +94,15 @@ const SelectCity = props => {
   // 选择城市
   const onSelectCity = city => {
     const { name, latitude, longitude } = city
+    onRemoveOffset()
     // 保存当前城市信息到redux
-    console.log(1)
     dispatch(
       setCurrentAddress({
         city: name,
         address: name,
         latitude,
         longitude,
-      }),
-      dispatch(actionShopParams({ offset: 0 }))
+      })
     )
     initCity()
   }

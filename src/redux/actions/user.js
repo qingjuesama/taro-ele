@@ -9,7 +9,6 @@ import {
   REMOVETOKEN,
   CURRENTADDRESS,
 } from '../action-types'
-import { actionShopParams } from './filterShop'
 // 设置token
 export const setToken = token => {
   token = `Bearer ${token}`
@@ -35,7 +34,6 @@ export const initCurrentAddress = () => {
     const result = await reqIpAddress()
     if (result.code === 0) {
       const { city, latitude, longitude, recommend } = result.data
-      dispatch(actionShopParams({ offset: 0 }))
       // 保存地址到redux
       dispatch(
         setCurrentAddress({
