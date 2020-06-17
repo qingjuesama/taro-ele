@@ -7,9 +7,9 @@ import './Loading.scss'
 const Loading = ({ title }) => {
   return (
     <View className='loading'> 
-      <View className='loading-rotate'>
+      {/* <View className='loading-rotate'>
         <Text className='icon icon-jiazai loading-rotate-icon'></Text>
-      </View>
+      </View> */}
       <View>{title}</View>
     </View>
   )

@@ -8,6 +8,7 @@ import { actionGetBatchFilter } from '@/src/redux/actions/filterShop'
 import Categories from '@/src/components/Categories/Categories'
 import FilterShops from '@/src/components/FilterShops/FilterShops'
 import Shop from '@/src/components/Shop/Shop'
+import Loading from '@/src/components/Loading/Loading'
 
 import './index.scss'
 
@@ -39,6 +40,8 @@ const Food = () => {
   const clearRef = useRef()
   // 复位距离
   const [scTop, setscTop] = useState(0)
+  // 是否还有更多
+  const [isMore, setIsMore] = useState(true)
 
   // 用户是否登录,是否有收货地址,是否加载商家筛选条
   const isLogin = useMemo(() => {
@@ -78,7 +81,7 @@ const Food = () => {
 
   // 获取商家列表
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && isMore) {
       reqGetMsiteShopList({
         latitude: currentAddress.latitude,
         longitude: currentAddress.longitude,
@@ -93,14 +96,15 @@ const Food = () => {
             if (res.data.length) {
               setShopList(data => [...data, ...res.data])
             } else {
-              Taro.showToast({ title: '没有更多了', icon: 'none' })
+              // Taro.showToast({ title: '没有更多了', icon: 'none' })
+              setIsMore(false)
             }
           }
           setBottomFlag(true)
         }
       })
     }
-  }, [isLogin, shopParams, currentAddress, offset, activeFoodPage])
+  }, [isLogin, shopParams, currentAddress, offset, activeFoodPage, isMore])
 
   // 滚动到底部加载更多商家列表
   const scrolltolower = useCallback(() => {
@@ -115,6 +119,7 @@ const Food = () => {
   // 清空offset
   const removeOffset = () => {
     setOffset(0)
+    setIsMore(true)
     setscTop(num => {
       if (num === 0) {
         return 0.1
@@ -184,7 +189,9 @@ const Food = () => {
         {shopList.map(shop => {
           return <Shop key={shop.restaurant.id} restaurant={shop.restaurant} />
         })}
+        {!isMore && <Loading title='没有更多了...'></Loading>}
       </ScrollView>
+      
     </View>
   )
 }

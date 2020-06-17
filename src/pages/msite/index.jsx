@@ -14,6 +14,7 @@ import {
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import TipNull from '@/src/components/TipNull/TipNull'
 import Shop from '@/src/components/Shop/Shop'
+import Loading from '@/src/components/Loading/Loading'
 
 import FilterShops from '@/src/components/FilterShops/FilterShops'
 import MsiteHeader from './components/Header/Header'
@@ -52,6 +53,8 @@ const Msite = () => {
   const [weiScroll, setWeiScroll] = useState(true)
   // 节流
   const [bottomFlag, setBottomFlag] = useState(false)
+  // 是否有更多商家
+  const [isMore, setIsMore] = useState(true)
 
   // 用户是否登录,是否有收货地址,是否加载商家筛选条
   const isLogin = useMemo(() => {
@@ -157,11 +160,12 @@ const Msite = () => {
   // 清空offset
   const removeOffset = () => {
     setOffset(0)
+    setIsMore(true)
   }
 
   // 获取商家列表
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && isMore) {
       reqGetMsiteShopList({
         latitude: currentAddress.latitude,
         longitude: currentAddress.longitude,
@@ -175,24 +179,25 @@ const Msite = () => {
             if (res.data.length) {
               setShopList(data => [...data, ...res.data])
             } else {
-              Taro.showToast({ title: '没有更多了', icon: 'none' })
+              // Taro.showToast({ title: '没有更多了', icon: 'none' })
+              setIsMore(false)
             }
           }
           setBottomFlag(true)
         }
       })
     }
-  }, [isLogin, shopParams, currentAddress, offset])
+  }, [isLogin, shopParams, currentAddress, offset, isMore])
 
   // 滚动到底部加载更多商家列表
   const scrolltolower = useCallback(() => {
-    if (bottomFlag && isLogin) {
+    if (bottomFlag && isLogin && isMore) {
       setOffset(num => {
         return num + shopParams.limit
       })
       setBottomFlag(false)
     }
-  }, [isLogin, bottomFlag, shopParams])
+  }, [isLogin, bottomFlag, shopParams, isMore])
 
   return (
     <ScrollView
@@ -240,7 +245,7 @@ const Msite = () => {
                 )
               })}
 
-              {/* <Loading title='加载中...' /> */}
+              {!isMore && <Loading title='没有更多了...' />}
             </View>
           </>
         )}
