@@ -1,4 +1,5 @@
 // 商家卡片展示
+import Taro from '@tarojs/taro'
 import React, { useState, useCallback, useMemo } from 'react'
 import { View, Image, Text } from '@tarojs/components'
 import classnames from 'classnames'
@@ -42,8 +43,13 @@ const Shop = ({ restaurant }) => {
     return (restaurant.rating / 5) * 100 + '%'
   }, [restaurant])
 
+  // 跳转商家详情
+  const goShop = () => {
+    Taro.navigateTo({ url: '/pages/shop/index' })
+  }
+
   return (
-    <View className='shop'>
+    <View className='shop' onClick={goShop}>
       <View className='shop-left'>
         <Image src={imgUrl(restaurant.image_path)} className='shop-left-img' />
       </View>

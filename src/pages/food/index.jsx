@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { View, ScrollView } from '@tarojs/components'
-import { getFoodsClass, reqGetFoodsPage, reqGetMsiteShopList } from '@/src/api'
+import { reqGetFoodsClass, reqGetFoodsPage, reqGetMsiteShopList } from '@/src/api'
 import { actionGetBatchFilter } from '@/src/redux/actions/filterShop'
 
 import Categories from '@/src/components/Categories/Categories'
@@ -60,7 +60,7 @@ const Food = () => {
       }
     )
 
-    getFoodsClass({ latitude, longitude }).then(res => {
+   reqGetFoodsClass({ latitude, longitude }).then(res => {
       if (res.code === 0) {
         const newData = res.data.filter(item => item.id)
         setFoodsClass(newData)

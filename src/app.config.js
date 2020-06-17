@@ -2,6 +2,7 @@ export default {
   pages: [
     'pages/msite/index',
     'pages/food/index',
+    'pages/myshop/index',
     'pages/discover/index',
     'pages/order/index',
     'pages/profile/index',

@@ -71,5 +71,8 @@ export const reqGetFoodsPage = ({ latitude, longitude, entry_id }) =>
   ajax(BASEURL + '/getFoodsPage', { latitude, longitude, entry_id })
 
 // 商家列表头部更多分类
-export const getFoodsClass = ({ latitude, longitude }) =>
+export const reqGetFoodsClass = ({ latitude, longitude }) =>
   ajax(BASEURL + '/getFoodsClass', { latitude, longitude })
+
+// 获取商家详情信息
+export const reqGetShop = () => ajax(BASEURL + '/getShop')
