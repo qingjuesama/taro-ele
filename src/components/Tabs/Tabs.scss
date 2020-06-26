@@ -1,0 +1,25 @@
+.tabs {
+  .tabs-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+    border-bottom: 1px #f5f5f5 solid;
+    display: flex;
+    .tabs-bar-item {
+      width: 33.33%;
+      text-align: center;
+      padding: 15px 0;
+      .tabs-bar-item-title {
+        color: #666;
+        font-size: 30px;
+      }
+      .tabs-active {
+        font-weight: 600;
+        border-bottom: 4px #2291f8 solid;
+        color: #333 !important;
+        padding-bottom: 15px;
+      }
+    }
+  }
+}

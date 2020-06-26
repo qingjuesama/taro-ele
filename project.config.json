@@ -120,6 +120,12 @@
 					"pathName": "pages/food/index",
 					"query": "target_name=美食",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商家详情",
+					"pathName": "pages/myshop/index",
+					"scene": null
 				}
 			]
 		}

@@ -13,3 +13,4 @@ export const UPSALES = 'UPSALES' // 更新销量最高
 export const UPFILTER = 'UPFILTER' // 更新筛选条件
 export const SHOPPARAMS = 'SHOPPARAMS' // 设置商家列表请求参数
 export const CATEGORIESPAGE = 'CATEGORIESPAGE' // 设置商家列表当前分类
+export const ADDCART = 'ADDCART' // 增加购物车商品

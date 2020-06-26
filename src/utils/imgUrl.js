@@ -1,7 +1,7 @@
 // 处理图片地址
 export default url => {
   const BASEURL = 'https://cube.elemecdn.com/'
-  let types = ['jpeg', 'png', 'gif']
+  let types = ['jpeg', 'jpg', 'png', 'gif']
   let str = ''
   let type = ''
 

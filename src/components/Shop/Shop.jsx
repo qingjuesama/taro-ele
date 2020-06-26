@@ -45,7 +45,7 @@ const Shop = ({ restaurant }) => {
 
   // 跳转商家详情
   const goShop = () => {
-    Taro.navigateTo({ url: '/pages/shop/index' })
+    Taro.navigateTo({ url: '/pages/myshop/index' })
   }
 
   return (

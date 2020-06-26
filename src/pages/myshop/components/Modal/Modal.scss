@@ -1,0 +1,100 @@
+.myshop-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 6;
+  .myshop-modal-main {
+    background: #fff;
+    width: 80%;
+    border-radius: 10px;
+    .myshop-modal-main-title {
+      font-size: 41px;
+      font-weight: 600;
+      text-align: center;
+      padding: 20px 50px;
+      .myshop-modal-main-title-tag {
+        width: 70px;
+        font-weight: 600;
+        font-size: 24px;
+        background-image: linear-gradient(90deg, #fff100, #ffe339);
+        color: #6a3709;
+        padding: 0 4px;
+        margin-right: 15px;
+      }
+    }
+
+    .myshop-modal-main-ul {
+      display: flex;
+      .myshop-modal-main-ul-li {
+        width: 20%;
+        text-align: center;
+        .myshop-modal-main-ul-li-title {
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .myshop-modal-main-ul-li-tag {
+          color: #bdbdbd;
+          font-size: 24px;
+        }
+      }
+    }
+
+    .myshop-modal-main-gongao {
+      .myshop-modal-main-gongao-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        padding: 20px 0;
+        font-size: 26px;
+        &::after,
+        &::before {
+          content: '';
+          display: block;
+          width: 40px;
+          height: 4px;
+          background-image: linear-gradient(
+            90deg,
+            #fff,
+            rgb(199, 199, 199) 50%,
+            #fff
+          );
+        }
+        &::after {
+          margin-left: 10px;
+        }
+        &::before {
+          margin-right: 10px;
+        }
+      }
+
+      .myshop-modal-main-gongao-content {
+        color: #333;
+        padding: 0 40px 40px 40px;
+      }
+    }
+  }
+
+  .myshop-modal-clear {
+    width: 80px;
+    height: 80px;
+    font-size: 60px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    opacity: 0.5;
+  }
+
+  .myshop-modal-bg {
+  }
+}

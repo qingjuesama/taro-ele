@@ -1,2 +1,209 @@
+.default-shop-img {
+  width: 100%;
+  height: 100%;
+}
 .myshop {
+  height: 100vh;
+  .myshop-top {
+    .myshop-top-bg {
+      position: relative;
+      height: 200px;
+      background-size: 100% 100% !important;
+      background-repeat: no-repeat !important;
+      .icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px 0 0 20px;
+        width: 60px;
+        height: 60px;
+        color: #FFFFFF;
+        font-weight: 600;
+        font-size: 30px;
+      }
+    }
+
+    .myshop-top-main {
+      position: relative;
+      padding-top: 50px;
+
+      .myshop-logo {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        overflow: hidden;
+        margin-top: -120px;
+        border-radius: 6px;
+        transform: translateX(-50%);
+
+        .myshop-logo-pinpai {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 1;
+          padding: 0 5px;
+          background-image: linear-gradient(90deg, #FFF100, #FFE339);
+          color: #6F3F15;
+          font-size: 22px;
+        }
+
+        .myshop-logo-img {
+          width: 150px;
+          height: 150px;
+          box-shadow: 0 0 4px 0 rgba(0, 0, 0, .2);
+        }
+      }
+
+      .myshop-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        width: 72vw;
+        color: #333333;
+        font-weight: 600;
+
+        .myshop-name-title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 41px;
+        }
+        .icon {
+          font-size: 24px;
+        }
+      }
+
+      .myshop-pingjia {
+        display: flex;
+        justify-content: center;
+        padding: 5px 0;
+        color: #666666;
+
+        .myshop-pingjia-item {
+          font-size: 24px;
+        }
+        .myshop-pingjia-item-c {
+          padding: 0 20px;
+        }
+      }
+
+      .myshop-tags {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 80px;
+
+        .myshop-tags-left {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          .myshop-tags-left-tag {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 0 10px;
+            border: 1px #FFE4E0 solid;
+            color: #FF4B33;
+            font-size: 24px;
+          }
+        }
+        .myshop-tags-right {
+          display: flex;
+          align-items: center;
+          width: 150px;
+          color: #999999;
+
+          .myshop-tags-right-title {
+            font-size: 24px;
+          }
+          .icon {
+            font-size: 18px;
+          }
+        }
+      }
+
+      .myshop-notice {
+        display: flex;
+        margin: 0 80px;
+        padding-top: 10px;
+
+        .myshop-notice-content {
+          overflow: hidden;
+          color: #999999;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
+  .myshop-content {
+    margin-top: 30px;
+    .myshop-order {
+      .myshop-order-banner {
+        margin: 20px 0;
+        padding: 0 32px;
+        height: auto;
+
+        .myshop-order-banner-img {
+          width: 100%;
+          height: 170px;
+          border-radius: 5px;
+        }
+      }
+
+      .myshop-order-recommend {
+        margin-bottom: 30px;
+        margin-left: 32px;
+
+        .myshop-order-recommend-title {
+          margin-right: 32px;
+          color: #333333;
+          font-weight: 600;
+          font-size: 32px;
+        }
+
+        .myshop-order-recommend-main {
+          -webkit-overflow-scrolling: touch; //ios不流畅问题
+
+          margin-top: 20px;
+          white-space: nowrap;
+        }
+      }
+
+      .myshop-order-main {
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 100px;
+        height: calc(100vh - 80px - 100px);
+
+        .myshop-order-main-left {
+          width: 220px;
+          height: 100%;
+        }
+        .myshop-order-main-right {
+          margin-left: 20px;
+          height: 100%;
+
+          .myshop-order-main-right-block {
+            .myshop-order-main-right-title {
+              display: flex;
+              padding: 10px 0;
+              .myshop-order-main-right-name {
+                color: #666666;
+                font-weight: 600;
+                font-size: 24px;
+              }
+              .myshop-order-main-right-des {
+                padding-left: 10px;
+                color: #666666;
+                font-size: 24px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

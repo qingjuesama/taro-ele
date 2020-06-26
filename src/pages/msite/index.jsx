@@ -13,10 +13,10 @@ import {
 } from '@/src/redux/actions/filterShop'
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import TipNull from '@/src/components/TipNull/TipNull'
+import FilterShops from '@/src/components/FilterShops/FilterShops'
 import Shop from '@/src/components/Shop/Shop'
 import Loading from '@/src/components/Loading/Loading'
 
-import FilterShops from '@/src/components/FilterShops/FilterShops'
 import MsiteHeader from './components/Header/Header'
 import MsiteSelectAddress from './components/SelectAddress/SelectAddress'
 import MsiteSelectCity from './components/SelectCity/SelectCity'
