@@ -5,12 +5,17 @@ import classnames from 'classnames'
 
 import './LeftBar.scss'
 
-const LeftBar = ({ good, isActive, onActive }) => {
+const LeftBar = ({ good, isActive, onActive, classCount }) => {
   const icon = useMemo(() => {
     if (good.icon_url) {
-      return <Image className='leftbar-icon' src={imgUrl(good.icon_url)} />
+      return (
+        <Image
+          className='leftbar-icon'
+          src={isActive ? imgUrl(good.icon_url) : imgUrl(good.grey_icon_url)}
+        />
+      )
     }
-  }, [good])
+  }, [good, isActive])
   return (
     <View
       className={classnames('leftbar', {
@@ -20,7 +25,7 @@ const LeftBar = ({ good, isActive, onActive }) => {
     >
       {icon}
       <View className='leftbar-name'>{good.name}</View>
-      <View className='leftbar-num'>0</View>
+      {classCount > 0 && <View className='leftbar-num'>{classCount}</View>}
     </View>
   )
 }

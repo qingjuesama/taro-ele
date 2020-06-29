@@ -1,6 +1,14 @@
 import Taro from '@tarojs/taro'
-import React, { useEffect, useState, useRef } from 'react'
-import { View, Image, Text, ScrollView } from '@tarojs/components'
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
+} from 'react'
+import { View, Image, Text, ScrollView, Button } from '@tarojs/components'
+import { Transition } from 'react-spring/renderprops'
 import { reqGetShop } from '@/src/api'
 import imgUrl from '@/src/utils/imgUrl'
 import Tabs from '@/src/components/Tabs/Tabs'
@@ -18,7 +26,7 @@ const MyShop = () => {
   const [goods, setGoods] = useState([])
   // 商家信息
   const [shopInfo, setShopInfo] = useState({})
-  // 推荐信息
+  // 推荐商品
   const [recommend, setRecommend] = useState([])
   // 加载完毕
   const [isOk, setIsOk] = useState(false)
@@ -42,6 +50,11 @@ const MyShop = () => {
   ])
   const [rightScrollArr, setRightScrollArr] = useState([])
   const [rightTop, setRightTop] = useState(0)
+  const [leftIndex, setLeftIndex] = useState(0)
+  const [cartInfo, setCartInfo] = useState({
+    foods: [],
+  })
+
   // 发送请求获取商家信息
   useEffect(() => {
     reqGetShop().then(res => {
@@ -50,6 +63,7 @@ const MyShop = () => {
         setShopInfo(res.data.rst)
         setRecommend(res.data.recommend[0])
         setIsOk(true)
+        initRightScrollTop()
       } else {
         Taro.redirectTo({ url: '/pages/msite/index' })
       }
@@ -62,41 +76,116 @@ const MyShop = () => {
   }
 
   // 获取筛选据顶部距离
-  const onScroll = () => {
-    clearTimeout(flagRef.current)
-    flagRef.current = setTimeout(() => {
-      if (scrollNum === 999) {
-        setScrollNum(999.1)
-      } else {
+  const onScroll = useCallback(
+    e => {
+      if (scrollNum === 0) {
         setScrollNum(999)
       }
-    }, 100)
-  }
+
+      const atScroll = e.detail.scrollTop
+      const atIndex = rightScrollArr.findIndex((item, index, arr) => {
+        return atScroll >= item && atScroll < arr[index + 1]
+      })
+      setLeftIndex(atIndex)
+    },
+    [scrollNum, rightScrollArr]
+  )
 
   // 左侧选中 右侧滚动
   const setRightScroll = i => {
     setRightTop(rightScrollArr[i])
   }
 
-  useEffect(() => {
+  // 初始化 右侧商品Top值
+  const initRightScrollTop = () => {
     setTimeout(() => {
       const query = Taro.createSelectorQuery()
       query.selectAll('.myshop-order-main-right-block').boundingClientRect()
       query.selectViewport().scrollOffset()
       query.exec(res => {
-        const initTop = res[0][0].top
-        const newRes = res[0].map(item => item.top - initTop)
-        setRightScrollArr(newRes)
+        if (res[0][0]) {
+          const initTop = res[0][0].top
+          const newRes = res[0].map(item => Math.ceil(item.top - initTop))
+          setRightScrollArr(newRes)
+        }
       })
-    }, 500)
-  }, [])
+    }, 0)
+  }
+
+  // 推荐增加
+  const goodAdd = good => {
+    setCartInfo(data => {
+      // 初始
+      if (good.count >= 1) {
+        data.foods.some(item => {
+          if (item.vfood_id === good.vfood_id) {
+            item.count++
+          }
+        })
+      } else {
+        good.count = 1
+        data.foods.push(good)
+      }
+      return { ...data }
+    })
+  }
+  // 推荐减少
+  const goodDec = good => {
+    setCartInfo(data => {
+      if (good.count > 1) {
+        data.foods.some(item => {
+          if (item.vfood_id === good.vfood_id) {
+            item.count--
+          }
+        })
+      } else {
+        // 删除商品
+        good.count = 0
+        const index = data.foods.findIndex(
+          item => item.vfood_id === good.vfood_id
+        )
+        data.foods.splice(index, 1)
+      }
+      return { ...data }
+    })
+  }
+
+  // 单个商品购买数量
+  const count = useCallback(
+    good => {
+      const newCount = cartInfo.foods.find(
+        mygood => mygood.vfood_id === good.vfood_id
+      )
+      if (newCount) {
+        return newCount.count
+      }
+      return 0
+    },
+    [cartInfo]
+  )
+
+  // 左侧分类数量
+  const classCount = useCallback(
+    good => {
+      let result = 0
+      cartInfo.foods.forEach(item => {
+        good.foods.forEach(citem => {
+          if (item.vfood_id === citem.vfood_id) {
+            result += item.count
+          }
+        }, 0)
+      })
+      return result
+    },
+    [cartInfo]
+  )
 
   if (!isOk) {
     return <Image className='default-shop-img' src={defaultShopImg} />
   }
 
   return (
-    <View scrollY scrollTop={scrollNum} className='myshop'>
+    <ScrollView scrollY scrollTop={scrollNum} className='myshop'>
       {/* {console.log(scrollNum)} */}
       {/* {console.log(shopInfo)} */}
       {/* {console.log(goods)} */}
@@ -175,7 +264,15 @@ const MyShop = () => {
               </View>
               <ScrollView scrollX className='myshop-order-recommend-main'>
                 {recommend.items.map(item => {
-                  return <Recommend key={item.item_id} recData={item} />
+                  return (
+                    <Recommend
+                      key={item.item_id}
+                      recData={item}
+                      onRecAdd={goodAdd}
+                      onRecDec={goodDec}
+                      count={count(item)}
+                    />
+                  )
                 })}
               </ScrollView>
             </View>
@@ -191,8 +288,9 @@ const MyShop = () => {
                     <LeftBar
                       key={good.id}
                       good={good}
-                      isActive={i === 2}
+                      isActive={i === leftIndex}
                       onActive={() => setRightScroll(i)}
+                      classCount={classCount(good)}
                     />
                   )
                 })}
@@ -200,7 +298,7 @@ const MyShop = () => {
 
               <ScrollView
                 scrollY
-                // onScroll={onScroll}
+                onScroll={onScroll}
                 scrollTop={rightTop}
                 className='myshop-order-main-right'
               >
@@ -209,7 +307,6 @@ const MyShop = () => {
                     <View
                       className='myshop-order-main-right-block'
                       key={good.id}
-                      id={'right' + good.id}
                     >
                       <View className='myshop-order-main-right-title'>
                         <View className='myshop-order-main-right-name'>
@@ -221,7 +318,13 @@ const MyShop = () => {
                       </View>
 
                       {good.foods.map(food => (
-                        <ShopItem key={food.item_id} food={food} />
+                        <ShopItem
+                          key={food.item_id}
+                          food={food}
+                          count={count(food)}
+                          onAdd={goodAdd}
+                          onDec={goodDec}
+                        />
                       ))}
                     </View>
                   )
@@ -235,8 +338,8 @@ const MyShop = () => {
       </View>
 
       {/* 购物车 */}
-      {/* <Cart /> */}
-    </View>
+      <Cart />
+    </ScrollView>
   )
 }
 

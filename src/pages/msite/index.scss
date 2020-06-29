@@ -6,27 +6,28 @@
 // }
 .msite {
   height: 100vh;
+
   -webkit-overflow-scrolling: touch; //ios不流畅问题
   .msite-main {
     margin-bottom: 130px;
     .list-title {
-      padding: 30px 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      padding: 30px 0;
       &::before {
         content: '';
         width: 50px;
         height: 2px;
-        background: #999;
         margin-right: 30px;
+        background: #999;
       }
       &::after {
         content: '';
         width: 50px;
         height: 2px;
-        background: #999;
         margin-left: 30px;
+        background: #999;
       }
     }
   }

@@ -5,13 +5,15 @@ import ShopButton from '@/src/components/ShopButton/ShopButton'
 
 import './ShopItem.scss'
 
-const ShopItem = ({ food }) => {
+const ShopItem = ({ food, count, onAdd, onDec }) => {
   return (
     <View className='shopitem'>
       {/* {console.log(food)} */}
-      <View className='shopitem-left'>
-        <Image className='shopitem-left-img' src={imgUrl(food.image_path)} />
-      </View>
+      {food.image_path ? (
+        <View className='shopitem-left'>
+          <Image className='shopitem-left-img' src={imgUrl(food.image_path)} />
+        </View>
+      ) : null}
       <View className='shopitem-right'>
         <View className='shopitem-title'>{food.name}</View>
         <View className='shopitem-intro'>{food.materials}</View>
@@ -20,10 +22,14 @@ const ShopItem = ({ food }) => {
         </View>
         <View className='shopitem-num'>
           <View className='shopitem-num-price'>
-            <Text className='shopitem-num-price-mini'>￥</Text>
-            {food.price}
+            <Text className='shopitem-num-price-left'>{food.price}</Text>
+            {food.origin_price !== food.price && (
+              <Text className='shopitem-num-price-right'>
+                ¥{food.origin_price}
+              </Text>
+            )}
           </View>
-          <ShopButton />
+          <ShopButton onAdd={onAdd} onDec={onDec} good={food} count={count} />
         </View>
       </View>
     </View>

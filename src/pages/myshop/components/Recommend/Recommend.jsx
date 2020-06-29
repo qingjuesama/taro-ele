@@ -4,7 +4,7 @@ import imgUrl from '@/src/utils/imgUrl'
 import ShopButton from '@/src/components/ShopButton/ShopButton'
 import './Recommend.scss'
 
-const Recommend = ({ recData }) => {
+const Recommend = ({ recData, onRecAdd, onRecDec, count }) => {
   return (
     <View className='recommend'>
       <Image className='recommend-img' src={imgUrl(recData.image_path)} />
@@ -15,10 +15,15 @@ const Recommend = ({ recData }) => {
         </View>
         <View className='recommend-main-numpice'>
           <View className='recommend-main-numpice-price'>
-            <Text className='price-fuhao'>￥</Text>
+            <Text className='price-fuhao'>¥</Text>
             {recData.price}
           </View>
-          <ShopButton />
+          <ShopButton
+            onAdd={onRecAdd}
+            onDec={onRecDec}
+            good={recData}
+            count={count}
+          />
         </View>
       </View>
     </View>

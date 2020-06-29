@@ -78,7 +78,7 @@ const Shop = ({ restaurant }) => {
           <View className='shop-tips'>
             <View>
               <Text className='shop-tips-title'>
-                ￥{restaurant.piecewise_agent_fee.rules[0].price}起送
+              ¥{restaurant.piecewise_agent_fee.rules[0].price}起送
               </Text>
               <Text className='xian'>|</Text>
               <Text className='shop-tips-title'>

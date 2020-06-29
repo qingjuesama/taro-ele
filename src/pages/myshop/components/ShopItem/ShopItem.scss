@@ -1,9 +1,12 @@
 .shopitem {
-  display: flex;
   overflow: hidden;
+  display: flex;
+  padding-bottom: 30px;
   .shopitem-left {
-    margin-right: 20px;
     width: 190px;
+    height: 190px;
+    margin-right: 20px;
+
     .shopitem-left-img {
       width: 190px;
       height: 190px;
@@ -11,35 +14,51 @@
   }
 
   .shopitem-right {
-    padding-right: 20px;
-    width: 350px;
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 190px;
     .shopitem-title {
-      color: #333333;
-      font-weight: 600;
-      font-size: 30px;
       overflow: hidden;
-      text-overflow: ellipsis;
+      color: #333;
+      font-size: 30px;
+      font-weight: 600;
       white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .shopitem-intro {
+      color: #999;
       font-size: 24px;
-      color: #999999;
     }
 
     .shopitem-pingfen {
+      color: #999;
       font-size: 24px;
-      color: #999999;
     }
     .shopitem-num {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       .shopitem-num-price {
+        color: #ff5339;
         font-size: 30px;
-        color: #FF5339;
-        .shopitem-num-price-mini {
-          color: #FF5339;
+        &::before {
+          content: '\A5';
+          display: inline-block;
           font-size: 24px;
+        }
+        .shopitem-num-price-left {
+          color: #ff5339;
+          font-size: 30px;
+        }
+        .shopitem-num-price-right {
+          padding-left: 14px;
+          color: #999;
+          font-size: 24px;
+          text-decoration: line-through;
         }
       }
     }

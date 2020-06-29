@@ -19,7 +19,7 @@ const Cart = () => {
         <View className='cart-total'>
           {/* <View className='cart-total-title'>未选购商品</View> */}
           <View className='cart-total-price'>
-            ￥99.9 <Text className='cart-total-yh'>￥19</Text>
+            ¥99.9 <Text className='cart-total-yh'>¥19</Text>
           </View>
           <View className='cart-total-psfei'>另需配送费2元</View>
         </View>
@@ -43,8 +43,8 @@ const Cart = () => {
                 <View className='item-title-min'>份</View>
               </View>
               <View className='item-prite'>
-                <Text className='item-prite-del'>￥169</Text>
-                ￥1192.4
+                <Text className='item-prite-del'>¥169</Text>
+                ¥1192.4
               </View>
               <View className='item-prite-button'>
                 <ShopButton />

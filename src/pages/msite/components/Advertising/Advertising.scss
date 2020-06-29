@@ -1,9 +1,9 @@
 .advertising {
   display: flex;
   justify-content: space-between;
-  background: #f9f9f9;
-  padding: 30px;
   margin: 20px 20px 0 20px;
+  padding: 30px;
+  background: #f9f9f9;
   .advertising-left {
     .title {
       font-size: 32px;
@@ -11,13 +11,13 @@
     }
 
     .detail {
-      color: #777777;
       padding: 10px 0;
+      color: #777;
     }
 
     .href {
-      color: #af8260;
       padding: 10px 0 0 0;
+      color: #af8260;
     }
   }
 

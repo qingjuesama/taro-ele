@@ -1,32 +1,35 @@
 .leftbar {
-  position: relative;
   display: flex;
-  background: #f8f8f8;
-  padding: 30px 15px;
   align-items: center;
+  position: relative;
+  padding: 30px 15px;
+  background: #f8f8f8;
   .leftbar-icon {
     width: 26px;
     height: 26px;
     margin-right: 10px;
   }
   .leftbar-name {
-    font-size: 24px;
     color: #666;
+    font-size: 24px;
   }
 
   .leftbar-num {
     position: absolute;
-    background-image: linear-gradient(-90deg, #ff7416, #ff3c15 98%);
-    border-radius: 15px;
-    right: 10px;
     top: 5px;
-    color: #fff;
-    height: 30px;
-    line-height: 30px;
-    font-size: 24px;
+    right: 10px;
+    height: 25px;
     padding: 0 7px;
+    background-image: linear-gradient(-90deg, #ff7416, #ff3c15 98%);
+    color: #fff;
+    font-size: 24px;
+    line-height: 25px;
+    border-radius: 15px;
   }
 }
 .leftbar-active {
   background: #fff;
+  .leftbar-name {
+    color: #000;
+  }
 }
