@@ -1,23 +1,18 @@
 import Taro from '@tarojs/taro'
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-  useLayoutEffect,
-} from 'react'
-import { View, Image, Text, ScrollView, Button } from '@tarojs/components'
-import { Transition } from 'react-spring/renderprops'
-import { reqGetShop } from '@/src/api'
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import { View, Image, Text, ScrollView } from '@tarojs/components'
+
+import { reqGetShop, reqEstimate } from '@/src/api'
 import imgUrl from '@/src/utils/imgUrl'
 import Tabs from '@/src/components/Tabs/Tabs'
 import defaultShopImg from '@/src/assets/images/default-shop.svg'
-import Modal from './components/Modal/Modal'
+import ShopInfoModal from './components/ShopInfoModal/ShopInfoModal'
+import ActivityModal from './components/ActivityModal/ActivityModal'
 import Recommend from './components/Recommend/Recommend'
 import LeftBar from './components/LeftBar/LeftBar'
 import ShopItem from './components/ShopItem/ShopItem'
 import Cart from './components/Cart/Cart'
+import Estimate from './components/Estimate/Estimate'
 
 import './index.scss'
 
@@ -32,10 +27,10 @@ const MyShop = () => {
   const [isOk, setIsOk] = useState(false)
   // 商家标题弹出层
   const [modalHide, setModalHide] = useState(true)
+  // 优惠详情
+  const [activityHide, setActivityHide] = useState(true)
   // 滚动到底部
   const [scrollNum, setScrollNum] = useState(0)
-  // 节流
-  const flagRef = useRef()
   // Tabs
   const [tabs] = useState([
     {
@@ -48,22 +43,41 @@ const MyShop = () => {
       title: '商家',
     },
   ])
+  // 商品列表 右侧Top距离数组
   const [rightScrollArr, setRightScrollArr] = useState([])
+  // 商品列表 右侧Top距离
   const [rightTop, setRightTop] = useState(0)
+  // 商品列表  左侧滚动index
   const [leftIndex, setLeftIndex] = useState(0)
+  // 购物车信息
   const [cartInfo, setCartInfo] = useState({
-    foods: [],
+    boxPrice: 0, // 餐盒费
+    goodTotal: 0, // 总数量
+    totalPrice: 0, // 现总价格
+    originalPrice: 0, // 原总价
+    isInterval: false, // 是否有必选品
+    isActiveInterval: false, // 是否选择必选品,
+    foods: [], // 选择商品列表
+  })
+  // 商家评价
+  const [userEstimate, setUserEstimate] = useState({
+    comments: [],
+    rating: {},
+    tags: [],
   })
 
-  // 发送请求获取商家信息
+  // 发送请求
   useEffect(() => {
-    reqGetShop().then(res => {
-      if (res.code === 0) {
-        setGoods(res.data.menu)
-        setShopInfo(res.data.rst)
-        setRecommend(res.data.recommend[0])
-        setIsOk(true)
+    // 发送请求获取 商家信息 , 商家评论
+    Promise.all([reqGetShop(), reqEstimate()]).then(dataArr => {
+      if (dataArr[0].code === 0 && dataArr[1].code === 0) {
+        setGoods(dataArr[0].data.menu)
+        setShopInfo(dataArr[0].data.rst)
+        setRecommend(dataArr[0].data.recommend[0])
+        intervalFoods(dataArr[0].data.menu)
+        setUserEstimate(dataArr[1].data)
         initRightScrollTop()
+        setIsOk(true)
       } else {
         Taro.redirectTo({ url: '/pages/msite/index' })
       }
@@ -73,6 +87,10 @@ const MyShop = () => {
   // 打开商家弹出层
   const openModal = () => {
     setModalHide(flag => !flag)
+  }
+  const onActivityHide = e => {
+    e.stopPropagation()
+    setActivityHide(flag => !flag)
   }
 
   // 获取筛选据顶部距离
@@ -112,44 +130,6 @@ const MyShop = () => {
     }, 0)
   }
 
-  // 推荐增加
-  const goodAdd = good => {
-    setCartInfo(data => {
-      // 初始
-      if (good.count >= 1) {
-        data.foods.some(item => {
-          if (item.vfood_id === good.vfood_id) {
-            item.count++
-          }
-        })
-      } else {
-        good.count = 1
-        data.foods.push(good)
-      }
-      return { ...data }
-    })
-  }
-  // 推荐减少
-  const goodDec = good => {
-    setCartInfo(data => {
-      if (good.count > 1) {
-        data.foods.some(item => {
-          if (item.vfood_id === good.vfood_id) {
-            item.count--
-          }
-        })
-      } else {
-        // 删除商品
-        good.count = 0
-        const index = data.foods.findIndex(
-          item => item.vfood_id === good.vfood_id
-        )
-        data.foods.splice(index, 1)
-      }
-      return { ...data }
-    })
-  }
-
   // 单个商品购买数量
   const count = useCallback(
     good => {
@@ -180,16 +160,120 @@ const MyShop = () => {
     [cartInfo]
   )
 
+  // 更新购物车数据
+  const updateCart = (good, name) => {
+    setCartInfo(data => {
+      if (name === 'add') {
+        addGood(data, good)
+      } else if (name === 'dec') {
+        decGood(data, good)
+      }
+      data.boxPrice = boxPrice(data)
+      data.goodTotal = total(data)
+      data.totalPrice = totalPrice(data)
+      data.originalPrice = originalPrice(data)
+      data.isActiveInterval = intervalIsFoods(data)
+      return { ...data }
+    })
+  }
+
+  // 增加商品
+  const addGood = (data, good) => {
+    const result = data.foods.find(food => food.vfood_id == good.vfood_id)
+    if (result) {
+      result.count++
+    } else {
+      data.foods.push({ ...good, count: 1 })
+    }
+  }
+
+  // 减少商品
+  const decGood = (data, good) => {
+    const result = data.foods.find(food => food.vfood_id == good.vfood_id)
+    const index = data.foods.findIndex(item => item.vfood_id === good.vfood_id)
+    if (result.count > 1) {
+      result.count--
+    } else {
+      data.foods.splice(index, 1)
+    }
+  }
+
+  // 餐盒费
+  const boxPrice = data => {
+    return data.foods.reduce((pre, food) => {
+      if (food.price > 1) {
+        pre += food.count
+      }
+      return pre
+    }, 0)
+  }
+
+  // 总数量
+  const total = data => {
+    return data.foods.reduce((pre, food) => {
+      return (pre += food.count)
+    }, 0)
+  }
+
+  // 现总价格
+  const totalPrice = data => {
+    const result = data.foods.reduce((pre, food) => {
+      return (pre += Number.parseFloat(food.price) * 1000 * food.count)
+    }, 0)
+    return result / 1000
+  }
+
+  // 原总价
+  const originalPrice = data => {
+    const result = data.foods.reduce((pre, food) => {
+      return (pre += Number.parseFloat(food.origin_price) * 1000 * food.count)
+    }, 0)
+    return result / 1000
+  }
+
+  // 是否存在必选品
+  const intervalFoods = menu => {
+    const myfood = menu.filter(good => Number.parseInt(good.type) === 4)
+    if (myfood.length) {
+      setCartInfo(data => ({ ...data, isInterval: true }))
+    }
+  }
+
+  // 是否选择必选品
+  const intervalIsFoods = data => {
+    let flag = false
+    if (data.isInterval) {
+      const myfood = goods.filter(good => Number.parseInt(good.type) === 4)
+      myfood[0].foods.forEach(cfood => {
+        data.foods.forEach(food => {
+          if (cfood.vfood_id === food.vfood_id) {
+            flag = true
+          }
+        })
+      })
+    }
+    return flag
+  }
+
+  // 清空购物车
+  const clearCart = () => {
+    setCartInfo(data => {
+      data.boxPrice = 0 // 餐盒费
+      data.goodTotal = 0 // 总数量
+      data.totalPrice = 0 // 现总价格
+      data.originalPrice = 0 // 原总价
+      data.isActiveInterval = false // 是否选择必选品,
+      data.foods = [] // 选择商品列表
+      return { ...data }
+    })
+  }
+
   if (!isOk) {
     return <Image className='default-shop-img' src={defaultShopImg} />
   }
 
   return (
     <ScrollView scrollY scrollTop={scrollNum} className='myshop'>
-      {/* {console.log(scrollNum)} */}
-      {/* {console.log(shopInfo)} */}
-      {/* {console.log(goods)} */}
-      {/* {console.log(recommend)} */}
       <View className='myshop-top'>
         <View
           className='myshop-top-bg'
@@ -220,35 +304,47 @@ const MyShop = () => {
               {shopInfo.delivery_mode.text}约{shopInfo.order_lead_time}分钟
             </Text>
           </View>
-          <View className='myshop-tags'>
-            <View className='myshop-tags-left'>
-              {shopInfo.activity_tags.map(tag => {
-                return (
-                  <Text className='myshop-tags-left-tag' key={tag.text}>
-                    {tag.text}
-                  </Text>
-                )
-              })}
+          {shopInfo.activity_tags.length > 0 && (
+            <View className='myshop-tags' onClick={e => onActivityHide(e)}>
+              <View className='myshop-tags-left'>
+                {shopInfo.activity_tags.map(tag => {
+                  return (
+                    <Text className='myshop-tags-left-tag' key={tag.text}>
+                      {tag.text}
+                    </Text>
+                  )
+                })}
+              </View>
+              <View className='myshop-tags-right'>
+                <View className='myshop-tags-right-title'>
+                  {shopInfo.activity_tags.length}个优惠
+                </View>
+                <View className='icon icon-xiajiantou'></View>
+              </View>
             </View>
-            <View className='myshop-tags-right'>
-              <View className='myshop-tags-right-title'>6个优惠</View>
-              <View className='icon icon-xiajiantou'></View>
-            </View>
-          </View>
+          )}
           <View className='myshop-notice'>
             <Text className='myshop-notice-content'>
-              公告：助力环保，我们做起！我们的打包袋是可降解环保袋；为了减少一次性餐具使用，筷子是可循环使用的，请您在结算备注处填写餐具数量，或者选择无需餐具，感谢支持！
+              公告：{shopInfo.promotion_info}
             </Text>
           </View>
         </View>
       </View>
 
-      {/* 商家简单介绍弹出层 */}
-      <Modal
+      {/* 商家介绍弹出层 */}
+      <ShopInfoModal
         shopInfo={shopInfo}
         onOpenModal={openModal}
         modalHide={modalHide}
       />
+      {/* 优惠活动弹出层 */}
+      {!activityHide && (
+        <ActivityModal
+          activities={shopInfo.activities}
+          onActivityHide={onActivityHide}
+        />
+      )}
+
       <View className='myshop-content'>
         <Tabs tabs={tabs}>
           <View className='myshop-order'>
@@ -267,9 +363,8 @@ const MyShop = () => {
                   return (
                     <Recommend
                       key={item.item_id}
+                      onUpdateCart={updateCart}
                       recData={item}
-                      onRecAdd={goodAdd}
-                      onRecDec={goodDec}
                       count={count(item)}
                     />
                   )
@@ -317,13 +412,12 @@ const MyShop = () => {
                         </View>
                       </View>
 
-                      {good.foods.map(food => (
+                      {good.foods.map((food, index) => (
                         <ShopItem
-                          key={food.item_id}
+                          key={food.item_id + index}
                           food={food}
                           count={count(food)}
-                          onAdd={goodAdd}
-                          onDec={goodDec}
+                          onUpdateCart={updateCart}
                         />
                       ))}
                     </View>
@@ -331,14 +425,21 @@ const MyShop = () => {
                 })}
               </ScrollView>
             </View>
+            {/* 购物车 */}
+            <Cart
+              cartInfo={cartInfo}
+              onUpdateCart={updateCart}
+              count={count}
+              shopInfo={shopInfo}
+              onClearCart={clearCart}
+            />
           </View>
-          <View className='myshop-appraise'>2</View>
+          <View className='myshop-appraise'>
+            <Estimate userEstimate={userEstimate} />
+          </View>
           <View className='myshop-shopinfo'>3</View>
         </Tabs>
       </View>
-
-      {/* 购物车 */}
-      <Cart />
     </ScrollView>
   )
 }

@@ -1,0 +1,144 @@
+.estimate {
+  height: 100vh;
+  .rating {
+    display: flex;
+    padding: 50px 40px 20px 40px;
+    background: #fff;
+    .rating-left {
+      display: flex;
+      align-items: center;
+      .total {
+        color: #ff6000;
+        font-size: 70px;
+      }
+      .total-xx {
+        margin: 0 20px;
+        .total-xx-title {
+          color: #666;
+          font-size: 24px;
+        }
+      }
+    }
+
+    .rating-right {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      .estimate-right-item {
+        .estimate-right-item-title {
+          color: #666;
+          font-size: 24px;
+          text-align: center;
+        }
+
+        .estimate-right-item-rating {
+          color: #666;
+          font-size: 40px;
+        }
+      }
+    }
+  }
+
+  .comments {
+    margin-top: 20px;
+    padding: 30px 20px 0 20px;
+    border-bottom: 1px #eee solid;
+    background: #fff;
+    .tags {
+      display: flex;
+      .tag {
+        margin-right: 15px;
+        padding: 10px 15px;
+        background: #ebf5ff;
+        color: #6d7885;
+        font-size: 24px;
+        border-radius: 6px;
+      }
+      .tag-active {
+        background: #0097ff;
+        color: #fff;
+      }
+    }
+    .content-rating {
+      margin: 30px 0;
+      .icon {
+        color: #e8e8e8;
+        font-size: 28px;
+      }
+      .active-icon {
+        color: #76d572;
+      }
+
+      .content-rating-text {
+        color: #666;
+        font-size: 24px;
+      }
+    }
+
+    .comments-list {
+      .comments-item {
+        display: flex;
+        padding: 20px 0;
+        border-bottom: 1px #eee solid;
+        .avatar {
+          overflow: hidden;
+          width: 60px;
+          height: 60px;
+          margin-right: 20px;
+          border-radius: 50%;
+          .avatar-img {
+            width: 60px;
+            height: 60px;
+          }
+        }
+
+        .comments-item-content {
+          flex: 1;
+          .usernametime {
+            display: flex;
+            justify-content: space-between;
+            .username {
+              font-size: 24px;
+            }
+            .usertime {
+              color: #999;
+              font-size: 24px;
+            }
+          }
+
+          .grade {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            .grade-tip {
+              padding-left: 10px;
+              font-size: 24px;
+            }
+          }
+
+          .leaveword {
+            .leaveword-text {
+              .good {
+                padding-right: 20px;
+                color: #5082b1;
+              }
+            }
+            .leaveword-images {
+              display: flex;
+              flex-wrap: wrap;
+              margin-top: 20px;
+              .leaveword-images-item {
+                width: 50%;
+                height: 50%;
+                .leaveword-images-img {
+                  width: 300px;
+                  height: 300px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

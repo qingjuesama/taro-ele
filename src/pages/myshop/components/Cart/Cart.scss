@@ -1,27 +1,27 @@
 .cart {
   position: fixed;
+  z-index: 5;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
-  background-color: rgba(61, 61, 63, 0.9);
-  z-index: 5;
+  background-color: rgba(61, 61, 63, .9);
   .cart-bar {
-    position: relative;
     display: flex;
     justify-content: space-between;
-    height: 100px;
+    position: relative;
     z-index: 2;
+    height: 100px;
     .cart-icon {
       position: relative;
       width: 80px;
       height: 80px;
-      background: #363636;
-      border-radius: 50%;
-      border: 10px #444444 solid;
-      box-sizing: content-box;
-      // box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.1);
+// box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.1);
       margin-top: -20px;
       margin-left: 30px;
+      border: 10px #444 solid;
+      background: #363636;
+      border-radius: 50%;
+      box-sizing: content-box;
       &::after {
         content: '';
         display: block;
@@ -37,15 +37,15 @@
       }
       .car-close {
         position: absolute;
-        background-image: linear-gradient(-90deg, #ff7416, #ff3c15 98%);
-        border-radius: 15px;
-        right: -10px;
         top: -10px;
-        color: #fff;
+        right: -10px;
         height: 30px;
-        line-height: 30px;
-        font-size: 24px;
         padding: 0 7px;
+        background-image: linear-gradient(-90deg, #ff7416, #ff3c15 98%);
+        color: #fff;
+        font-size: 24px;
+        line-height: 30px;
+        border-radius: 15px;
       }
     }
 
@@ -60,15 +60,15 @@
       flex: 1;
       margin: 20px 0 0 40px;
       .cart-total-title {
+        height: 30px;
         color: #999;
         font-size: 26px;
-        height: 30px;
       }
       .cart-total-price {
         height: 32px;
-        line-height: 32px;
         color: #fff;
         font-size: 32px;
+        line-height: 32px;
         .cart-total-yh {
           color: #999;
           font-size: 24px;
@@ -76,72 +76,72 @@
         }
       }
       .cart-total-psfei {
-        font-size: 24px;
-        color: #999;
         height: 24px;
+        color: #999;
+        font-size: 24px;
       }
     }
 
     .cart-tip {
       width: 250px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 28px;
       background: #535356;
-      text-align: center;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 600;
       line-height: 100px;
+      text-align: center;
     }
     .cart-result {
-      height: 100%;
       width: 200px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 28px;
+      height: 100%;
       background: #38ca73;
-      text-align: center;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 600;
       line-height: 100px;
+      text-align: center;
     }
   }
   .cart-shops {
     position: fixed;
-    left: 0;
-    bottom: 100px;
-    right: 0;
-    background: #fff;
     z-index: 1;
+    right: 0;
+    bottom: 100px;
+    left: 0;
+    background: #fff;
     .cart-shops-tip {
       background: #fffad6;
-      text-align: center;
       font-size: 24px;
+      text-align: center;
     }
 
     .cart-shops-main {
       .cart-shops-main-topbar {
-        background: #eceff1;
         display: flex;
         justify-content: space-between;
-        padding:15px 20px;
+        padding: 15px 20px;
         border-bottom: 1px #ddd solid;
+        background: #eceff1;
         .topbar-left {
-          font-size: 32px;
           color: #666;
+          font-size: 32px;
         }
 
         .topbar-right {
           color: #666;
           font-size: 30px;
           .icon {
-            color: #666;
             padding-right: 10px;
+            color: #666;
             font-size: 30px;
           }
         }
       }
 
       .cart-shops-main-list {
-        padding: 0 20px;
         width: auto;
         max-height: 80vw;
+        padding: 0 20px;
         .list-item {
           display: flex;
           align-items: center;
@@ -149,11 +149,11 @@
           border-bottom: 1px #eee solid;
           .item-title {
             flex: 5.5;
-            font-size: 32px;
             color: #333;
+            font-size: 32px;
             .item-title-min {
-              font-size: 22px;
               color: #999;
+              font-size: 22px;
             }
           }
 
@@ -163,15 +163,16 @@
             font-weight: 600;
             text-align: right;
             .item-prite-del {
-              font-size: 22px;
+              padding-right: 20px;
               color: #999;
-              text-decoration: line-through;
+              font-size: 22px;
               font-weight: normal;
+              text-decoration: line-through;
             }
           }
           .item-prite-button {
-            flex: 3;
             display: flex;
+            flex: 3;
             justify-content: flex-end;
           }
         }
@@ -181,8 +182,8 @@
           padding: 20px 0;
           .canhe {
             flex: 5.5;
-            font-size: 32px;
             color: #333;
+            font-size: 32px;
           }
 
           .canhe-price {
@@ -205,7 +206,7 @@
     bottom: 0;
     left: 0;
     background-color: #000;
-    opacity: 0.4;
-    transition: opacity 0.3s ease;
+    opacity: .4;
+    transition: opacity .3s ease;
   }
 }

@@ -1,4 +1,4 @@
-import Taro, { Current } from '@tarojs/taro'
+import Taro, { getCurrentInstance } from '@tarojs/taro'
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import classnames from 'classnames'
@@ -33,6 +33,7 @@ const SelectCity = props => {
   const [resultCityList, setResultCityList] = useState([])
   // 定时器
   const time = useRef()
+  const current = getCurrentInstance()
 
   // 发送请求
   const getCity = useCallback(async () => {
@@ -133,13 +134,13 @@ const SelectCity = props => {
     if (cityShow) {
       if (process.env.TARO_ENV === 'weapp') {
         setTimeout(() => {
-          const query = Taro.createSelectorQuery().in(Current.page)
+          const query = Taro.createSelectorQuery().in(current.page)
           query.selectAll('.dom').boundingClientRect()
           query.exec(res => {
             const result = res[0].map(item => item.top - 95)
             setCityTop(result.splice(1))
           })
-        }, 0)
+        }, 0) 
       } else {
         let offsetTopList = []
         const list = document.querySelectorAll('.dom')
@@ -149,7 +150,7 @@ const SelectCity = props => {
         setCityTop(offsetTopList.splice(1))
       }
     }
-  }, [cityShow])
+  }, [cityShow, current])
 
   // 选择城市索引
   const onLinkCity = (alp, index) => {

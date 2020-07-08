@@ -2,20 +2,18 @@ import Taro from '@tarojs/taro'
 import React from 'react'
 import classnames from 'classnames'
 import { View, Text } from '@tarojs/components'
+import distance from '@/src/utils/distance'
 
-import './Modal.scss'
+import './ShopInfoModal.scss'
 
-const Modal = ({ shopInfo, modalHide, onOpenModal }) => {
+const ShopInfoModal = ({ shopInfo, modalHide, onOpenModal }) => {
   return (
     <View
       className={classnames('myshop-modal ', {
         'ele-hide': modalHide,
       })}
     >
-      <View
-        className={classnames('myshop-modal-main', {
-        })}
-      >
+      <View className={classnames('myshop-modal-main', {})}>
         <View className='myshop-modal-main-title'>
           <Text className='myshop-modal-main-title-tag'>品牌</Text>
           唐宫海鲜舫（新侨店）
@@ -49,7 +47,7 @@ const Modal = ({ shopInfo, modalHide, onOpenModal }) => {
           </View>
           <View className='myshop-modal-main-ul-li'>
             <View className='myshop-modal-main-ul-li-title'>
-              {shopInfo.distance}
+              {distance(shopInfo.distance)}
             </View>
             <View className='myshop-modal-main-ul-li-tag'>距离</View>
           </View>
@@ -70,4 +68,4 @@ const Modal = ({ shopInfo, modalHide, onOpenModal }) => {
   )
 }
 
-export default Modal
+export default ShopInfoModal

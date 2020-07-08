@@ -1,4 +1,4 @@
-import Taro, { Current, useDidShow } from '@tarojs/taro'
+import Taro, { getCurrentInstance, useDidShow } from '@tarojs/taro'
 import React, { useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import classnames from 'classnames'
@@ -14,6 +14,7 @@ import profileActiveIcon from './images/profile_2.svg'
 import './FooterBar.scss'
 
 const FooterBar = () => {
+
   // 路由地址
   const [path, setPath] = useState('')
 
@@ -50,13 +51,13 @@ const FooterBar = () => {
 
   useDidShow(() => {
     // 获取路由路径
-    const page = Current.page
-    if (page.path) {
+    const current = getCurrentInstance()
+    if (current.app.config && current.app.config.router) {
       // H5端
-      setPath(page.path)
+      setPath(current.app.config.router.pathname)
     } else {
       // 微信端
-      setPath('/' + page.route)
+      setPath( current.router.path)
     }
   }, [])
 

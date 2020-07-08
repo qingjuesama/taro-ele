@@ -5,10 +5,9 @@ import ShopButton from '@/src/components/ShopButton/ShopButton'
 
 import './ShopItem.scss'
 
-const ShopItem = ({ food, count, onAdd, onDec }) => {
+const ShopItem = ({ onUpdateCart, food, count }) => {
   return (
     <View className='shopitem'>
-      {/* {console.log(food)} */}
       {food.image_path ? (
         <View className='shopitem-left'>
           <Image className='shopitem-left-img' src={imgUrl(food.image_path)} />
@@ -29,7 +28,7 @@ const ShopItem = ({ food, count, onAdd, onDec }) => {
               </Text>
             )}
           </View>
-          <ShopButton onAdd={onAdd} onDec={onDec} good={food} count={count} />
+          <ShopButton onUpdateCart={onUpdateCart} good={food} count={count} />
         </View>
       </View>
     </View>

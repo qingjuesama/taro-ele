@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import imgUrl from '@/src/utils/imgUrl'
 import distance from '@/src/utils/distance'
 import './Shop.scss'
+import Star from '../Star/Star'
 
 const Shop = ({ restaurant }) => {
   const [isHide, setIsHide] = useState(false)
@@ -38,11 +39,6 @@ const Shop = ({ restaurant }) => {
     setIsHide(data => !data)
   }
 
-  // 计算评分⭐⭐
-  const countGrade = useMemo(() => {
-    return (restaurant.rating / 5) * 100 + '%'
-  }, [restaurant])
-
   // 跳转商家详情
   const goShop = () => {
     Taro.navigateTo({ url: '/pages/myshop/index' })
@@ -64,10 +60,8 @@ const Shop = ({ restaurant }) => {
 
           <View className='shop-pingfen'>
             <View className='shop-xsqk'>
-              <View className='shop-grade'>
-                <View className='xx1' style={{ width: countGrade }}></View>
-                <View className='xx2'></View>
-              </View>
+              {/* ⭐⭐分数 */}
+              <Star rating={restaurant.rating} />
               <View className='shop-onsale'>
                 月售{restaurant.recent_order_num}单
               </View>
@@ -78,7 +72,7 @@ const Shop = ({ restaurant }) => {
           <View className='shop-tips'>
             <View>
               <Text className='shop-tips-title'>
-              ¥{restaurant.piecewise_agent_fee.rules[0].price}起送
+                ¥{restaurant.piecewise_agent_fee.rules[0].price}起送
               </Text>
               <Text className='xian'>|</Text>
               <Text className='shop-tips-title'>

@@ -76,3 +76,9 @@ export const reqGetFoodsClass = ({ latitude, longitude }) =>
 
 // 获取商家详情信息
 export const reqGetShop = () => ajax(BASEURL + '/getShop')
+
+// 获取商家评价
+export const reqEstimate = () => ajax(BASEURL + '/getEstimate')
+// 获取商家评论更多
+export const reqRatings = ({ name, offset, limit, has_content }) =>
+  ajax(BASEURL + '/getRatings', { name, offset, limit, has_content })
