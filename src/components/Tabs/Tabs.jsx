@@ -37,7 +37,7 @@ const Tabs = ({ tabs, children }) => {
               className={classnames({
                 'ele-hide': i !== tabIndex,
               })}
-              key={item.props.children}
+              key={'cart' + i}
             >
               {item}
             </View>

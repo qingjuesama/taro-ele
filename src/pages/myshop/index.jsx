@@ -13,6 +13,7 @@ import LeftBar from './components/LeftBar/LeftBar'
 import ShopItem from './components/ShopItem/ShopItem'
 import Cart from './components/Cart/Cart'
 import Estimate from './components/Estimate/Estimate'
+import ShopInfo from './components/ShopInfo/ShopInfo'
 
 import './index.scss'
 
@@ -89,7 +90,6 @@ const MyShop = () => {
     setModalHide(flag => !flag)
   }
   const onActivityHide = e => {
-    e.stopPropagation()
     setActivityHide(flag => !flag)
   }
 
@@ -437,7 +437,9 @@ const MyShop = () => {
           <View className='myshop-appraise'>
             <Estimate userEstimate={userEstimate} />
           </View>
-          <View className='myshop-shopinfo'>3</View>
+          <View className='myshop-shopinfo'>
+            <ShopInfo shopInfo={shopInfo} />
+          </View>
         </Tabs>
       </View>
     </ScrollView>

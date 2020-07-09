@@ -82,3 +82,5 @@ export const reqEstimate = () => ajax(BASEURL + '/getEstimate')
 // 获取商家评论更多
 export const reqRatings = ({ name, offset, limit, has_content }) =>
   ajax(BASEURL + '/getRatings', { name, offset, limit, has_content })
+// 获取商家品牌故事 
+export const reqBrandStory = () => ajax(BASEURL + '/brandStory')
