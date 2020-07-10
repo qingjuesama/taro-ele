@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { View, Image, Text, ScrollView } from '@tarojs/components'
 
 import { reqGetShop, reqEstimate } from '@/src/api'
@@ -89,7 +89,7 @@ const MyShop = () => {
   const openModal = () => {
     setModalHide(flag => !flag)
   }
-  const onActivityHide = e => {
+  const onActivityHide = () => {
     setActivityHide(flag => !flag)
   }
 
@@ -127,7 +127,7 @@ const MyShop = () => {
           setRightScrollArr(newRes)
         }
       })
-    }, 0)
+    }, 500)
   }
 
   // 单个商品购买数量
@@ -268,6 +268,12 @@ const MyShop = () => {
     })
   }
 
+  // 返回
+  const onBack = () => {
+    console.log(1)
+    Taro.navigateBack({ delta: 1 })
+  }
+
   if (!isOk) {
     return <Image className='default-shop-img' src={defaultShopImg} />
   }
@@ -281,7 +287,7 @@ const MyShop = () => {
             background: `url(${imgUrl(shopInfo.shop_sign.image_hash)})`,
           }}
         >
-          <View className='icon icon-fanhui'></View>
+          <View className='icon icon-fanhui' onClick={onBack}></View>
         </View>
         <View className='myshop-top-main'>
           <View className='myshop-logo'>

@@ -27,7 +27,6 @@ import MsiteSvip from './components/Svip/Svip'
 import './index.scss'
 
 const Msite = () => {
-  console.log('msite')
   // 当前用户收货地址
   const currentAddress = useSelector(state => state.currentAddress)
   // 首页筛选条数据
