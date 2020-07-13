@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import configStore from './redux/store'
 
+import { initCurrentAddress } from './redux/actions/user'
+
 import './assets/style/custom-theme.scss'
 import './assets/style/iconfont/iconfont.css'
 import './app.scss'
@@ -9,7 +11,17 @@ import './app.scss'
 const store = configStore()
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.getAddress()
+  }
+
+  // 获取ip地址 经纬度
+  getAddress = () => {
+    const { currentAddress } = store.getState()
+    if (!currentAddress.latitude && !currentAddress.longitude) {
+      store.dispatch(initCurrentAddress())
+    }
+  }
 
   componentDidShow() {}
 

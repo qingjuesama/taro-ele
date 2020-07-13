@@ -1,0 +1,32 @@
+.mysearch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  .zoom {
+    position: absolute;
+    left: 20px;
+    color: #999;
+    font-size: 24px;
+  }
+  .clear {
+    position: absolute;
+    right: 100px;
+    color: #999;
+    font-size: 24px;
+  }
+
+  .mysearch-input {
+    flex: 1;
+    padding: 8px 0;
+    padding: 10px 70px;
+    background: #f8f8f8;
+  }
+
+  .mysearch-text {
+    padding-left: 20px;
+    color: #333;
+    font-size: 32px;
+    font-weight: 700;
+  }
+}

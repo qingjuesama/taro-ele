@@ -82,3 +82,10 @@ export const reqEstimate = () => ajax(BASEURL + '/getEstimate')
 // 获取商家评论更多
 export const reqRatings = ({ name, offset, limit, has_content }) =>
   ajax(BASEURL + '/getRatings', { name, offset, limit, has_content })
+
+// 热门搜索
+export const reqHotSearchWords = ({ latitude, longitude }) =>
+  ajax(BASEURL + '/hotSearchWords', { latitude, longitude })
+
+// 搜索结果
+export const reqTypeaHead = value => ajax(BASEURL + '/typeaHead', { value })

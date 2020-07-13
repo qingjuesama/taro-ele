@@ -27,7 +27,6 @@ import MsiteSvip from './components/Svip/Svip'
 import './index.scss'
 
 const Msite = () => {
-  console.log('msite')
   // 当前用户收货地址
   const currentAddress = useSelector(state => state.currentAddress)
   // 首页筛选条数据
@@ -71,19 +70,13 @@ const Msite = () => {
     setCityShow(flag)
   }
 
-  // 获取城市 经纬度及城市
+  // 重新获取城市 经纬度及城市
   const onLocationCity = useCallback(() => {
     removeOffset()
     dispatch(initCurrentAddress())
   }, [dispatch])
 
-  // 获取ip地址 经纬度
-  useEffect(() => {
-    // 不存在地址则重新获取
-    if (!currentAddress.latitude && !currentAddress.longitude) {
-      onLocationCity()
-    }
-  }, [onLocationCity, currentAddress])
+
 
   // 获取导航数据
   useEffect(() => {

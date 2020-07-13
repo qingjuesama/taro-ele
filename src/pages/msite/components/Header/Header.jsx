@@ -1,4 +1,5 @@
 // 头部定位
+import Taro from '@tarojs/taro'
 import React from 'react'
 import { View, Text } from '@tarojs/components'
 
@@ -6,7 +7,9 @@ import './Header.scss'
 
 const Header = ({ onSetAddressShow, currentAddress }) => {
   // 跳转搜索页面
-  const handleGoSearch = () => {}
+  const handleGoSearch = () => {
+    Taro.navigateTo({ url: '/pages/search/index' })
+  }
 
   return (
     <View className='header'>
@@ -16,7 +19,9 @@ const Header = ({ onSetAddressShow, currentAddress }) => {
           <Text className='icon icon-daohangdizhi'></Text>
         </View>
         <View className='header-title' onClick={() => onSetAddressShow(true)}>
-          {currentAddress.address ? currentAddress.address : '定位失败,请手动选择'}
+          {currentAddress.address
+            ? currentAddress.address
+            : '定位失败,请手动选择'}
         </View>
         <View className='jiantou'>
           <Text className='icon icon-xiajiantou'></Text>
@@ -24,11 +29,9 @@ const Header = ({ onSetAddressShow, currentAddress }) => {
       </View>
 
       {/* 搜索 */}
-      <View className='search'>
-         <Text className='icon icon-sousuo'></Text>
-        <Text className='search-name' onClick={handleGoSearch}>
-          搜索饿了么商家、商品名称
-        </Text>
+      <View className='search' onClick={handleGoSearch}>
+        <Text className='icon icon-sousuo'></Text>
+        <Text className='search-name'>搜索饿了么商家、商品名称</Text>
       </View>
     </View>
   )

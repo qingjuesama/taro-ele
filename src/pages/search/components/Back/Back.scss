@@ -1,0 +1,29 @@
+.back {
+  margin-top: 20px;
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title {
+      color: #666;
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .icon {
+      color: #cecece;
+      font-size: 24px;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    .tab {
+      margin: 10px 20px 10px 0;
+      padding: 10px 20px;
+      background: #f7f7f7;
+      color: #666;
+    }
+  }
+}
