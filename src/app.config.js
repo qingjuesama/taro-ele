@@ -15,6 +15,7 @@ export default {
     'pages/profile/pages/password/index',
     'pages/login/index',
     'pages/register/index',
+    'pages/search/index',
   ],
   window: {
     backgroundTextStyle: 'light',

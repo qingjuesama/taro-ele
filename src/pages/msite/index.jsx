@@ -70,19 +70,13 @@ const Msite = () => {
     setCityShow(flag)
   }
 
-  // 获取城市 经纬度及城市
+  // 重新获取城市 经纬度及城市
   const onLocationCity = useCallback(() => {
     removeOffset()
     dispatch(initCurrentAddress())
   }, [dispatch])
 
-  // 获取ip地址 经纬度
-  useEffect(() => {
-    // 不存在地址则重新获取
-    if (!currentAddress.latitude && !currentAddress.longitude) {
-      onLocationCity()
-    }
-  }, [onLocationCity, currentAddress])
+
 
   // 获取导航数据
   useEffect(() => {

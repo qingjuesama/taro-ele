@@ -5,7 +5,6 @@ import { View, ScrollView } from '@tarojs/components'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserAddressList, setCurrentAddress } from '@/src/redux/actions/user'
-import { actionShopParams } from '@/src/redux/actions/filterShop'
 import { reqAddressDetail } from '@/src/api'
 import NavBar from '@/src/components/NavBar/NavBar'
 
