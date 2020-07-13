@@ -1,0 +1,40 @@
+.prize {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 220px;
+  margin: 10px 15px;
+  text-align: center;
+  .tab {
+    position: absolute;
+    z-index: 1;
+    padding: 0 8px;
+    background: #413d3c;
+    color: #fff;
+    font-size: 24px;
+  }
+
+  .prize-img {
+    width: 220px;
+    height: 220px;
+    border: 1px #f8f8f8 solid;
+  }
+
+  .prize-head {
+    .title {
+      font-size: 26px;
+    }
+
+    .price {
+      .points {
+        color: #ff5339;
+        font-size: 26;
+      }
+
+      .original {
+        color: #aaa;
+        font-size: 22px;
+      }
+    }
+  }
+}

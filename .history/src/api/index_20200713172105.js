@@ -95,5 +95,5 @@ export const reqTypeaHead = value => ajax(BASEURL + '/typeaHead', { value })
 // 发现 限时抽奖
 export const reqSuggest = () => ajax(BASEURL + '/suggest')
 // 发现
-export const reqDiscover = ({ latitude, longitude }) =>
+export const discover = ({ latitude, longitude }) =>
   ajax(BASEURL + '/discover', { latitude, longitude })

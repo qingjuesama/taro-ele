@@ -22,7 +22,7 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -125,6 +125,13 @@
 					"id": -1,
 					"name": "商家详情",
 					"pathName": "pages/myshop/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发现",
+					"pathName": "pages/discover/index",
 					"scene": null
 				}
 			]

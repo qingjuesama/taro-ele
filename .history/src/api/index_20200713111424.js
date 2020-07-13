@@ -91,9 +91,3 @@ export const reqHotSearchWords = ({ latitude, longitude }) =>
 
 // 搜索结果
 export const reqTypeaHead = value => ajax(BASEURL + '/typeaHead', { value })
-
-// 发现 限时抽奖
-export const reqSuggest = () => ajax(BASEURL + '/suggest')
-// 发现
-export const reqDiscover = ({ latitude, longitude }) =>
-  ajax(BASEURL + '/discover', { latitude, longitude })

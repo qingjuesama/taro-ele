@@ -51,68 +51,31 @@
     margin-top: 20px;
     background: #fff;
     .suggest-head {
-      padding-top: 30px;
       .suggest-head-title {
         display: flex;
         align-items: center;
-        justify-content: center;
         .striping {
-          position: relative;
-          width: 40px;
+          width: 30px;
           height: 4px;
           background: #333;
-          &::after {
-            content: '';
-            position: absolute;
-            top: -3px;
-            width: 12px;
-            height: 12px;
-            background: #333;
-            border-radius: 50%;
-          }
-          &:first-child {
-            &::after {
-              right: 0;
-            }
-          }
         }
 
         .icon {
-          padding: 0 10px 0 5px;
           color: #f9534e;
-          font-size: 36px;
+          font-size: 30px;
         }
 
         .title {
-          padding-right: 10px;
           font-size: 36px;
           font-weight: 600;
         }
       }
 
       .tip {
-        color: #999;
-        font-size: 24px;
-        line-height: 1.2;
-        text-align: center;
       }
     }
 
     .suggest-main {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 20px;
-      .suggest-more {
-        width: 100%;
-        margin-top: 20px;
-        margin-bottom: 200px;
-        color: #999;
-        text-align: center;
-        .icon {
-          color: #999;
-        }
-      }
     }
   }
 }

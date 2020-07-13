@@ -100,7 +100,6 @@
 
     .suggest-main {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
       margin-top: 20px;
       .suggest-more {
@@ -110,7 +109,7 @@
         color: #999;
         text-align: center;
         .icon {
-          color: #999;
+          color: #d9d9d9;
         }
       }
     }

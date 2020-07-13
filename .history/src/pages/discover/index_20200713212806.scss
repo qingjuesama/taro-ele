@@ -100,18 +100,11 @@
 
     .suggest-main {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
       margin-top: 20px;
       .suggest-more {
-        width: 100%;
-        margin-top: 20px;
-        margin-bottom: 200px;
         color: #999;
         text-align: center;
-        .icon {
-          color: #999;
-        }
       }
     }
   }

@@ -2,18 +2,17 @@
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { View, Image, Text } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { reqSuggest, reqDiscover } from '@/src/api'
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import imgUrl from '@/src/utils/imgUrl'
-import Prize from './components/Prize/Prize'
 
 import './index.scss'
 
 const Discover = () => {
   const { latitude, longitude } = useSelector(data => data.currentAddress)
   const [discover, setDiscover] = useState([])
-  const [suggests, setSuggests] = useState([])
+  const [suggest, setSuggest] = useState([])
 
   useEffect(() => {
     if (latitude && longitude) {
@@ -21,7 +20,7 @@ const Discover = () => {
         resArr => {
           if (resArr[0].code === 0 && resArr[1].code === 0) {
             setDiscover(resArr[0].data['1'])
-            setSuggests(resArr[1].data)
+            setSuggest(resArr[1].data)
           }
         }
       )
@@ -54,22 +53,11 @@ const Discover = () => {
         })}
       </View>
       <View className='suggest'>
-        <View className='suggest-head'>
-          <View className='suggest-head-title'>
-            <View className='striping'></View>
-            <View className='icon icon-icon-test'></View>
-            <View className='title'>限时好礼</View>
-            <View className='striping'></View>
+        <View>
+          <View>
+            <View className='icon icon-icon-test'></View>限时好礼
           </View>
-          <View className='tip'>金币换豪礼</View>
-        </View>
-        <View className='suggest-main'>
-          {suggests.map((suggest, i) => {
-            return <Prize key={suggest.title + i} suggest={suggest} />
-          })}
-          <View className='suggest-more'>
-            查看更多<Text className='icon icon-jiantou1'></Text>
-          </View>
+          <View>金币换豪礼</View>
         </View>
       </View>
       <FooterBar />

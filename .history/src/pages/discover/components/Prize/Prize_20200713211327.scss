@@ -1,0 +1,27 @@
+.prize {
+  position: relative;
+  .tab {
+    position: absolute;
+    z-index: 1;
+    background: #413d3c;
+    color: #fff;
+  }
+
+  .prize-img {
+    width: 220px;
+    height: 220px;
+  }
+
+  .prize-head {
+    .title {
+    }
+
+    .price {
+      .points {
+      }
+
+      .original {
+      }
+    }
+  }
+}

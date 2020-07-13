@@ -2,7 +2,7 @@
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { View, Image, Text } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { reqSuggest, reqDiscover } from '@/src/api'
 import FooterBar from '@/src/components/FooterBar/FooterBar'
 import imgUrl from '@/src/utils/imgUrl'
@@ -67,9 +67,6 @@ const Discover = () => {
           {suggests.map((suggest, i) => {
             return <Prize key={suggest.title + i} suggest={suggest} />
           })}
-          <View className='suggest-more'>
-            查看更多<Text className='icon icon-jiantou1'></Text>
-          </View>
         </View>
       </View>
       <FooterBar />
