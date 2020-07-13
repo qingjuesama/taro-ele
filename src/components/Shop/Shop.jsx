@@ -35,7 +35,8 @@ const Shop = ({ restaurant }) => {
   }, [isHide])
 
   // 展开活动查看更多
-  const handleUnfold = () => {
+  const handleUnfold = (e) => {
+    e.stopPropagation()
     setIsHide(data => !data)
   }
 

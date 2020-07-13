@@ -60,7 +60,7 @@ const ajax = (url, data = {}, method, param) => {
           hideLoading()
         }
       },
-    }).catch(err => {})
+    })
   })
 }
 
