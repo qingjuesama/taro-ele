@@ -5,7 +5,14 @@ import ShopButton from '@/src/components/ShopButton/ShopButton'
 
 import './Cart.scss'
 
-const Cart = ({ cartInfo, count, shopInfo, onUpdateCart, onClearCart }) => {
+const Cart = ({
+  cartInfo,
+  count,
+  shopInfo,
+  onUpdateCart,
+  onClearCart,
+  onSettleAccounts,
+}) => {
   const {
     boxPrice,
     goodTotal,
@@ -58,11 +65,6 @@ const Cart = ({ cartInfo, count, shopInfo, onUpdateCart, onClearCart }) => {
     setIsHide(false)
   }
 
-  // 结算
-  const settleAccounts = () => {
-    console.log(cartInfo)
-  }
-
   return (
     <View className='cart'>
       <View className='cart-bar'>
@@ -91,7 +93,7 @@ const Cart = ({ cartInfo, count, shopInfo, onUpdateCart, onClearCart }) => {
         </View>
 
         {isResult ? (
-          <View className='cart-result' onClick={settleAccounts}>
+          <View className='cart-result' onClick={onSettleAccounts}>
             结算
           </View>
         ) : (

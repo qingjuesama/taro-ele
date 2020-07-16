@@ -270,8 +270,16 @@ const MyShop = () => {
 
   // 返回
   const onBack = () => {
-    console.log(1)
     Taro.navigateBack({ delta: 1 })
+  }
+
+  // 结算
+  const settleAccounts = () => {
+    const clearing = { cartInfo, shopInfo }
+    Taro.setStorageSync('clearing', clearing)
+    Taro.navigateTo({
+      url: `/pages/clearing/index`,
+    })
   }
 
   if (!isOk) {
@@ -438,6 +446,7 @@ const MyShop = () => {
               count={count}
               shopInfo={shopInfo}
               onClearCart={clearCart}
+              onSettleAccounts={settleAccounts}
             />
           </View>
           <View className='myshop-appraise'>

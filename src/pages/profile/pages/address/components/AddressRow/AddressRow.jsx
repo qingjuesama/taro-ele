@@ -3,10 +3,23 @@ import { View, Text } from '@tarojs/components'
 
 import './AddressRow.scss'
 
-const AddressRow = ({ address, onDelAddress, onEditAddress }) => {
+const AddressRow = ({
+  address,
+  onDelAddress,
+  onEditAddress,
+  selectFlag,
+  currentAddress,
+  onSelectUserAddress,
+}) => {
   return (
     <View className='addressrow'>
-      <View className='addressrow-left'>
+      {selectFlag && currentAddress.id === address.id && (
+        <View className='icon icon-success_fill addressrow-icon'></View>
+      )}
+      <View
+        className='addressrow-left'
+        onClick={() => onSelectUserAddress(address)}
+      >
         <View className='myinfo'>
           <View className='myname'>{address.name}</View>
           <View className='mysex'>{address.sex === '1' ? '先生' : '女士'}</View>

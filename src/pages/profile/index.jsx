@@ -44,7 +44,7 @@ const Profile = () => {
     if (userInfo.id) {
       Taro.navigateTo({ url: '/pages/profile/pages/info/index' })
     } else {
-      Taro.redirectTo({ url: '/pages/login/index' })
+      Taro.navigateTo({ url: '/pages/login/index' })
     }
   }
 

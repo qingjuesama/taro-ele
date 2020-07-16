@@ -3,6 +3,7 @@ export default {
     'pages/msite/index',
     'pages/food/index',
     'pages/myshop/index',
+    'pages/clearing/index',
     'pages/discover/index',
     'pages/order/index',
     'pages/profile/index',

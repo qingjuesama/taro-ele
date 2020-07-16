@@ -1,6 +1,6 @@
 // 我的地址
-import Taro, { useDidShow } from '@tarojs/taro'
-import React from 'react'
+import Taro, { useDidShow, getCurrentInstance } from '@tarojs/taro'
+import React, { useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { useDispatch, useSelector } from 'react-redux'
 import { reqDelUserAddress } from '@/src/api'
@@ -8,6 +8,7 @@ import {
   atUserAddress,
   removeUserAddress,
   getUserAddressList,
+  setCurrentAddress,
 } from '@/src/redux/actions/user'
 import NavBar from '@/src/components/NavBar/NavBar'
 import AddressRow from './components/AddressRow/AddressRow'
@@ -15,7 +16,21 @@ import './index.scss'
 
 const ProfileAddress = () => {
   const dispatch = useDispatch()
-  const userAddressList = useSelector(state => state.userAddressList)
+  const { userAddressList, currentAddress } = useSelector(state => state)
+  const { page } = getCurrentInstance()
+
+  // 是否可以选择地址
+  const selectFlag = useMemo(() => {
+    if (page) {
+      let params = page.path.split('?')[1]
+      params = params.split('=')[1]
+      if (params === 'true') {
+        return true
+      } else {
+        return false
+      }
+    }
+  }, [page])
 
   // 获取收货地址
   const getAddress = () => {
@@ -60,14 +75,22 @@ const ProfileAddress = () => {
     })
   }
 
-  // 返回个人中心
-  const goProfile = () => {
-    Taro.redirectTo({ url: '/pages/profile/index' })
+  // 当前用户选择地址 并返回上一页
+  const selectUserAddress = address => {
+    if (selectFlag) {
+      dispatch(setCurrentAddress(address))
+      Taro.navigateBack({ delta: 1 })
+    }
   }
+
+  // 返回个人中心
+  // const goProfile = () => {
+  //   Taro.redirectTo({ url: '/pages/profile/index' })
+  // }
 
   return (
     <View className='profileaddress'>
-      <NavBar title='我的地址' onClose={goProfile} />
+      <NavBar title='我的地址' />
       <View className='profileaddress-list'>
         {userAddressList.map(item => {
           return (
@@ -76,6 +99,9 @@ const ProfileAddress = () => {
               address={item}
               onDelAddress={delAddress}
               onEditAddress={editAddress}
+              selectFlag={selectFlag}
+              currentAddress={currentAddress}
+              onSelectUserAddress={selectUserAddress}
             />
           )
         })}

@@ -74,7 +74,7 @@ const ProfileInfo = () => {
   // 退出登录
   const logOut = () => {
     dispatch(removeToken())
-    Taro.redirectTo({ url: '/pages/profile/index' })
+    Taro.navigateBack({ delta: 1 })
   }
 
   return (
