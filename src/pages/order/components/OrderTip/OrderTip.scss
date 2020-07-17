@@ -1,0 +1,23 @@
+.order-tip {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 30vw;
+  .order-tip-img {
+    width: 400px;
+    height: auto;
+  }
+
+  .order-tip-title {
+    padding: 20px 0;
+    color: #6a6a6a;
+    font-size: 34px;
+  }
+
+  .order-tip-button {
+    padding: 15px 50px;
+    background: #56d176;
+    color: #fff;
+    border-radius: 4px;
+  }
+}

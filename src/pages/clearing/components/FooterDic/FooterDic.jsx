@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 
 import './FooterDic.scss'
 
-const FooterDic = ({ totalPrice, discountsPrice, onPay }) => {
+const FooterDic = ({ totalPrice, discountsPrice, onPay, payLoading }) => {
   return (
     <View className='footerdic'>
       <View className='footerdic-price'>¥{totalPrice}</View>
@@ -12,7 +12,7 @@ const FooterDic = ({ totalPrice, discountsPrice, onPay }) => {
         {discountsPrice}
       </View>
       <View className='footerdic-submit' onClick={onPay}>
-        去支付
+        {payLoading ? '正在支付...' : '去支付'}
       </View>
     </View>
   )

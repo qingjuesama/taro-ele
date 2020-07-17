@@ -1,5 +1,5 @@
 // 我的地址
-import Taro, { useDidShow, getCurrentInstance } from '@tarojs/taro'
+import Taro, { useDidShow, useRouter } from '@tarojs/taro'
 import React, { useMemo } from 'react'
 import { View, Text } from '@tarojs/components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,20 +17,16 @@ import './index.scss'
 const ProfileAddress = () => {
   const dispatch = useDispatch()
   const { userAddressList, currentAddress } = useSelector(state => state)
-  const { page } = getCurrentInstance()
-
+  const router = useRouter()
+  
   // 是否可以选择地址
   const selectFlag = useMemo(() => {
-    if (page) {
-      let params = page.path.split('?')[1]
-      params = params.split('=')[1]
-      if (params === 'true') {
-        return true
-      } else {
-        return false
-      }
+    if (router.params.clearing) {
+      return true
+    } else {
+      return false
     }
-  }, [page])
+  }, [router])
 
   // 获取收货地址
   const getAddress = () => {

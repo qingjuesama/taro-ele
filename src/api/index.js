@@ -97,3 +97,9 @@ export const reqSuggest = () => ajax(BASEURL + '/suggest')
 // 发现
 export const reqDiscover = ({ latitude, longitude }) =>
   ajax(BASEURL + '/discover', { latitude, longitude })
+
+// 支付
+export const reqPay = params => ajax(BASEURL + '/pay', params, 'POST')
+
+// 订单列表
+export const getOrder = () => ajax(BASEURL + '/getOrder')

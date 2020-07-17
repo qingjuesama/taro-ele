@@ -43,7 +43,7 @@ const ProfileInfo = () => {
 
     result &&
       Taro.uploadFile({
-        url: 'http://localhost:4000/api/uploadHead', //仅为示例，非真实的接口地址
+        url: 'http://localhost:4000/api/uploadHead', 
         filePath: result.tempFilePaths[0],
         name: 'head',
         formData: {
@@ -52,9 +52,7 @@ const ProfileInfo = () => {
         header: {
           Authorization: token,
         },
-        success(res) {
-          // const data = res.data
-          // console.log(data)
+        success() {
           // 重新读取用户信息
           getUserInfo()
         },

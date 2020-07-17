@@ -1,8 +1,9 @@
-import Taro, { useReady, getCurrentInstance, useRouter } from '@tarojs/taro'
-import React, { useMemo, useState } from 'react'
+import Taro from '@tarojs/taro'
+import React, { useMemo, useState, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { View } from '@tarojs/components'
 import NavBar from '@/src/components/NavBar/NavBar'
+import { reqPay } from '@/src/api'
 import CartAddress from './components/CartAddress/CartAddress'
 import Distribution from './components/Distribution/Distribution'
 import CartInfo from './components/CartInfo/CartInfo'
@@ -32,10 +33,33 @@ const Clearing = () => {
   }, [cartInfo])
 
   // 去支付
-  const pay = () => {}
-
-  console.log(useRouter())
-  // useReady(() => {})
+  const pay = useCallback(async () => {
+    if (currentAddress.id) {
+      const body = {
+        ...cartInfo,
+        shopName: shopInfo.name,
+        imagePath: shopInfo.image_path,
+        delivery: shopInfo.delivery_mode.text,
+      }
+      setPayLoading(true)
+      const result = await reqPay(body)
+      if (result.code === 0) {
+        setPayLoading(false)
+        Taro.showToast({
+          title: '支付成功',
+          icon: 'loading',
+          duration: 1500,
+          success() {
+            setTimeout(() => {
+              Taro.redirectTo({ url: '/pages/order/index' })
+            }, 1500)
+          },
+        })
+      }
+    } else {
+      Taro.showToast({ title: '请选择收货地址', icon: 'none', duration: 1500 })
+    }
+  }, [cartInfo, shopInfo, currentAddress])
 
   return (
     <View className='clearing'>
@@ -50,6 +74,7 @@ const Clearing = () => {
         totalPrice={totalPrice}
         discountsPrice={discountsPrice}
         onPay={pay}
+        payLoading={payLoading}
       />
     </View>
   )

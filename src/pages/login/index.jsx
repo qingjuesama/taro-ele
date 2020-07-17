@@ -58,7 +58,7 @@ const Login = () => {
           success() {
             setTimeout(() => {
               Taro.hideLoading()
-              Taro.navigateBack({ delta: 1 })
+              Taro.redirectTo({ url: '/pages/profile/index' })
             }, 1000)
           },
         })
