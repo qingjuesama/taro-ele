@@ -103,3 +103,6 @@ export const reqPay = params => ajax(BASEURL + '/pay', params, 'POST')
 
 // 订单列表
 export const getOrder = () => ajax(BASEURL + '/getOrder')
+// 订单详情
+export const getOrderDetail = ({ id }) =>
+  ajax(BASEURL + '/getOrderDetail', { id })

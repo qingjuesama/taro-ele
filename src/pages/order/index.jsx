@@ -1,4 +1,5 @@
 // 订单
+import Taro from '@tarojs/taro'
 import React, { useState, useEffect, useMemo } from 'react'
 import { View } from '@tarojs/components'
 import { Transition } from 'react-spring/renderprops'
@@ -28,15 +29,26 @@ const Order = () => {
     return !orderDatas.length || !isLogin
   }, [orderDatas, isLogin])
 
+  // 跳转订单详情
+  const goOrderDetail = data => {
+    Taro.navigateTo({ url: `/pages/order/detail/index?id=${data.orderNum}` })
+  }
+
   return (
     <View className='order'>
-      <View className='order-cards'>
-        {orderDatas.map((orderData, i) => (
-          <Ordercard key={'order' + i} orderData={orderData} />
-        ))}
+      <View className='order-main'>
+        <View className='order-cards'>
+          {orderDatas.map((orderData, i) => (
+            <Ordercard
+              key={'order' + i}
+              orderData={orderData}
+              onLink={goOrderDetail}
+            />
+          ))}
+        </View>
+        {isTip && <OrderTip isLogin={isLogin} orderDatas={orderDatas} />}
+        <FooterBar />
       </View>
-      {isTip && <OrderTip isLogin={isLogin} orderDatas={orderDatas} />}
-      <FooterBar />
     </View>
   )
 }

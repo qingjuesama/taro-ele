@@ -6,6 +6,7 @@ export default {
     'pages/clearing/index',
     'pages/discover/index',
     'pages/order/index',
+    'pages/order/detail/index',
     'pages/profile/index',
     'pages/profile/pages/info/index',
     'pages/profile/pages/address/index',

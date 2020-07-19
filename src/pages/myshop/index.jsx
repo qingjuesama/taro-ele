@@ -53,12 +53,14 @@ const MyShop = () => {
   // 购物车信息
   const [cartInfo, setCartInfo] = useState({
     boxPrice: 0, // 餐盒费
+    deliveryPrice: 0, // 配送费
     goodTotal: 0, // 总数量
     totalPrice: 0, // 现总价格
     originalPrice: 0, // 原总价
     isInterval: false, // 是否有必选品
     isActiveInterval: false, // 是否选择必选品,
     foods: [], // 选择商品列表
+    shopPhone: '',
   })
   // 商家评价
   const [userEstimate, setUserEstimate] = useState({
@@ -173,6 +175,8 @@ const MyShop = () => {
       data.totalPrice = totalPrice(data)
       data.originalPrice = originalPrice(data)
       data.isActiveInterval = intervalIsFoods(data)
+      data.deliveryPrice = shopInfo.float_delivery_fee
+      data.shopPhone = shopInfo.phone
       return { ...data }
     })
   }
@@ -259,11 +263,13 @@ const MyShop = () => {
   const clearCart = () => {
     setCartInfo(data => {
       data.boxPrice = 0 // 餐盒费
+      data.deliveryPrice = 0 // 配送费
       data.goodTotal = 0 // 总数量
       data.totalPrice = 0 // 现总价格
       data.originalPrice = 0 // 原总价
       data.isActiveInterval = false // 是否选择必选品,
       data.foods = [] // 选择商品列表
+      data.shopPhone = ''
       return { ...data }
     })
   }

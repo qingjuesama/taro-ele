@@ -1,0 +1,121 @@
+.order-detail {
+  min-height: 100vh;
+  background: #f5f5f5;
+  .order-detail-main {
+    padding: 20px;
+    .order-detail-tip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .order-detail-tip-left {
+        display: flex;
+        align-items: center;
+        .order-detail-tip-icon {
+          padding-right: 20px;
+          color: #38ca73;
+          font-size: 50px;
+        }
+        .order-detail-tip-title {
+          height: 100%;
+          color: #38ca73;
+          font-size: 40px;
+          line-height: 1.2;
+        }
+      }
+      .order-detail-tip-button {
+        display: inline-block;
+        height: 50px;
+        padding: 0 10px;
+        border: 1px #2395ff solid;
+        color: #2395ff;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 6px;
+      }
+    }
+    .order-carts {
+      .order-carts-head {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px #f5f5f5 solid;
+        .order-carts-title-img {
+          width: 40px;
+          height: 40px;
+          padding-right: 10px;
+        }
+
+        .order-carts-title {
+          color: #333;
+          font-size: 30px;
+        }
+      }
+      .order-carts-foods {
+        .order-carts-food {
+          display: flex;
+          padding: 20px 0;
+          border-bottom: 1px #f5f5f5 solid;
+          color: #333;
+          .order-carts-food-name {
+            overflow: hidden;
+            flex: 7;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .order-carts-food-count {
+            flex: 1;
+            font-size: 24px;
+            text-align: center;
+          }
+          .order-carts-food-price {
+            flex: 2;
+            font-size: 24px;
+            text-align: right;
+          }
+
+          .order-carts-food-totalprice {
+            flex: 2;
+            font-size: 24px;
+            text-align: right;
+          }
+        }
+      }
+      .order-carts-totalprice {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 30px 0 10px 0;
+        font-size: 36px;
+        .order-carts-shopphone {
+          color: #2395ff;
+          font-size: 26px;
+          > .icon {
+            color: #2395ff;
+          }
+        }
+        .order-carts-totalprice-text {
+          padding-right: 10px;
+          font-size: 30px;
+        }
+      }
+    }
+    .order-detail-ty-title {
+      padding: 20px 0;
+      border-bottom: 1px #f5f5f5 solid;
+      color: #333;
+      font-size: 30px;
+    }
+    .order-detail-ty-item {
+      display: flex;
+      padding: 15px 0;
+      .order-detail-ty-tab {
+        padding-right: 20px;
+        color: #6e6e6e;
+      }
+      .order-detail-ty-content {
+        color: #6e6e6e;
+      }
+    }
+  }
+}

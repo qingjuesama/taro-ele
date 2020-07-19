@@ -132,6 +132,13 @@
 					"id": -1,
 					"name": "发现",
 					"pathName": "pages/discover/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订单详情",
+					"pathName": "pages/order/detail/index",
 					"scene": null
 				}
 			]

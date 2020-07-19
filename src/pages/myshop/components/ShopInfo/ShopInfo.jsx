@@ -22,7 +22,7 @@ const ShopInfo = ({ shopInfo }) => {
   // 拨号联系商家
   const openTel = phone => {
     Taro.makePhoneCall({
-      phoneNumber: phone, 
+      phoneNumber: phone,
     })
   }
 
@@ -41,27 +41,31 @@ const ShopInfo = ({ shopInfo }) => {
         </View>
       </Card>
       <Card title='配送信息'>
-        由{shopInfo.delivery_mode.text}提供配送，约{shopInfo.order_lead_time}
-        分钟送达，距离{shopInfo.distance_text}
-        {shopInfo.piecewise_agent_fee.description}
+        <View className='shopinfo-bgcolor'>
+          由{shopInfo.delivery_mode.text}提供配送，约{shopInfo.order_lead_time}
+          分钟送达，距离{shopInfo.distance_text}
+          {shopInfo.piecewise_agent_fee.description}
+        </View>
       </Card>
       <Card title='商家服务'>
-        {shopInfo.supports.map(support => {
-          return (
-            <View key={support.id} className='serve'>
-              <View
-                style={{
-                  border: `1px #${support.icon_color} solid`,
-                  color: `#${support.icon_color}`,
-                }}
-                className='icon-name'
-              >
-                {support.icon_name}
+        <View className='shopinfo-bgcolor'>
+          {shopInfo.supports.map(support => {
+            return (
+              <View key={support.id} className='serve'>
+                <View
+                  style={{
+                    border: `1px #${support.icon_color} solid`,
+                    color: `#${support.icon_color}`,
+                  }}
+                  className='icon-name'
+                >
+                  {support.icon_name}
+                </View>
+                <View className='serve-descripton'>{support.description}</View>
               </View>
-              <View className='serve-descripton'>{support.description}</View>
-            </View>
-          )
-        })}
+            )
+          })}
+        </View>
       </Card>
       <Card title='商家实景'>
         <View className='scene'>

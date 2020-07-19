@@ -40,6 +40,7 @@ const Clearing = () => {
         shopName: shopInfo.name,
         imagePath: shopInfo.image_path,
         delivery: shopInfo.delivery_mode.text,
+        address: currentAddress,
       }
       setPayLoading(true)
       const result = await reqPay(body)
@@ -51,7 +52,7 @@ const Clearing = () => {
           duration: 1500,
           success() {
             setTimeout(() => {
-              Taro.redirectTo({ url: '/pages/order/index' })
+              Taro.reLaunch({ url: '/pages/order/index' })
             }, 1500)
           },
         })

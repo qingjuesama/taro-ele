@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 import './Ordercard.scss'
 
-const Ordercard = ({ orderData }) => {
+const Ordercard = ({ orderData, onLink }) => {
   const goodNames = useMemo(() => {
     const foods = JSON.parse(orderData.foods)
     const lc = foods.length
@@ -22,7 +22,7 @@ const Ordercard = ({ orderData }) => {
   }, [orderData])
 
   return (
-    <View className='ordercard'>
+    <View className='ordercard' onClick={() => onLink(orderData)}>
       <View className='ordercard-top'>
         <View className='ordercard-top-left'>
           <Image
