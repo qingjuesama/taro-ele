@@ -1,0 +1,48 @@
+.svip {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 10px 20px 0 20px;
+  background-image: $svip-background-image;
+  color: #644f1b;
+  border-radius: 6px;
+  .svip-left {
+    display: flex;
+    align-items: center;
+    .svip-icon {
+      margin-right: 10px;
+      width: 33px;
+      height: 33px;
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .svip-title {
+      font-weight: 600;
+    }
+    .svip-tip {
+      font-size: 22px;
+      &::before {
+        content: '\B7';
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .svip-right {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    &::after {
+      display: block;
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-right: 2px solid #8c632b;
+      border-bottom: 2px solid #8c632b;
+      transform: rotate(-45deg);
+      margin-left: 10px;
+    }
+  }
+}

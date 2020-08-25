@@ -1,0 +1,34 @@
+.ele-eitem {
+  background: $white-color;
+  font-size: $font-size-32;
+  padding-left: 15px;
+  &:last-child {
+    .ele-eitem-main {
+      border-bottom: none;
+    }
+  }
+  .ele-eitem-main {
+    margin-left: 15px;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    .ele-eitem-content-img {
+      margin-right: 15px;
+      width: 60px;
+      height: 60px;
+    }
+    .ele-eitem-content {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding-right: 20px;
+      .ele-eitem-content-title {
+        flex: 1;
+        padding: 25px 0;
+      }
+      .ele-eitem-content-icon {
+        margin-left: 10px;
+      }
+    }
+  }
+}

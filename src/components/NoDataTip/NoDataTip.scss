@@ -1,0 +1,17 @@
+.ele-nodatatipo {
+  @include flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  .ele-nodatatipo-img {
+    width: 420px;
+  }
+  .ele-nodatatipo-title {
+    font-size: $font-size-34;
+    padding-bottom: 20px;
+  }
+  .ele-nodatatipo-info {
+    font-size: $font-size-24;
+    color: $color-999;
+    padding-bottom: 20px;
+  }
+}

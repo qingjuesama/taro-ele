@@ -1,0 +1,48 @@
+.footerbar {
+  height: 100px;
+  .footerbar-mian {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 3;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    background: #fff;
+    color: $color-999;
+    box-shadow: 0 -0.3px 0.6vw rgba(0, 0, 0, 0.1);
+    .footer-item {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      .item-icon {
+        width: 36px;
+        height: 36px;
+        .taro-img {
+          display: block;
+          width: auto;
+          height: auto;
+        }
+        .item-icon-img {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+      }
+
+      .item-name {
+        font-size: 20px;
+        padding-top: 5px;
+      }
+    }
+    .active {
+      .item-name {
+        color: $blue-color;
+      }
+    }
+  }
+}
