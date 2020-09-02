@@ -98,7 +98,6 @@ const PassWord = () => {
 
   return (
     <View className='password'>
-      {console.log('旧密码', oldPassWord)}
       <View className='passowrd-main clearfix'>
         <View className='passowrd-item'>
           <MyInput

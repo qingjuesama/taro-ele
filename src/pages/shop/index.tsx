@@ -1,9 +1,9 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import React, { useEffect, useState, useCallback } from 'react'
-import { View, Image, Text, ScrollView } from '@tarojs/components'
+import { View, Image, ScrollView } from '@tarojs/components'
 import _ from 'lodash'
 
-import { H5, WEAPP } from '../../config/base'
+import { H5 } from '../../config/base'
 import getDom from '../../utils/getDom'
 import defaultShopImg from '../../assets/images/default-shop.svg'
 
@@ -18,17 +18,18 @@ import ShopItem from './components/ShopItem/ShopItem'
 import Cart from './components/Cart/Cart'
 import Estimate from './components/Estimate/Estimate'
 import ShopInfo from './components/ShopInfo/ShopInfo'
+import ShopHead from './components/Head/Head'
 
 import './index.scss'
 
 const MyShop = () => {
   const { params } = useRouter()
   // 商品列表
-  const [goods, setGoods] = useState([])
+  const [goods, setGoods] = useState<any>([])
   // 商家信息
-  const [shopInfo, setShopInfo] = useState({})
+  const [shopInfo, setShopInfo] = useState<any>({})
   // 推荐商品
-  const [recommend, setRecommend] = useState({})
+  const [recommend, setRecommend] = useState<any>({})
   // 加载完毕
   const [isOk, setIsOk] = useState(false)
   // 商家标题弹出层
@@ -61,7 +62,7 @@ const MyShop = () => {
     tags: [],
   })
   // 购物车信息
-  const [cartInfo, setCartInfo] = useState({
+  const [cartInfo, setCartInfo] = useState<any>({
     boxPrice: 0, // 餐盒费
     deliveryPrice: 0, // 配送费
     goodTotal: 0, // 总数量
@@ -77,42 +78,44 @@ const MyShop = () => {
   useEffect(() => {
     const { id } = params
     // 发送请求获取 商家信息 , 商家评论
-    Promise.all([API.reqGetShop({id}), API.reqEstimate({id})]).then((dataArr) => {
-      const [shop, estimate] = dataArr
-      const { err: shopErr, res: shopData } = shop
-      const { err: estimateErr, res: estimateData } = estimate
+    Promise.all([API.reqGetShop({ id }), API.reqEstimate({ id })]).then(
+      (dataArr) => {
+        const [shop, estimate] = dataArr
+        const { err: shopErr, res: shopData } = shop
+        const { err: estimateErr, res: estimateData } = estimate
 
-      if (shopErr || estimateErr) {
-        Taro.reLaunch({ url: '/pages/msite/index' })
-        return
-      }
+        if (shopErr || estimateErr) {
+          Taro.reLaunch({ url: '/pages/msite/index' })
+          return
+        }
 
-      if (shopData.code === 0) {
-        setGoods(shopData.data.menu)
-        setShopInfo(shopData.data.rst)
-        shopData.data.recommend[0] && setRecommend(shopData.data.recommend[0])
-        intervalFoods(shopData.data.menu)
-      } else {
-        console.log(shopData)
-      }
+        if (shopData.code === 0) {
+          setGoods(shopData.data.menu)
+          setShopInfo(shopData.data.rst)
+          shopData.data.recommend[0] && setRecommend(shopData.data.recommend[0])
+          intervalFoods(shopData.data.menu)
+        } else {
+          console.log(shopData)
+        }
 
-      if (estimateData.code === 0) {
-        setUserEstimate(estimateData.data)
-        initRightScrollTop()
-        setIsOk(true)
-        _setHeight()
-      } else {
-        console.log(estimateData)
-      }
+        if (estimateData.code === 0) {
+          setUserEstimate(estimateData.data)
+          initRightScrollTop()
+          setIsOk(true)
+          _setHeight()
+        } else {
+          console.log(estimateData)
+        }
 
-      if (shopData.code !== 0 || estimateData.code !== 0) {
-        Taro.redirectTo({ url: '/pages/msite/index' })
+        if (shopData.code !== 0 || estimateData.code !== 0) {
+          Taro.redirectTo({ url: '/pages/msite/index' })
+        }
       }
-    })
+    )
   }, [params])
 
   // 打开商家弹出层
-  const openModal = () => {
+  const onOpenModal = () => {
     setModalHide((flag) => !flag)
   }
   const onActivityHide = () => {
@@ -132,9 +135,9 @@ const MyShop = () => {
 
   // 商品展示区与是否在当前视口,更新top值
   const _setTop = async () => {
-    const [res] = await getDom('#order-scroll')
-    if (res[0].top > 40) {
-      WEAPP && Taro.pageScrollTo({ scrollTop: 9999 })
+    const res: any = await getDom('#order-scroll')
+    if (res[0][0].top > 40) {
+      !H5 && Taro.pageScrollTo({ scrollTop: 9999 })
       H5 && window.scrollTo(0, 9999)
     }
   }
@@ -312,7 +315,7 @@ const MyShop = () => {
 
   // 返回
   const onBack = () => {
-    Taro.navigateBack({ delta: 1 })
+    Taro.reLaunch({ url: '/pages/msite/index' })
   }
 
   // 结算
@@ -339,69 +342,16 @@ const MyShop = () => {
 
   return (
     <View className='myshop' id='myshop'>
-      <View className='myshop-top'>
-        <View
-          className='myshop-top-bg'
-          style={{
-            background: `url(${imgUrl(
-              shopInfo.shop_sign.image_hash || shopInfo.image_path
-            )})`,
-          }}
-        >
-          {H5 && <View className='icon icon-fanhui' onClick={onBack}></View>}
-        </View>
-        <View className='myshop-top-main'>
-          <View className='myshop-logo'>
-            <View className='myshop-logo-pinpai'>品牌</View>
-            <Image
-              className='myshop-logo-img'
-              src={imgUrl(shopInfo.image_path)}
-            />
-          </View>
-          <View className='myshop-name' onClick={openModal}>
-            <View className='myshop-name-title'>{shopInfo.name}</View>
-            <View className='icon icon-jiantou'></View>
-          </View>
-          <View className='myshop-pingjia'>
-            <Text className='myshop-pingjia-item'>评价{shopInfo.rating}</Text>
-            <Text className='myshop-pingjia-item myshop-pingjia-item-c'>
-              月售{shopInfo.recent_order_num}单
-            </Text>
-            <Text className='myshop-pingjia-item'>
-              {shopInfo.delivery_mode.text}约{shopInfo.order_lead_time}分钟
-            </Text>
-          </View>
-          {!!shopInfo.activity_tags.length && (
-            <View className='myshop-tags' onClick={(e) => onActivityHide(e)}>
-              <View className='myshop-tags-left'>
-                {shopInfo.activity_tags.map((tag) => {
-                  return (
-                    <Text className='myshop-tags-left-tag' key={tag.text}>
-                      {tag.text}
-                    </Text>
-                  )
-                })}
-              </View>
-              <View className='myshop-tags-right'>
-                <View className='myshop-tags-right-title'>
-                  {shopInfo.activities.length}个优惠
-                </View>
-                <View className='icon icon-xiajiantou'></View>
-              </View>
-            </View>
-          )}
-          <View className='myshop-notice'>
-            <Text className='myshop-notice-content'>
-              公告：{shopInfo.promotion_info}
-            </Text>
-          </View>
-        </View>
-      </View>
-
+      <ShopHead
+        shopInfo={shopInfo}
+        onOpenModal={onOpenModal}
+        onActivityHide={onActivityHide}
+        onBack={onBack}
+      />
       {/* 商家介绍弹出层 */}
       <ShopInfoModal
         shopInfo={shopInfo}
-        onOpenModal={openModal}
+        onOpenModal={onOpenModal}
         modalHide={modalHide}
       />
       {/* 优惠活动弹出层 */}

@@ -118,7 +118,6 @@ const SelectCity = () => {
   const onInput = (e: BaseEventOrig<InputProps.inputEventDetail>) => {
     let value = e.detail.value
     setCityValue(value)
-    console.log(value)
     value = value.trim()
     if (!value) {
       setResultCityList([])

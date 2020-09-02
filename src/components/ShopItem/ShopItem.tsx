@@ -29,7 +29,7 @@ const ShopItem: FC<ShopItemProps> = (props) => {
   // 跳转商家详情
   const goShop = () => {
     const { id } = shopdata
-    Taro.navigateTo({ url: `/pages/shop/index?id=${id}` })
+    Taro.reLaunch({ url: `/pages/shop/index?id=${id}` })
   }
 
   return (

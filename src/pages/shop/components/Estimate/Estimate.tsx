@@ -7,7 +7,7 @@ import Star from '../../../../components/Star/Star'
 import imgUrl from '../../../../utils/imgUrl'
 import getDom from '../../../../utils/getDom'
 import API from '../../../../api'
-import { WEAPP, H5, defaultImg } from '../../../../config/base'
+import { H5, defaultImg } from '../../../../config/base'
 
 import './Estimate.scss'
 
@@ -143,7 +143,7 @@ const Estimate: FC<EstimateProps> = (props) => {
   const onScroll = _.throttle(async () => {
     const [result] = await getDom('.tags')
     if (result[0].top > 115) {
-      WEAPP &&
+      !H5 &&
         Taro.pageScrollTo({
           scrollTop: 9999,
         })

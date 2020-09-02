@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import React, { useMemo, useState, useCallback } from 'react'
 import { View } from '@tarojs/components'
 import { useSelector } from 'react-redux'
-import { H5, WEAPP } from '../../config/base'
+import { H5 } from '../../config/base'
 import NavBar from '../../components/NavBar/NavBar'
 import API from '../../api'
 import { Reducers } from '../../redux/interface'
@@ -77,7 +77,7 @@ const Clearing = () => {
 
   return (
     <View className='clearing'>
-      {H5 && <NavBar title='结算' />}
+      {H5 && <NavBar title='结算' icon='fanhui' />}
       <CartAddress
         useAddress={currentAddress}
         onSelectAddress={selectAddress}

@@ -25,7 +25,6 @@ import MsiteNavSwipe from './components/NavSwipe/NavSwipe'
 import MsiteAdvertising from './components/Advertising/Advertising'
 import MsiteSvip from './components/Svip/Svip'
 
-
 import { Ifilter, IShopList } from '../../api/interface'
 
 import './index.scss'
