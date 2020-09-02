@@ -1,0 +1,25 @@
+.search-result-item {
+  padding: 30px 20px;
+  border-bottom: 1px #eee solid;
+  &:last-of-type {
+    border: none;
+  }
+  .search-result-item-top {
+    display: flex;
+    justify-content: space-between;
+    .search-result-top-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 30px;
+    }
+
+    .search-result-item-top-distance {
+      font-size: 24px;
+    }
+  }
+
+  .search-result-item-address {
+    font-size: 24px;
+    color: #333;
+  }
+}

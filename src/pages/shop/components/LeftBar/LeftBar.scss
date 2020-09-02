@@ -1,0 +1,35 @@
+.leftbar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 30px 15px;
+  background: #f8f8f8;
+  .leftbar-icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 10px;
+  }
+  .leftbar-name {
+    color: #666;
+    font-size: 24px;
+  }
+
+  .leftbar-num {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    height: 25px;
+    padding: 0 7px;
+    background-image: linear-gradient(-90deg, #ff7416, #ff3c15 98%);
+    color: #fff;
+    font-size: 24px;
+    line-height: 25px;
+    border-radius: 15px;
+  }
+}
+.leftbar-active {
+  background: #fff;
+  .leftbar-name {
+    color: #000;
+  }
+}

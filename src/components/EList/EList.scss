@@ -1,8 +1,7 @@
 .ele-elist {
   .ele-elist-title {
-    padding: 25px 0;
+    margin: 25px 0 20px 25px;
+    font-size: $font-size-24;
+    color: $color-999;
   }
-  // > :last-child {
-  //   border-bottom: none;
-  // }
 }

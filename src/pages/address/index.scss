@@ -1,0 +1,17 @@
+.selectaddress {
+  height: 100vh;
+  background: #f4f4f4;
+  color: #333;
+  -webkit-overflow-scrolling: touch; //ios不流畅问题
+}
+.start {
+  transform: translateX(100vw);
+}
+.end {
+  transform: translateX(0);
+}
+.add {
+  position: absolute;
+  right: 20px;
+  top: 24px;
+}

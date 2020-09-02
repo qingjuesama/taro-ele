@@ -1,0 +1,20 @@
+.distribution {
+  margin: 20px;
+  padding: 10px 20px;
+  background: #fff;
+  .distribution-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    &:first-child {
+      border-bottom: 1px #f8f8f8 solid;
+    }
+    .row-left {
+      color: #333;
+    }
+
+    .row-right {
+      color: #2395ff;
+    }
+  }
+}

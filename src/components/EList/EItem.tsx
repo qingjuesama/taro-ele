@@ -1,15 +1,16 @@
 import React, { FC } from 'react'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import classnames from 'classnames'
 import EIcon from '../EIcon/EIcon'
 
 import './EItem.scss'
 
+type Arrow = 'jiantou1' | 'none'
 export interface EItemProps {
   thumb?: string | React.ReactNode
   extra?: string | React.ReactNode
-  arrow?: 'horizontal'
-  onClick: () => void
+  arrow?: Arrow
+  onClick?: () => void
   className?: string
 }
 
@@ -18,18 +19,26 @@ const EItem: FC<EItemProps> = (props) => {
   const classes = classnames('ele-eitem', className)
 
   const isThumb = () => {
-    if (thumb as string) {
-      return <Image src={thumb as string} className='ele-eitem-content-img' />
+    if (typeof thumb === 'string') {
+      return <Image src={thumb} className='ele-eitem-content-img' />
     } else {
       return thumb
     }
   }
 
   const isExtra = () => {
-    if (extra as string) {
-      return <View>{extra}</View>
+    if (typeof extra === 'string') {
+      return <View className='ele-eitem-extra'>{extra}</View>
     } else {
       return extra
+    }
+  }
+
+  const isArrow = () => {
+    if (arrow === 'none') {
+      return false
+    } else {
+      return true
     }
   }
 
@@ -40,7 +49,7 @@ const EItem: FC<EItemProps> = (props) => {
         <View className='ele-eitem-content'>
           <View className='ele-eitem-content-title'>{children}</View>
           {isExtra && isExtra()}
-          {arrow && (
+          {isArrow() && (
             <EIcon
               type='jiantou1'
               size={25}
@@ -54,6 +63,6 @@ const EItem: FC<EItemProps> = (props) => {
   )
 }
 EItem.defaultProps = {
-  arrow: 'horizontal',
+  arrow: 'jiantou1',
 }
 export default EItem

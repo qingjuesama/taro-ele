@@ -1,15 +1,18 @@
-export interface CurrentAddress {
+export interface Address {
   id: string
   city: string
   address: string
   address_detail: string
-  latitude: number
-  longitude: number
+  latitude: string
+  longitude: string
   name: string
   phone: string
   sex: string
 }
 
 export interface Reducers {
-  currentAddress: CurrentAddress
+  currentAddress: Address
+  userAddress: Address
+  userAddressList: Address[]
+  token: string
 }

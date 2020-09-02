@@ -1,15 +1,14 @@
 import { request, getStorageSync } from '@tarojs/taro'
 
 class Server {
-  // 用户token
-  protected Authorization: string = getStorageSync('token') || ''
-
   protected ajax({
     url,
     data,
     method = 'GET',
     ...restParams
   }: Taro.RequestParams) {
+    // 用户token
+    const Authorization: string = getStorageSync('token') || ''
     // 判断请求类型
     let contentType: string
     // GET请求
@@ -27,7 +26,7 @@ class Server {
           method,
           header: {
             'content-type': contentType,
-            Authorization: this.Authorization,
+            Authorization,
           },
           ...restParams,
           // 成功回调

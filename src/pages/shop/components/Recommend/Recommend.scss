@@ -1,0 +1,35 @@
+.recommend {
+  display: inline-block;
+  width: 250px;
+  margin-right: 30px;
+  .recommend-img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+  }
+
+  .recommend-main {
+    .recommend-main-title {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .recommend-main-pingjia {
+      font-size: 24px;
+      color: #999;
+    }
+
+    .recommend-main-numpice {
+      display: flex;
+      justify-content: space-between;
+      .recommend-main-numpice-price {
+        color: #ff5339;
+        font-size: 36px;
+        .price-fuhao {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

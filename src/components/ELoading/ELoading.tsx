@@ -5,7 +5,7 @@ import setstylepx from '../../utils/setstylepx'
 import './ELoading.scss'
 
 interface ELoadingProps {
-  height?: number
+  height?: number | string
   className?: string
   move?: boolean
   title?: string
@@ -15,6 +15,15 @@ interface ELoadingProps {
 const ELoading: FC<ELoadingProps> = (props) => {
   const { height, className, move, title, icon } = props
   const classes = classnames('ele-isloading', className)
+
+  const pHeight = () => {
+    if (typeof height === 'string') {
+      return height
+    } else {
+      return setstylepx(height)
+    }
+  }
+
   if (move) {
     return (
       <View className='ele-move'>
@@ -23,9 +32,7 @@ const ELoading: FC<ELoadingProps> = (props) => {
       </View>
     )
   } else {
-    return (
-      <View className={classes} style={{ height: setstylepx(height) }}></View>
-    )
+    return <View className={classes} style={{ height: pHeight() }}></View>
   }
 }
 

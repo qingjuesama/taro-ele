@@ -1,16 +1,15 @@
 // 我的
 import Taro, { useDidShow } from '@tarojs/taro'
 import React, { useState } from 'react'
-import { View, Image } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import API from '../../api'
+import { IUserInfo } from '../../api/interface'
 import FooterNav from '../../components/FooterNav/FooterNav'
 
-import './index.scss'
-
-import UserHead from './components/UserHead/UserHead'
-import Row from '../../components/Row/Row'
-
 import EList from '../../components/EList'
+import ELoading from '../../components/ELoading/ELoading'
+import ProfileUserHead from './components/UserHead/UserHead'
+import ProfileMoney from './components/Money/Money'
 
 import red from '../../assets/images/red.svg'
 import gold from '../../assets/images/gold.svg'
@@ -22,44 +21,96 @@ import downloadImg from '../../assets/images/download.svg'
 import ruleImg from '../../assets/images/rule.svg'
 import defaultHead from '../../assets/images/default-head.png'
 
+import './index.scss'
+
+const tabList = {
+  address: {
+    img: addressImg,
+    title: '我的地址',
+  },
+  shopping: [
+    {
+      id: 1,
+      img: pointImg,
+      title: '金币商城',
+    },
+    {
+      id: 2,
+      img: commendImg,
+      title: '分享拿20元现金',
+    },
+  ],
+  eleInfo: [
+    {
+      id: 1,
+      img: serviceImg,
+      title: '我的客服',
+    },
+    {
+      id: 2,
+      img: downloadImg,
+      title: '下载饿了么APP',
+    },
+    {
+      id: 3,
+      img: ruleImg,
+      title: '规则中心',
+    },
+  ],
+}
+
+const moneyList = [
+  {
+    id: 1,
+    img: red,
+    title: '红包',
+  },
+  {
+    id: 2,
+    img: gold,
+    title: '金币',
+  },
+]
+
+const initHeadInfo = {
+  phone: '登录后享受更多权限',
+  userName: '登录/注册',
+  headImg: defaultHead,
+}
+
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState({
-    phone: '登录后享受更多权限',
-    userName: '登录/注册',
-    headImg: defaultHead,
-  })
+  const { address, shopping, eleInfo } = tabList
+  const [userInfo, setUserInfo] = useState({} as IUserInfo)
 
   // 获取用户信息
   const getUserInfo = async () => {
-    const [err, result] = await API.reqUserInfo()
-    if (err?.name === '401') {
-      console.log(err)
+    const { err, res } = await API.reqUserInfo()
+    if (err) {
+      setUserInfo(initHeadInfo)
       return
     }
-    if (result.code === 0) {
-      setUserInfo(result.data)
-    } else {
-      console.log(result)
+    if (res.code === 0) {
+      setUserInfo(res.data)
     }
   }
 
   useDidShow(() => {
     getUserInfo()
-  }, [])
+  })
 
   // 跳转到用户信息 或者 登录
   const onLink = () => {
     if (userInfo.id) {
-      Taro.navigateTo({ url: '/pages/profile/pages/info/index' })
+      Taro.navigateTo({ url: '/pages/profile/info/index' })
     } else {
-      Taro.navigateTo({ url: '/pages/login/index' })
+      Taro.reLaunch({ url: '/pages/login/index' })
     }
   }
 
   // 跳转到我的地址
   const goAddress = () => {
     if (userInfo.id) {
-      Taro.navigateTo({ url: '/pages/profile/pages/address/index' })
+      Taro.navigateTo({ url: '/pages/profile/address/index' })
     } else {
       Taro.showToast({ title: '请先登录', icon: 'none' })
     }
@@ -70,74 +121,42 @@ const Profile = () => {
     Taro.showToast({ title: '暂未开放', icon: 'none' })
   }
 
+  if (!userInfo.headImg) {
+    return <ELoading height='100vh' />
+  }
+
   return (
     <View className='profile'>
-      <UserHead userInfo={userInfo} onLink={onLink} />
-      <View className='user-money'>
-        <View className='money-red' onClick={tipNull}>
-          <View className='money-imgs'>
-            <Image src={red} className='money-image' />
-          </View>
-          <View className='money-txt'>红包</View>
-        </View>
-        <View className='money-red' onClick={tipNull}>
-          <View className='money-imgs'>
-            <Image src={gold} className='money-image' />
-          </View>
-          <View className='money-txt'>金币</View>
-        </View>
-      </View>
-      {/* <View className='profile-block'>
-        <Row
-          imgUrl={addressImg}
-          addressText='我的地址'
-          border={false}
-          onGo={goAddress}
-        />
-      </View>
-      <View className='profile-block'>
-        <Row imgUrl={pointImg} addressText='金币商城' />
-        <Row imgUrl={commendImg} addressText='分享拿20元现金' border={false} />
-      </View>
-      <View className='profile-block'>
-        <Row imgUrl={serviceImg} addressText='我的客服' />
-        <Row imgUrl={downloadImg} addressText='下载饿了么APP' />
-        <Row imgUrl={ruleImg} addressText='规则中心' border={false} />
-      </View>
-      */}
+      <ProfileUserHead userInfo={userInfo} onLink={onLink} />
+
+      <ProfileMoney moneyList={moneyList} onClick={tipNull} />
 
       <EList className='profile-list'>
-        <EList.EItem onClick={() => console.log(123)} thumb={addressImg}>
-          我的地址
+        <EList.EItem onClick={goAddress} thumb={address.img}>
+          {address.title}
         </EList.EItem>
       </EList>
+
       <EList className='profile-list'>
-        <EList.EItem
-          onClick={() => console.log(123)}
-          thumb={pointImg}
-          extra={
-            <Image
-              src={defaultHead}
-              style={{
-                height: '80px',
-                width: '80px',
-                borderRadius: '50%',
-                marginTop: '10px',
-                marginBottom: '10px',
-              }}
-            />
-          }
-        >
-          <View style={{ fontWeight: 'bold' }}>我的地址</View>
-        </EList.EItem>
-        <EList.EItem
-          onClick={() => console.log(123)}
-          thumb={commendImg}
-          extra={<View style={{ fontWeight: 'bold' }}>我的地址</View>}
-        >
-          我的地址
-        </EList.EItem>
+        {shopping.map((item) => {
+          return (
+            <EList.EItem key={item.id} onClick={tipNull} thumb={item.img}>
+              {item.title}
+            </EList.EItem>
+          )
+        })}
       </EList>
+
+      <EList className='profile-list'>
+        {eleInfo.map((item) => {
+          return (
+            <EList.EItem key={item.id} onClick={tipNull} thumb={item.img}>
+              {item.title}
+            </EList.EItem>
+          )
+        })}
+      </EList>
+
       <View className='profile-privacy'>政策隐私</View>
       <FooterNav />
     </View>

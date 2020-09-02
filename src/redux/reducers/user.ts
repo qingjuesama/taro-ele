@@ -1,22 +1,28 @@
 import Taro from '@tarojs/taro'
 import {
-  USERADDRESS,
-  SETUSERADDRESS,
-  REMOVEUSERADDRESS,
   GETUSERADDRESSLIST,
   SETTOKEN,
   REMOVETOKEN,
   CURRENTADDRESS,
+  USERADDRESS,
+  SETUSERADDRESS,
+  REMOVEUSERADDRESS,
+  REMOVEUSERADDRESSLIST,
 } from '../action-types'
+import { Reducers } from '../interface'
 
-interface Action<T = any> {
-  type: string
-  payload: T
+interface Action<T, D = string> {
+  type: T
+  payload: D
 }
 
 // 用户token
+type TOKENTYPE = typeof SETTOKEN | typeof REMOVETOKEN
 const initToken: string = Taro.getStorageSync('token') || ''
-const token = (state = initToken, action: Action<string>) => {
+const token = (
+  state = initToken,
+  action: Action<TOKENTYPE, Reducers['token']>
+) => {
   const { type, payload } = action
   switch (type) {
     case SETTOKEN:
@@ -29,6 +35,7 @@ const token = (state = initToken, action: Action<string>) => {
 }
 
 // 当前收货地址
+type CURRENTADDRESSTYPE = typeof CURRENTADDRESS
 const initCurrentAddress = {
   id: '',
   city: '', // 城市名称
@@ -40,7 +47,10 @@ const initCurrentAddress = {
   phone: '', // 收货人手机
   sex: '', // 性别
 }
-const currentAddress = (state = initCurrentAddress, action) => {
+const currentAddress = (
+  state = initCurrentAddress,
+  action: Action<CURRENTADDRESSTYPE, Reducers['currentAddress']>
+) => {
   const { type, payload } = action
   switch (type) {
     case CURRENTADDRESS:
@@ -51,18 +61,30 @@ const currentAddress = (state = initCurrentAddress, action) => {
 }
 
 // 收货地址列表
+type USERADDRESSLISTTYPE =
+  | typeof GETUSERADDRESSLIST
+  | typeof REMOVEUSERADDRESSLIST
 const initAddressList = []
-const userAddressList = (state = initAddressList, action) => {
+const userAddressList = (
+  state = initAddressList,
+  action: Action<USERADDRESSLISTTYPE, Reducers['userAddressList']>
+) => {
   const { type, payload } = action
   switch (type) {
     case GETUSERADDRESSLIST:
       return payload
+    case REMOVEUSERADDRESSLIST:
+      return []
     default:
       return state
   }
 }
 
 // 编辑收货地址
+type USERADDRESSTYPE =
+  | typeof USERADDRESS
+  | typeof SETUSERADDRESS
+  | typeof REMOVEUSERADDRESS
 const initUserAddress = {
   id: '',
   city: '', // 城市名称
@@ -74,7 +96,10 @@ const initUserAddress = {
   phone: '', // 收货人手机
   sex: '', // 性别
 }
-const userAddress = (state = initUserAddress, action) => {
+const userAddress = (
+  state = initUserAddress,
+  action: Action<USERADDRESSTYPE, Reducers['userAddress']>
+) => {
   const { type, payload } = action
   switch (type) {
     case USERADDRESS:

@@ -1,6 +1,13 @@
 // 首页
-import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { View, Text, ScrollView } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  Fragment,
+} from 'react'
+import { View, ScrollView, Navigator } from '@tarojs/components'
 import { useSelector } from 'react-redux'
 import API from '../../api'
 import { Reducers } from '../../redux/interface'
@@ -8,6 +15,7 @@ import { Reducers } from '../../redux/interface'
 import NavBar from '../../components/NavBar/NavBar'
 import EIcon from '../../components/EIcon/EIcon'
 import FilterBar, { FilterParams } from '../../components/FilterBar/FilterBar'
+import ShopList from '../../components/ShopList/ShopList'
 import ELoading from '../../components/ELoading/ELoading'
 import NoDataTip from '../../components/NoDataTip/NoDataTip'
 import FooterNav from '../../components/FooterNav/FooterNav'
@@ -16,7 +24,7 @@ import MsiteSearchBar from './components/SearchBar/SearchBar'
 import MsiteNavSwipe from './components/NavSwipe/NavSwipe'
 import MsiteAdvertising from './components/Advertising/Advertising'
 import MsiteSvip from './components/Svip/Svip'
-import ShopList from '../../components/ShopList/ShopList'
+
 
 import { Ifilter, IShopList } from '../../api/interface'
 
@@ -28,7 +36,7 @@ const Msite = () => {
   const [shopList, setShopList] = useState<IShopList[]>([])
   const [scrollTop, setScrollTop] = useState(0)
   const [isScrollY, setIsScrollY] = useState(true)
-  const { currentAddress } = useSelector((state: Reducers) => state)
+  const { currentAddress, token } = useSelector((state: Reducers) => state)
   const [filterParams, setFilterParams] = useState({} as FilterParams)
   const [offset, setOffset] = useState(0)
   const [isMove, setIsMove] = useState(true)
@@ -160,6 +168,15 @@ const Msite = () => {
     setIsScrollY(isScroll)
   }, [])
 
+  // 跳转到登录
+  const handleToLogin = () => {
+    Taro.reLaunch({ url: '/pages/login/index' })
+  }
+  // 跳转到选择地址
+  const handleSelectAddress = () => {
+    Taro.reLaunch({ url: '/pages/address/index' })
+  }
+
   return (
     <ScrollView
       className='msite'
@@ -172,12 +189,20 @@ const Msite = () => {
       <View>
         <NavBar className='msite-navbar'>
           <EIcon type='daohangdizhi' size={34} color='#fff' />
-          <Text className='msite-navbar-title ellipsis'>
+          <Navigator
+            url='/pages/address/index'
+            openType='redirect'
+            className='msite-navbar-title ellipsis'
+          >
             {currentAddress.address}
-          </Text>
+          </Navigator>
           <EIcon type='xiajiantou' size={16} color='#fff' />
         </NavBar>
-        <MsiteSearchBar icon='sousuo' title='搜索饿了么商家、商品名称' />
+        <MsiteSearchBar
+          icon='sousuo'
+          title='搜索饿了么商家、商品名称'
+          url='/pages/search/index'
+        />
         <MsiteNavSwipe navSwipeList={navSwipeList} />
         <MsiteAdvertising
           title='品质套餐'
@@ -186,30 +211,40 @@ const Msite = () => {
           url='/pages/ranking'
         />
         <MsiteSvip />
-        <FilterBar
-          title='推荐商家'
-          filterData={filterData}
-          onChange={handleFilterChange}
-          onScrollTop={handleScrollTop}
-          onIsScroll={handleIsScroll}
-        />
-        <ShopList shopListData={shopList} renderLoading={handleLoading()} />
+        {token && currentAddress.latitude && (
+          <Fragment>
+            <FilterBar
+              title='推荐商家'
+              filterData={filterData}
+              onChange={handleFilterChange}
+              onScrollTop={handleScrollTop}
+              onIsScroll={handleIsScroll}
+              topDomName='.searchbar'
+              className='msite-filter'
+            />
+            <ShopList shopListData={shopList} renderLoading={handleLoading()} />
+          </Fragment>
+        )}
+        {!token && currentAddress.latitude && (
+          <NoDataTip
+            className='nologin'
+            img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
+            title='没有结果'
+            info='登录后查看更多商家'
+            btnContent='登录'
+            onButtonClick={handleToLogin}
+          />
+        )}
 
-        {/* <NoDataTip
-          img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
-          title='没有结果'
-          info='登录后查看更多商家'
-          btnContent='登录'
-          onButtonClick={() => {}}
-        />
-
-        <NoDataTip
-          img='//fuss10.elemecdn.com/2/67/64f199059800f254c47e16495442bgif.gif'
-          title='输入地址后才能订餐哦'
-          btnContent='手动选择地址'
-          onButtonClick={() => {}}
-        /> */}
-
+        {!currentAddress.latitude && (
+          <NoDataTip
+            className='nologin'
+            img='//fuss10.elemecdn.com/2/67/64f199059800f254c47e16495442bgif.gif'
+            title='输入地址后才能订餐哦'
+            btnContent='手动选择地址'
+            onButtonClick={handleSelectAddress}
+          />
+        )}
         <FooterNav />
       </View>
     </ScrollView>

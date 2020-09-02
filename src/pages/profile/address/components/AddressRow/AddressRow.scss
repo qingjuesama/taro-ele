@@ -1,0 +1,46 @@
+.addressrow {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px #f0f0f0 solid;
+  background: #fff;
+  color: #6f6f6f;
+  .addressrow-icon {
+    padding-left: 20px;
+    color: #4cd964;
+    font-size: 60px;
+  }
+  .addressrow-left {
+    flex: 1;
+    padding-left: 20px;
+    .myinfo {
+      display: flex;
+      align-items: center;
+      .myname {
+        color: #333;
+        font-size: 34px;
+        font-weight: 600;
+      }
+      .mysex {
+        margin-left: 10px;
+      }
+      .myphone {
+        margin-left: 20px;
+        font-size: 32px;
+      }
+    }
+    .myaddress {
+    }
+  }
+
+  .addressrow-right {
+    display: flex;
+    align-items: center;
+    .addressrow-right-icon {
+      padding: 0 20px;
+      .icon {
+        font-size: 34px;
+      }
+    }
+  }
+}

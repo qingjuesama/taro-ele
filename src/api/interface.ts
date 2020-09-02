@@ -137,3 +137,87 @@ export interface ILogin {
   message: string
   token: string
 }
+
+// 用户信息
+export interface IUserInfo {
+  headImg: string
+  id?: string
+  phone: string
+  userName: string
+}
+
+// 修改用户名
+export interface IUserNameParams {
+  userName: string
+}
+// 修改密码
+export interface PasswordParams {
+  oldPassWord: string
+  newPassWord: string
+}
+// 获取地址
+export interface IUserAddressParams {
+  id: string
+}
+
+// 地址
+export interface Address {
+  address: string
+  address_detail: string
+  city: string
+  id: string
+  latitude: string
+  longitude: string
+  name: string
+  phone: string
+  sex: string
+}
+
+// 城市列表
+export interface GETCityList {
+  alphabet: string[]
+  cityList: CityList[]
+}
+
+export interface Cities {
+  id: string
+  latitude: string
+  longitude: string
+  name: string
+  pinyin: string
+}
+export interface CityList {
+  cities: Cities[]
+  idx: string
+}
+
+// 热门搜索
+export interface HotSearchWords {
+  word: string
+}
+
+// 商家列表详情 筛选头
+export interface FoodsPage {
+  id: number
+  name: string
+  restaurant_category_ids: number[]
+}
+
+// 商家列表详情 筛选头
+export interface FoodsClass {
+  count: number
+  id: number | null
+  ids: number[]
+  level: number
+  name: string
+  sub_categories: SubCategories[]
+}
+export interface SubCategories {
+  count: number
+  id: number
+  ids: null
+  image_url: string
+  level: number
+  name: string
+  sub_categories: any[]
+}

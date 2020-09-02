@@ -1,19 +1,18 @@
 .ele-eitem {
   background: $white-color;
   font-size: $font-size-32;
-  padding-left: 15px;
+  padding-left: 20px;
   &:last-child {
     .ele-eitem-main {
       border-bottom: none;
     }
   }
   .ele-eitem-main {
-    margin-left: 15px;
     border-bottom: 1px solid #f5f5f5;
     display: flex;
     align-items: center;
     .ele-eitem-content-img {
-      margin-right: 15px;
+      margin-right: 10px;
       width: 60px;
       height: 60px;
     }
@@ -28,6 +27,9 @@
       }
       .ele-eitem-content-icon {
         margin-left: 10px;
+      }
+      .ele-eitem-extra {
+        color: $color-666;
       }
     }
   }

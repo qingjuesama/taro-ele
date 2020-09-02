@@ -60,14 +60,14 @@ const FooterNav: FC = () => {
   useEffect(() => {
     // 获取路由路径
     const current: Taro.Current = getCurrentInstance()
-    if (current.app?.config?.router && current.router) {
-      if (H5) {
+    if (H5) {
+      if (current.app) {
         // H5端
         setPath(current.app.config.router.pathname)
-      } else {
-        // 小程序
-        setPath(current.router.path)
       }
+    } else {
+      // 小程序
+      setPath(current.router.path)
     }
   }, [])
 

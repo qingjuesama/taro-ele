@@ -41,6 +41,7 @@ type EIconType =
   | 'sousuo'
   | 'loading'
 
+
 export interface EIconProps extends StandardProps {
   black?: boolean
   type: EIconType

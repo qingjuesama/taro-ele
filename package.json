@@ -46,6 +46,8 @@
     "@types/react-transition-group": "^4.4.0",
     "await-to-js": "^2.1.1",
     "classnames": "^2.2.6",
+    "dayjs": "^1.8.34",
+    "lodash": "^4.17.20",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "react-redux": "^7.2.0",

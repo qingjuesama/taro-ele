@@ -6,12 +6,14 @@ import EIcon, { EIconProps } from '../EIcon/EIcon'
 
 import './NavBar.scss'
 
+type onRightHref = () => void
+
 interface INavBarProps extends Omit<EIconProps, 'type'> {
   icon?: EIconProps['type']
   onIconClick?: () => void
   title?: string
   rightText?: string
-  rightHref?: string
+  rightHref?: string | onRightHref
 }
 
 const NavBar: React.FC<INavBarProps> = (props) => {
@@ -26,17 +28,32 @@ const NavBar: React.FC<INavBarProps> = (props) => {
     ...restProps
   } = props
   const classes = classnames('navbar', className)
+
+  const handleRightHref = () => {
+    if (rightHref && rightText) {
+      if (typeof rightHref === 'string') {
+        return (
+          <Navigator url={rightHref} className='navbar-href'>
+            {rightText}
+          </Navigator>
+        )
+      } else {
+        return (
+          <View className='navbar-href' onClick={rightHref}>
+            {rightText}
+          </View>
+        )
+      }
+    }
+  }
+
   return (
     <View className={classes} {...restProps}>
       {icon && (
         <EIcon className='navbar-black' type={icon} onClick={onIconClick} />
       )}
       {title && <View className='navbar-title'>{title}</View>}
-      {rightHref && rightText && (
-        <Navigator url={rightHref} className='navbar-href'>
-          {rightText}
-        </Navigator>
-      )}
+      {handleRightHref()}
       {children}
     </View>
   )

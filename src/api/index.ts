@@ -1,7 +1,8 @@
+import Taro from '@tarojs/taro'
 import to from 'await-to-js'
 import Server from './serve'
 import configStore from '../redux/store'
-import { removeToken } from '../redux/actions/user'
+import { removeToken, removeUserAddressList } from '../redux/actions/user'
 import { H5 } from '../config/base'
 import {
   Ip,
@@ -11,6 +12,15 @@ import {
   IRegister,
   ILoginParams,
   ILogin,
+  IUserInfo,
+  IUserNameParams,
+  PasswordParams,
+  IUserAddressParams,
+  Address,
+  GETCityList,
+  HotSearchWords,
+  FoodsPage,
+  FoodsClass,
 } from './interface'
 
 let BASEURL: string
@@ -33,6 +43,10 @@ interface APILayout<T> {
   code: number
   data: T
 }
+interface APIMessage<T> {
+  code: number
+  message: T
+}
 
 class API extends Server {
   // 异常处理
@@ -48,11 +62,13 @@ class API extends Server {
     if (code === 401) {
       // 清空token
       store.dispatch(removeToken())
+      // 清空用户地址
+      store.dispatch(removeUserAddressList())
     }
     const errInfo = {
-      '401': '请先登录',
-      '404': '服务器未响应',
-      '500': '服务器繁忙',
+      401: '请先登录',
+      404: '服务器未响应',
+      500: '服务器繁忙',
     }
     return {
       code,
@@ -130,212 +146,270 @@ class API extends Server {
     return { err, res }
   }
 
-  // // 搜索城市列表
-  // async reqCityList(params: object) {
-  //   let [err, result] = await to(
-  //     this.ajax({
-  //       url: BASEURL + '/city',
-  //       data: params,
-  //     })
-  //   )
-  //   err = this.errMessage(err)
+  // 获取用户信息
+  async reqUserInfo() {
+    let [error, result] = await to(this.ajax({ url: BASEURL + '/userinfo' }))
 
-  //   return [err, result]
-  // }
+    const err = this.errMessage(error, result)
+    const res: APILayout<IUserInfo> = result?.data
 
-  // // 搜索当前城市详细地址
-  // async reqAddressDetail(params) {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/address', params))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 修改用户名
+  async reqSetUserName(username: IUserNameParams) {
+    let [error, result] = await to(
+      this.ajax({
+        url: BASEURL + '/setUserName',
+        data: username,
+        method: 'POST',
+      })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<string> = result?.data
 
-  // // 获取用户信息
-  // async reqUserInfo() {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/userinfo'))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 修改用户密码
+  async reqSetPassWord(params: PasswordParams) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/setPassWord', data: params, method: 'POST' })
+    )
 
-  // // 获取用户地址
-  // async reqUserAddress() {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/userAddress'))
-  //   err = this.errMessage(err)
+    const err = this.errMessage(error, result)
+    const res: APIMessage<string> = result?.data
 
-  //   return [err, result]
-  // }
+    return { err, res }
+  }
 
-  // // 用户搜索地址
-  // async reqUseSearchAddress(params) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/useSearchAddress', params)
-  //   )
-  //   err = this.errMessage(err)
+  // 删除用户收货地址
+  async reqDelUserAddress(id: IUserAddressParams) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/delUserAddress', data: id })
+    )
 
-  //   return [err, result]
-  // }
+    const err = this.errMessage(error, result)
+    const res: APILayout<Address> & APIMessage<string> = result?.data
 
-  // // 编辑用户收货地址
-  // async reqSetUserAddress(params) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/setUserAddress', params, 'POST')
-  //   )
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 获取用户地址
+  async reqUserAddress() {
+    let [error, result] = await to(this.ajax({ url: BASEURL + '/userAddress' }))
 
-  // // 添加用户收货地址
-  // async reqAddUserAddress(params) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/addUserAddress', params, 'POST')
-  //   )
-  //   err = this.errMessage(err)
+    const err = this.errMessage(error, result)
+    const res: APILayout<Address> = result?.data
 
-  //   return [err, result]
-  // }
+    return { err, res }
+  }
 
-  // // 删除用户收货地址
-  // async reqDelUserAddress(id) {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/delUserAddress', id))
-  //   err = this.errMessage(err)
+  // 添加用户收货地址
+  async reqAddUserAddress(params) {
+    let [error, result] = await to(
+      this.ajax({
+        url: BASEURL + '/addUserAddress',
+        data: params,
+        method: 'POST',
+      })
+    )
 
-  //   return [err, result]
-  // }
+    const err = this.errMessage(error, result)
+    const res = result?.data
 
-  // // 修改用户名
-  // async reqSetUserName(username) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/setUserName', username, 'POST')
-  //   )
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 用户搜索地址
+  async reqUseSearchAddress(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/useSearchAddress', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<Address[]> = result?.data
 
-  // // 修改用户密码
-  // async reqSetPassWord(params) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/setPassWord', params, 'POST')
-  //   )
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 编辑用户收货地址
+  async reqSetUserAddress(params) {
+    let [error, result] = await to(
+      this.ajax({
+        url: BASEURL + '/setUserAddress',
+        data: params,
+        method: 'POST',
+      })
+    )
+    const err = this.errMessage(error, result)
+    const res = result?.data
 
-  // // 商家列表头部滑动分类数据
-  // async reqGetFoodsPage({ latitude, longitude, entry_id }) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/getFoodsPage', { latitude, longitude, entry_id })
-  //   )
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 发现 限时抽奖
+  async reqSuggest() {
+    let [error, result] = await to(this.ajax({ url: BASEURL + '/suggest' }))
+    const err = this.errMessage(error, result)
+    const res = result?.data
 
-  // // 商家列表头部更多分类
-  // async reqGetFoodsClass({ latitude, longitude }) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/getFoodsClass', { latitude, longitude })
-  //   )
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 发现
+  async reqDiscover(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/discover', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res = result?.data
 
-  // // 获取商家详情信息
-  // async reqGetShop(id) {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/getShop', { id }))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 订单列表
+  async getOrder() {
+    let [error, result] = await to(this.ajax({ url: BASEURL + '/getOrder' }))
+    const err = this.errMessage(error, result)
+    const res = result?.data
 
-  // // 获取商家评价
-  // async reqEstimate() {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/getEstimate'))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 订单详情
+  async getOrderDetail(id) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/getOrderDetail', data: id })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<any> = result?.data
 
-  // // 获取商家评论更多
-  // async reqRatings({ name, offset, limit, has_content }) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/getRatings', { name, offset, limit, has_content })
-  //   )
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 搜索当前城市详细地址
+  async reqAddressDetail(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/address', data: params })
+    )
 
-  // // 获取商家品牌故事
-  // async reqBrandStory() {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/brandStory'))
-  //   err = this.errMessage(err)
+    const err = this.errMessage(error, result)
+    const res: APILayout<Address[]> = result?.data
 
-  //   return [err, result]
-  // }
+    return { err, res }
+  }
 
-  // // 热门搜索
-  // async reqHotSearchWords({ latitude, longitude }) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/hotSearchWords', { latitude, longitude })
-  //   )
-  //   err = this.errMessage(err)
+  // 搜索城市列表
+  async reqCityList() {
+    let [error, result] = await to(
+      this.ajax({
+        url: BASEURL + '/city',
+      })
+    )
 
-  //   return [err, result]
-  // }
+    const err = this.errMessage(error, result)
+    const res: APILayout<GETCityList> = result?.data
 
-  // // 搜索结果
-  // async reqTypeaHead(value) {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/typeaHead', { value }))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 热门搜索
+  async reqHotSearchWords(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/hotSearchWords', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<HotSearchWords[]> = result?.data
 
-  // // 发现 限时抽奖
-  // async reqSuggest() {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/suggest'))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
-  // // 发现
-  // async reqDiscover({ latitude, longitude }) {
-  //   let [err, result] = await to(
-  //     this.ajax(BASEURL + '/discover', { latitude, longitude })
-  //   )
-  //   err = this.errMessage(err)
+  // 搜索结果
+  async reqTypeaHead(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/typeaHead', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<any> = result?.data
 
-  //   return [err, result]
-  // }
+    return { err, res }
+  }
 
-  // // 支付
-  // async reqPay(params) {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/pay', params, 'POST'))
-  //   err = this.errMessage(err)
+  // 商家列表头部滑动分类数据
+  async reqGetFoodsPage(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/getFoodsPage', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<FoodsPage[]> = result?.data
 
-  //   return [err, result]
-  // }
+    return { err, res }
+  }
 
-  // // 订单列表
-  // async getOrder() {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/getOrder'))
-  //   err = this.errMessage(err)
+  // 商家列表头部更多分类
+  async reqGetFoodsClass(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/getFoodsClass', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<FoodsClass[]> = result?.data
 
-  //   return [err, result]
-  // }
-  // // 订单详情
-  // async getOrderDetail({ id }) {
-  //   let [err, result] = await to(this.ajax(BASEURL + '/getOrderDetail', { id }))
-  //   err = this.errMessage(err)
+    return { err, res }
+  }
 
-  //   return [err, result]
-  // }
+  // 获取商家详情信息
+  async reqGetShop(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/getShop', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<any> = result?.data
+
+    return { err, res }
+  }
+
+  // 获取商家评价
+  async reqEstimate(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/getEstimate', data: params })
+    )
+
+    const err = this.errMessage(error, result)
+    const res: APILayout<any> = result?.data
+
+    return { err, res }
+  }
+
+  // 获取商家评论更多
+  async reqRatings(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/getRatings', data: params })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<any> = result?.data
+
+    return { err, res }
+  }
+
+  // 获取商家品牌故事
+  async reqBrandStory() {
+    let [error, result] = await to(this.ajax({ url: BASEURL + '/brandStory' }))
+    const err = this.errMessage(error, result)
+    const res: APILayout<any> = result?.data
+
+    return { err, res }
+  }
+
+  // 支付
+  async reqPay(params) {
+    let [error, result] = await to(
+      this.ajax({ url: BASEURL + '/pay', data: params, method: 'POST' })
+    )
+    const err = this.errMessage(error, result)
+    const res: APILayout<any[]> = result?.data
+
+    return { err, res }
+  }
 }
 
 export default new API()
