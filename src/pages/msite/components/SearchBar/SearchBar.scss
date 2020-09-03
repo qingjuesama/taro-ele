@@ -1,0 +1,23 @@
+$main-height: 72px;
+
+.searchbar {
+  @include flex;
+  background-image: $defualt-background-image;
+  padding: 20px 26px;
+  position: sticky;
+  top: -1px;
+  z-index: 9;
+  .searchbar-main {
+    background: $white-color;
+    width: 100%;
+    height: $main-height;
+    line-height: $main-height;
+    text-align: center;
+    .searchbar-icon {
+      padding-right: 10px;
+    }
+    .searchbar-title {
+      color: $color-999;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+// 搜索
+.selectcity-search {
+  background-image: $defualt-background-image;
+  overflow: hidden;
+  .selectcity-search-main {
+    background: #fff;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    margin: 20px 50px;
+    .selectcity-search-icon {
+      margin: 0 10px 0 20px;
+      .icon {
+        font-size: 25px;
+      }
+    }
+    .selectcity-search-input {
+      width: 500px;
+      font-size: 24px;
+      padding: 10px 0;
+      .selectcity-search-input-content {
+        width: 500px;
+      }
+    }
+  }
+}

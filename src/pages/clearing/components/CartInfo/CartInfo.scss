@@ -1,0 +1,68 @@
+.cartinfo {
+  margin: 0 20px;
+  padding: 0 30px;
+  background: #fff;
+  .cartinfo-title {
+    padding: 20px 0;
+    border-bottom: 1px #f5f5f5 solid;
+    color: #333;
+    font-size: 34px;
+    font-weight: 600;
+  }
+
+  .cartinfo-goods {
+    .cartinfo-food {
+      display: flex;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px #ededed solid;
+      .cartinfo-img {
+        width: 72px;
+        height: 72px;
+        padding-right: 10px;
+      }
+
+      .cartinfo-name {
+        flex: 9;
+      }
+
+      .cartinfo-count {
+        flex: 1;
+        font-size: 24px;
+        text-align: right;
+      }
+
+      .origin-price {
+        min-width: 100px;
+        color: #999;
+        text-align: right;
+        text-decoration: line-through;
+      }
+
+      .lowest_price {
+        flex: 3;
+        color: #ff4a07;
+        text-align: right;
+      }
+    }
+    .sundry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px #f5f5f5 solid;
+      .sundry-left {
+      }
+      .sundry-right {
+      }
+    }
+  }
+
+  .result {
+    padding: 20px 0;
+    text-align: right;
+    .result-price {
+      font-size: 44px;
+    }
+  }
+}

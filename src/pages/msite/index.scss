@@ -1,0 +1,44 @@
+.msite {
+  -webkit-overflow-scrolling: touch; //ios不流畅问题
+  height: 100vh;
+  .msite-navbar {
+    padding: 20px 20px 0 20px;
+    height: 69px;
+    .msite-navbar-title {
+      padding: 0 10px;
+      font-size: $font-size-34;
+      color: $white-color;
+      font-weight: $font-weight;
+      max-width: 40vw;
+    }
+  }
+  .nologin {
+    padding: 50px 0;
+  }
+  .msite-filter {
+    top: 110px;
+  }
+
+  // .msite-main {
+  //   .list-title {
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //     padding: 30px 0;
+  //     &::before {
+  //       content: '';
+  //       width: 50px;
+  //       height: 2px;
+  //       margin-right: 30px;
+  //       background: #999;
+  //     }
+  //     &::after {
+  //       content: '';
+  //       width: 50px;
+  //       height: 2px;
+  //       margin-left: 30px;
+  //       background: #999;
+  //     }
+  //   }
+  // }
+}

@@ -1,0 +1,50 @@
+// body
+$body-line-height: 1.2 !default;
+$body-font-size: 28px !default;
+$body-font-famify: 'Helvetica Neue', Tahoma, Arial, PingFangSC-Regular,
+  'Hiragino Sans GB', 'Microsoft Yahei', sans-serif !default;
+
+// 字体颜色
+$white-color: #ffffff !default;
+$black-color: #000000 !default;
+$orange-color: #ff4b33 !default;
+$blue-color: #2395ff !default;
+$green-color: #38ca73 !default;
+$color-333: #333333 !default;
+$color-666: #666666 !default;
+$color-777: #777777 !default;
+$color-999: #999999 !default;
+$color-ddd:#dddddd !default;
+
+// 字体大小
+$font-size-41: 41px !default;
+$font-size-38: 38px !default;
+$font-size-36: 36px !default;
+$font-size-34: 34px !default;
+$font-size-32: 32px !default;
+$font-size-30: 30px !default;
+$font-size-28: 28px !default;
+$font-size-26: 26px !default;
+$font-size-24: 24px !default;
+$font-size-22: 22px !default;
+$font-size-20: 20px !default;
+
+// 加粗
+$font-weight: 700 !default;
+
+// 渐变背景
+$defualt-background-image: linear-gradient(90deg, #0af, #0085ff) !default;
+$tag-background-image: linear-gradient(45deg, #0085ff, #0af) !default;
+$svip-background-image: linear-gradient(90deg, #ffefc4, #f3dda0) !default;
+$brand-background-image: linear-gradient(-139deg, #fff100, #ffe339) !default;
+$count-background-image: linear-gradient(-90deg, #ff7416, #ff3c15 98%) !default;
+$bg-background-image: linear-gradient(
+    0deg,
+    #f5f5f5,
+    #f5f5f5 65%,
+    hsla(0, 0%, 96%, 0.3) 75%,
+    hsla(0, 0%, 96%, 0)
+  ),
+  linear-gradient(270deg, #0085ff, #0af) !default;
+  
+$background-f5f5f5: #f5f5f5;

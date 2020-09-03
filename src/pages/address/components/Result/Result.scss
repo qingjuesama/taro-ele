@@ -1,0 +1,22 @@
+// 搜索地址
+.search-result {
+  background: #fff;
+  .search-main-tip {
+    color: #999;
+    padding-top: 50px;
+    padding-bottom: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .tip-title {
+      font-size: 30px;
+      padding: 20px 0;
+    }
+  }
+}
+.search-show {
+  display: block;
+}
+.search-hide {
+  display: none;
+}

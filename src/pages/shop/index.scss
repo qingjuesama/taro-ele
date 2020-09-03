@@ -1,0 +1,87 @@
+.default-shop-img {
+  width: 100%;
+  height: 100%;
+}
+.myshop {
+  height: 100vh;
+  -webkit-overflow-scrolling: touch; //ios不流畅问题
+
+  .myshop-content {
+    margin-top: 30px;
+    .myshop-order {
+      .myshop-order-banner {
+        height: auto;
+        margin: 20px 0;
+        padding: 0 32px;
+
+        .myshop-order-banner-img {
+          width: 100%;
+          height: 170px;
+          border-radius: 5px;
+        }
+      }
+
+      .myshop-order-recommend {
+        margin-bottom: 30px;
+        margin-left: 32px;
+
+        .myshop-order-recommend-title {
+          margin-right: 32px;
+          color: #333;
+          font-size: 32px;
+          font-weight: 600;
+        }
+
+        .myshop-order-recommend-main {
+          margin-top: 20px;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch; //ios不流畅问题
+        }
+      }
+
+      .myshop-order-main {
+        .myshop-order-main-content {
+          display: flex;
+          .myshop-order-main-left {
+            width: 150px;
+            height: 100%;
+            -webkit-overflow-scrolling: touch; //ios不流畅问题
+          }
+          .myshop-order-main-right {
+            width: 550px;
+            margin-left: 20px;
+            height: 100%;
+            -webkit-overflow-scrolling: touch; //ios不流畅问题
+            .myshop-order-main-right-block {
+              .myshop-order-main-right-title {
+                display: flex;
+                padding: 10px 0;
+                .myshop-order-main-right-name {
+                  color: #666;
+                  font-size: 24px;
+                  font-weight: 600;
+                }
+                .myshop-order-main-right-des {
+                  padding-left: 10px;
+                  color: #666;
+                  font-size: 24px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .myshop-appraise {
+      background: #f5f5f5;
+    }
+  }
+}
+
+.test {
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  height: 300px;
+  background: red;
+}

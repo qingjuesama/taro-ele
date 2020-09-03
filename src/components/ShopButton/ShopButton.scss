@@ -1,0 +1,23 @@
+.shopbutton {
+  display: flex;
+  align-items: center;
+  .shopbutton-rec {
+    .icon {
+      color: #2395ff;
+      font-size: 42px;
+    }
+  }
+
+  .shopbutton-num {
+    padding: 0 15px;
+    color: #3f3f3f;
+  }
+
+  .shopbutton-add {
+    overflow: hidden;
+    .icon {
+      color: #2395ff;
+      font-size: 42px;
+    }
+  }
+}
