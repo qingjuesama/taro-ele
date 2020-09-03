@@ -1,4 +1,0 @@
-@include ele-animation('top', scaleY(0), scaleY(1), center top);
-@include ele-animation('left', scale(0.45, 0.45), scale(1, 1), top left);
-@include ele-animation('right', scale(0.45, 0.45), scale(1, 1), top right);
-@include ele-animation('bottom', scaleY(0), scaleY(1), center bottom);
