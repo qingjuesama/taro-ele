@@ -17,7 +17,11 @@ const ShopItem: FC<ShopItemProps> = (props) => {
     <View className='shopitem'>
       {food.image_path ? (
         <View className='shopitem-left'>
-          <Image className='shopitem-left-img' src={imgUrl(food.image_path)} />
+          <Image
+            className='shopitem-left-img'
+            src={imgUrl(food.image_path)}
+            lazyLoad
+          />
         </View>
       ) : null}
       <View className='shopitem-right'>
@@ -28,12 +32,18 @@ const ShopItem: FC<ShopItemProps> = (props) => {
         </View>
         <View className='shopitem-num'>
           <View className='shopitem-num-price'>
-            <Text className='shopitem-num-price-left'>{food.price}</Text>
-            {food.origin_price !== food.price && (
-              <Text className='shopitem-num-price-right'>
-                ¥{food.origin_price}
-              </Text>
-            )}
+            <View>
+              <Text className='shopitem-num-price-left'>{food.price}</Text>
+            </View>
+            <View>
+              {food.origin_price !== food.price && (
+                <View>
+                  <Text className='shopitem-num-price-right'>
+                    ¥{food.origin_price}
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
           <ShopButton onUpdateCart={onUpdateCart} good={food} count={count} />
         </View>

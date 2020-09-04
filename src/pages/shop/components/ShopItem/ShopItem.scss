@@ -45,6 +45,8 @@
       .shopitem-num-price {
         color: #ff5339;
         font-size: 30px;
+        display: flex;
+        align-items: center;
         &::before {
           content: '\A5';
           display: inline-block;

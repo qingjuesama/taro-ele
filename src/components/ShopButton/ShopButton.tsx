@@ -21,7 +21,9 @@ const ShopButton: FC<ShopButtonProps> = (props) => {
           >
             <View className='icon icon-jianshao'></View>
           </View>
-          <View className='shopbutton-num'>{count}</View>
+          <View>
+            <View className='shopbutton-num'>{count}</View>
+          </View>
         </Fragment>
       )}
       <View
