@@ -1,4 +1,4 @@
-# Taro3.0 仿饿了么 h5 微信小程序(Hooks)
+# Taro3.0 仿饿了么 h5 微信小程序(Hooks TS)
 
 ![](https://img.shields.io/badge/Taro-3.0.5-blue.svg)
 ![](https://img.shields.io/badge/react-16.10.0-green.svg)
