@@ -1,14 +1,9 @@
 // 首页
 import Taro from '@tarojs/taro'
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  Fragment,
-} from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { View, ScrollView, Navigator } from '@tarojs/components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeToken } from '../../redux/actions/user'
 import API from '../../api'
 import { Reducers } from '../../redux/interface'
 
@@ -30,6 +25,7 @@ import { Ifilter, IShopList } from '../../api/interface'
 import './index.scss'
 
 const Msite = () => {
+  const dispatch = useDispatch()
   const [navSwipeList, setNavSwipeList] = useState([])
   const [filterData, setFilterData] = useState({} as Ifilter)
   const [shopList, setShopList] = useState<IShopList[]>([])
@@ -44,27 +40,27 @@ const Msite = () => {
   const shopLoading = useRef(false)
 
   // 导航
-  const _getNavList = async () => {
-    const params = {
-      latitude: 41.138329,
-      longitude: 123.052798,
-    }
-    const { err, res } = await API.reqNavList(params)
-    if (err) {
-      console.log(err)
-      return
-    }
+  const _getNavList = useCallback(async () => {
+    const { latitude, longitude } = currentAddress
+    if (latitude && longitude) {
+      const { err, res } = await API.reqNavList({ latitude, longitude })
+      if (err) {
+        console.log(err)
+        return
+      }
 
-    if (res.code === 0) {
-      setNavSwipeList(res.data)
+      if (res.code === 0) {
+        setNavSwipeList(res.data)
+      }
     }
-  }
+  }, [currentAddress])
+
   // 筛选
-  const _getFilter = async () => {
+  const _getFilter = useCallback(async () => {
     const { err, res } = await API.reqGetBatchFilter()
     if (err) {
       if (err.code === 401) {
-        console.log(err.message)
+        dispatch(removeToken())
       }
       return
     }
@@ -72,12 +68,14 @@ const Msite = () => {
     if (res.code === 0) {
       setFilterData(res.data)
     }
-  }
+  }, [dispatch])
 
   useEffect(() => {
-    _getNavList()
     _getFilter()
-  }, [])
+  }, [_getFilter])
+  useEffect(() => {
+    _getNavList()
+  }, [_getNavList])
 
   // 获取商家列表
   useEffect(() => {
@@ -97,7 +95,9 @@ const Msite = () => {
         limit: limit.current,
       }).then(({ err, res }) => {
         if (err) {
-          console.log(err)
+          if (err.code === 401) {
+            dispatch(removeToken())
+          }
           return
         }
         if (res.code === 0) {
@@ -113,7 +113,7 @@ const Msite = () => {
         }
       })
     }
-  }, [currentAddress, offset, filterParams, isMove, navSwipeList])
+  }, [currentAddress, offset, filterParams, isMove, navSwipeList, dispatch])
 
   // 筛选参数
   const handleFilterChange = useCallback(
@@ -177,76 +177,83 @@ const Msite = () => {
   }
 
   return (
-    <ScrollView
-      className='msite'
-      id='msite'
-      scrollY={isScrollY}
-      scrollTop={scrollTop}
-      lowerThreshold={100}
-      onScrollToLower={handleLower}
-    >
-      <View>
-        <NavBar className='msite-navbar'>
-          <EIcon type='daohangdizhi' size={34} color='#fff' />
-          <Navigator
-            url='/pages/address/index'
-            openType='redirect'
-            className='msite-navbar-title ellipsis'
-          >
-            {currentAddress.address}
-          </Navigator>
-          <EIcon type='xiajiantou' size={16} color='#fff' />
-        </NavBar>
-        <MsiteSearchBar
-          icon='sousuo'
-          title='搜索饿了么商家、商品名称'
-          url='/pages/search/index'
-        />
-        <MsiteNavSwipe navSwipeList={navSwipeList} />
-        <MsiteAdvertising
-          title='品质套餐'
-          detail='搭配齐全吃得好'
-          img='https://cube.elemecdn.com/e/ee/df43e7e53f6e1346c3fda0609f1d3png.png'
-          url='/pages/ranking'
-        />
-        <MsiteSvip />
-        {token && currentAddress.latitude && (
-          <Fragment>
-            <FilterBar
-              title='推荐商家'
-              filterData={filterData}
-              onChange={handleFilterChange}
-              onScrollTop={handleScrollTop}
-              onIsScroll={handleIsScroll}
-              topDomName='.searchbar'
-              className='msite-filter'
+    <View className='ele-msite'>
+      <View className='ele-msite-box'>
+        <ScrollView
+          className='msite'
+          id='msite'
+          scrollY={isScrollY}
+          lowerThreshold={100}
+          onScrollToLower={handleLower}
+          scrollTop={scrollTop}
+        >
+          <View>
+            <NavBar className='msite-navbar'>
+              <EIcon type='daohangdizhi' size={34} color='#fff' />
+              <Navigator
+                url='/pages/address/index'
+                openType='redirect'
+                className='msite-navbar-title ellipsis'
+              >
+                {currentAddress.address}
+              </Navigator>
+              <EIcon type='xiajiantou' size={16} color='#fff' />
+            </NavBar>
+            <MsiteSearchBar
+              icon='sousuo'
+              title='搜索饿了么商家、商品名称'
+              url='/pages/search/index'
             />
-            <ShopList shopListData={shopList} renderLoading={handleLoading()} />
-          </Fragment>
-        )}
-        {!token && currentAddress.latitude && (
-          <NoDataTip
-            className='nologin'
-            img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
-            title='没有结果'
-            info='登录后查看更多商家'
-            btnContent='登录'
-            onButtonClick={handleToLogin}
-          />
-        )}
+            <MsiteNavSwipe navSwipeList={navSwipeList} />
+            <MsiteAdvertising
+              title='品质套餐'
+              detail='搭配齐全吃得好'
+              img='https://cube.elemecdn.com/e/ee/df43e7e53f6e1346c3fda0609f1d3png.png'
+              url='/pages/ranking'
+            />
+            <MsiteSvip />
+            {token && currentAddress.latitude && (
+              <View id='filter'>
+                <FilterBar
+                  title='推荐商家'
+                  filterData={filterData}
+                  onChange={handleFilterChange}
+                  onScrollTop={handleScrollTop}
+                  onIsScroll={handleIsScroll}
+                  topDomName='.searchbar'
+                  className='msite-filter'
+                />
+                <ShopList
+                  shopListData={shopList}
+                  renderLoading={handleLoading()}
+                />
+              </View>
+            )}
+            {!token && currentAddress.latitude && (
+              <NoDataTip
+                className='nologin'
+                img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
+                title='没有结果'
+                info='登录后查看更多商家'
+                btnContent='登录'
+                onButtonClick={handleToLogin}
+              />
+            )}
 
-        {!currentAddress.latitude && (
-          <NoDataTip
-            className='nologin'
-            img='//fuss10.elemecdn.com/2/67/64f199059800f254c47e16495442bgif.gif'
-            title='输入地址后才能订餐哦'
-            btnContent='手动选择地址'
-            onButtonClick={handleSelectAddress}
-          />
-        )}
-        <FooterNav />
+            {!currentAddress.latitude && (
+              <NoDataTip
+                className='nologin'
+                img='//fuss10.elemecdn.com/2/67/64f199059800f254c47e16495442bgif.gif'
+                title='输入地址后才能订餐哦'
+                btnContent='手动选择地址'
+                onButtonClick={handleSelectAddress}
+              />
+            )}
+          </View>
+        </ScrollView>
       </View>
-    </ScrollView>
+      <FooterNav />
+    </View>
   )
 }
 
