@@ -9,6 +9,7 @@ import { Reducers } from '../../redux/interface'
 
 import NavBar from '../../components/NavBar/NavBar'
 import EIcon from '../../components/EIcon/EIcon'
+import EScroll from '../../components/EScroll/EScroll'
 import FilterBar, { FilterParams } from '../../components/FilterBar/FilterBar'
 import ShopList from '../../components/ShopList/ShopList'
 import ELoading from '../../components/ELoading/ELoading'
@@ -177,81 +178,79 @@ const Msite = () => {
   }
 
   return (
-    <View className='ele-msite'>
-      <View className='ele-msite-box'>
-        <ScrollView
-          className='msite'
-          id='msite'
-          scrollY={isScrollY}
-          lowerThreshold={100}
-          onScrollToLower={handleLower}
-          scrollTop={scrollTop}
-        >
-          <View>
-            <NavBar className='msite-navbar'>
-              <EIcon type='daohangdizhi' size={34} color='#fff' />
-              <Navigator
-                url='/pages/address/index'
-                openType='redirect'
-                className='msite-navbar-title ellipsis'
-              >
-                {currentAddress.address}
-              </Navigator>
-              <EIcon type='xiajiantou' size={16} color='#fff' />
-            </NavBar>
-            <MsiteSearchBar
-              icon='sousuo'
-              title='搜索饿了么商家、商品名称'
-              url='/pages/search/index'
-            />
-            <MsiteNavSwipe navSwipeList={navSwipeList} />
-            <MsiteAdvertising
-              title='品质套餐'
-              detail='搭配齐全吃得好'
-              img='https://cube.elemecdn.com/e/ee/df43e7e53f6e1346c3fda0609f1d3png.png'
-              url='/pages/ranking'
-            />
-            <MsiteSvip />
-            {token && currentAddress.latitude && (
-              <View id='filter'>
-                <FilterBar
-                  title='推荐商家'
-                  filterData={filterData}
-                  onChange={handleFilterChange}
-                  onScrollTop={handleScrollTop}
-                  onIsScroll={handleIsScroll}
-                  topDomName='.searchbar'
-                  className='msite-filter'
-                />
-                <ShopList
-                  shopListData={shopList}
-                  renderLoading={handleLoading()}
-                />
-              </View>
-            )}
-            {!token && currentAddress.latitude && (
-              <NoDataTip
-                className='nologin'
-                img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
-                title='没有结果'
-                info='登录后查看更多商家'
-                btnContent='登录'
-                onButtonClick={handleToLogin}
+    <View className='msite'>
+      <EScroll
+        className='msite'
+        id='msite'
+        scrollY={isScrollY}
+        lowerThreshold={100}
+        onScrollToLower={handleLower}
+        scrollTop={scrollTop}
+      >
+        <View>
+          <NavBar className='msite-navbar'>
+            <EIcon type='daohangdizhi' size={34} color='#fff' />
+            <Navigator
+              url='/pages/address/index'
+              openType='redirect'
+              className='msite-navbar-title ellipsis'
+            >
+              {currentAddress.address}
+            </Navigator>
+            <EIcon type='xiajiantou' size={16} color='#fff' />
+          </NavBar>
+          <MsiteSearchBar
+            icon='sousuo'
+            title='搜索饿了么商家、商品名称'
+            url='/pages/search/index'
+          />
+          <MsiteNavSwipe navSwipeList={navSwipeList} />
+          <MsiteAdvertising
+            title='品质套餐'
+            detail='搭配齐全吃得好'
+            img='https://cube.elemecdn.com/e/ee/df43e7e53f6e1346c3fda0609f1d3png.png'
+            url='/pages/ranking'
+          />
+          <MsiteSvip />
+          {token && currentAddress.latitude && (
+            <View id='filter'>
+              <FilterBar
+                title='推荐商家'
+                filterData={filterData}
+                onChange={handleFilterChange}
+                onScrollTop={handleScrollTop}
+                onIsScroll={handleIsScroll}
+                topDomName='.searchbar'
+                className='msite-filter'
               />
-            )}
+              <ShopList
+                shopListData={shopList}
+                renderLoading={handleLoading()}
+              />
+            </View>
+          )}
+          {!token && currentAddress.latitude && (
+            <NoDataTip
+              className='nologin'
+              img='//fuss10.elemecdn.com/d/60/70008646170d1f654e926a2aaa3afpng.png'
+              title='没有结果'
+              info='登录后查看更多商家'
+              btnContent='登录'
+              onButtonClick={handleToLogin}
+            />
+          )}
 
-            {!currentAddress.latitude && (
-              <NoDataTip
-                className='nologin'
-                img='//fuss10.elemecdn.com/2/67/64f199059800f254c47e16495442bgif.gif'
-                title='输入地址后才能订餐哦'
-                btnContent='手动选择地址'
-                onButtonClick={handleSelectAddress}
-              />
-            )}
-          </View>
-        </ScrollView>
-      </View>
+          {!currentAddress.latitude && (
+            <NoDataTip
+              className='nologin'
+              img='//fuss10.elemecdn.com/2/67/64f199059800f254c47e16495442bgif.gif'
+              title='输入地址后才能订餐哦'
+              btnContent='手动选择地址'
+              onButtonClick={handleSelectAddress}
+            />
+          )}
+        </View>
+      </EScroll>
       <FooterNav />
     </View>
   )

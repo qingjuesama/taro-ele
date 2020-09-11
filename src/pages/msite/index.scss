@@ -1,33 +1,24 @@
-.ele-msite {
+.msite {
   height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  .ele-msite-box {
-    flex: 1;
-    overflow: hidden;
-    .msite {
-      -webkit-overflow-scrolling: touch; //ios不流畅问题
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      .msite-navbar {
-        padding: 20px 20px 0 20px;
-        height: 69px;
-        .msite-navbar-title {
-          padding: 0 10px;
-          font-size: $font-size-34;
-          color: $white-color;
-          font-weight: $font-weight;
-          max-width: 40vw;
-        }
-      }
-      .nologin {
-        padding: 50px 0;
-      }
-      .msite-filter {
-        top: 110px;
-      }
+
+  .msite-navbar {
+    padding: 20px 20px 0 20px;
+    height: 69px;
+    .msite-navbar-title {
+      padding: 0 10px;
+      font-size: $font-size-34;
+      color: $white-color;
+      font-weight: $font-weight;
+      max-width: 40vw;
     }
+  }
+  .nologin {
+    padding: 50px 0;
+  }
+  .msite-filter {
+    top: 110px;
   }
 }

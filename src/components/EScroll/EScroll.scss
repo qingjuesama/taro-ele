@@ -1,0 +1,10 @@
+.escroll {
+  flex: 1;
+  overflow: hidden;
+  .scroll-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    -webkit-overflow-scrolling: touch; //ios不流畅问题
+  }
+}
