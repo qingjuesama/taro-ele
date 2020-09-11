@@ -6,6 +6,7 @@ import { removeToken, removeUserAddressList } from '../redux/actions/user'
 import { H5 } from '../config/base'
 import {
   Ip,
+  INavSwiper,
   Ifilter,
   IShopList,
   IRegisterParams,
@@ -96,7 +97,7 @@ class API extends Server {
       this.ajax({ url: BASEURL + '/navlist', data: params })
     )
     const err = this.errMessage(error, result)
-    const res = result?.data
+    const res: APILayout<INavSwiper[]> = result?.data
 
     return { err, res }
   }

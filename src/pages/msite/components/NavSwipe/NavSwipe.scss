@@ -1,49 +1,5 @@
 .navswiper {
   padding-bottom: 20px;
-  .framework {
-    display: flex;
-    flex-wrap: wrap;
-    .framework-item {
-      @include flex;
-      flex-direction: column;
-      width: 20%;
-      padding-top: 20px;
-      .framework-item-title {
-        width: 90px;
-        height: 90px;
-        background: $background-f5f5f5;
-        border-radius: 50%;
-      }
-      .framework-item-txt {
-        width: 80px;
-        height: 25px;
-        margin-top: 15px;
-        background: $background-f5f5f5;
-      }
-    }
-  }
-  .navswiper-main {
-    display: flex;
-    flex-wrap: wrap;
-    .navswiper-main-item {
-      @include flex;
-      flex-direction: column;
-      width: 20%;
-      padding-top: 20px;
-      .navswiper-main-item-image {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        .nav-image {
-          width: 90px;
-          height: 90px;
-        }
-      }
-      .navswiper-main-item-title {
-        color: $color-666;
-        font-size: 24px;
-        text-align: center;
-      }
-    }
-  }
+  display: flex;
+  flex-wrap: wrap;
 }

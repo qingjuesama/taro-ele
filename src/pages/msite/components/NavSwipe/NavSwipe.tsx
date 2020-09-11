@@ -1,66 +1,50 @@
-import Taro, { FC } from '@tarojs/taro'
-import React from 'react'
-import { View, Image, Navigator } from '@tarojs/components'
-import imgUrl from '../../../../utils/imgUrl'
+import React, { FC, useState, useEffect } from 'react'
+import { View } from '@tarojs/components'
+import { useSelector } from 'react-redux'
+
+import API from '../../../../api'
+import { INavSwiper } from '../../../../api/interface'
+import { Reducers } from '../../../../redux/interface'
+
+import NavSwiperFramework from '../Framework/Framework'
+import NavSwiperItem from '../NavSwipeItem/NavSwipeItem'
 
 import './NavSwipe.scss'
 
-interface NavSwiperProps {
-  navSwipeList: any[]
-}
+const NavSwiper: FC = () => {
+  const { currentAddress } = useSelector((state: Reducers) => state)
+  const [navSwipeList, setNavSwipeList] = useState<INavSwiper[]>([])
 
-const NavSwiper: FC<NavSwiperProps> = (props) => {
-  const { navSwipeList } = props
-  const framework = Array(10).fill(1)
-
-  if (!!navSwipeList.length) {
+  useEffect(() => {
+    const { latitude, longitude } = currentAddress
     // 导航
-    return (
-      <View className='navswiper'>
-        <View className='navswiper-main'>
-          {navSwipeList.map((navItem) => {
-            return (
-              <View className='navswiper-main-item' key={navItem.id}>
-                <Navigator
-                  url={`/pages/food/index?id=${navItem.id}&name=${navItem.name}`}
-                >
-                  <View className='navswiper-main-item-image'>
-                    <Image
-                      className='nav-image'
-                      mode='widthFix'
-                      src={imgUrl(navItem.image_hash)}
-                    ></Image>
-                  </View>
-                  <View className='navswiper-main-item-title'>
-                    {navItem.name}
-                  </View>
-                </Navigator>
-              </View>
-            )
-          })}
-        </View>
-      </View>
-    )
-  } else {
+    if (latitude && longitude) {
+      API.reqNavList({ latitude, longitude }).then((result) => {
+        const { err, res } = result
+        if (err) {
+          console.log(err)
+          return
+        }
+        if (res.code === 0) {
+          setNavSwipeList(res.data)
+        }
+      })
+    }
+  }, [currentAddress])
+
+  if (!navSwipeList.length) {
     // 骨架
-    return (
-      <View className='navswiper'>
-        <View className='framework'>
-          {framework.map((item, i) => {
-            return (
-              <View className='framework-item' key={item + i}>
-                <View className='framework-item-title'></View>
-                <View className='framework-item-txt'></View>
-              </View>
-            )
-          })}
-        </View>
-      </View>
-    )
+    return <NavSwiperFramework />
   }
-}
-NavSwiper.defaultProps = {
-  navSwipeList: [],
+
+  // 导航
+  return (
+    <View className='navswiper'>
+      {navSwipeList.map((navItem) => {
+        return <NavSwiperItem navItem={navItem} key={navItem.id} />
+      })}
+    </View>
+  )
 }
 
 export default NavSwiper

@@ -6,6 +6,13 @@ export interface Ip {
   recommend: string
 }
 
+// 导航分类
+export interface INavSwiper {
+  id: number
+  name: string
+  image_hash: string
+}
+
 // 筛选条
 export interface Ifilter {
   filter: {
