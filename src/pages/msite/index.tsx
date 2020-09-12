@@ -1,19 +1,18 @@
 // 首页
 import React, { useEffect, useState, useRef, useCallback } from 'react'
-import { View, Navigator } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeToken } from '../../redux/actions/user'
 import API from '../../api'
 import { Reducers } from '../../redux/interface'
 
-import NavBar from '../../components/NavBar/NavBar'
-import EIcon from '../../components/EIcon/EIcon'
 import EScroll from '../../components/EScroll/EScroll'
 import FilterBar, { FilterParams } from '../../components/FilterBar/FilterBar'
 import ShopList from '../../components/ShopList/ShopList'
 import ELoading from '../../components/ELoading/ELoading'
 import FooterNav from '../../components/FooterNav/FooterNav'
 
+import MsiteNavBar from './components/MsiteNavBar/MsiteNavBar'
 import MsiteSearchBar from './components/SearchBar/SearchBar'
 import MsiteNavSwipe from './components/NavSwipe/NavSwipe'
 import MsiteAdvertising from './components/Advertising/Advertising'
@@ -26,7 +25,6 @@ import './index.scss'
 
 const Msite = () => {
   const dispatch = useDispatch()
-  const [filterData, setFilterData] = useState({} as Ifilter)
   const [shopList, setShopList] = useState<IShopList[]>([])
   const [scrollTop, setScrollTop] = useState(0)
   const [isScrollY, setIsScrollY] = useState(true)
@@ -38,24 +36,6 @@ const Msite = () => {
   const limit = useRef(6)
   const shopLoading = useRef(false)
 
-  // 筛选
-  const _getFilter = useCallback(async () => {
-    const { err, res } = await API.reqGetBatchFilter()
-    if (err) {
-      if (err.code === 401) {
-        dispatch(removeToken())
-      }
-      return
-    }
-
-    if (res.code === 0) {
-      setFilterData(res.data)
-    }
-  }, [dispatch])
-
-  useEffect(() => {
-    _getFilter()
-  }, [_getFilter])
 
   // 获取商家列表
   useEffect(() => {
@@ -158,21 +138,7 @@ const Msite = () => {
       >
         <View>
           {/* 头部定位收货地址 */}
-          <NavBar className='msite-navbar'>
-            {/* 图标 */}
-            <EIcon type='daohangdizhi' size={34} color='#fff' />
-            {/* 地址信息 */}
-            <Navigator
-              url='/pages/address/index'
-              openType='redirect'
-              className='msite-navbar-title ellipsis'
-            >
-              {currentAddress.address || '手动选择收货地址'}
-            </Navigator>
-            {/* 图标 */}
-            <EIcon type='xiajiantou' size={16} color='#fff' />
-          </NavBar>
-
+          <MsiteNavBar />
           {/* 搜索 */}
           <MsiteSearchBar
             icon='sousuo'
@@ -199,7 +165,6 @@ const Msite = () => {
             <View id='filter'>
               <FilterBar
                 title='推荐商家'
-                filterData={filterData}
                 onChange={handleFilterChange}
                 onScrollTop={handleScrollTop}
                 onIsScroll={handleIsScroll}

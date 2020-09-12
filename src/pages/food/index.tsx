@@ -16,7 +16,7 @@ import ShopList from '../../components/ShopList/ShopList'
 import Categories from '../../components/Categories/Categories'
 
 import ELoading from '../../components/ELoading/ELoading'
-import { Ifilter, IShopList, FoodsPage, FoodsClass } from '../../api/interface'
+import { IShopList, FoodsPage, FoodsClass } from '../../api/interface'
 import { Reducers } from '../../redux/interface'
 
 import './index.scss'
@@ -32,7 +32,6 @@ const Food = () => {
   const [foodsClass, setFoodsClass] = useState<FoodsClass[]>([])
 
   const [shopList, setShopList] = useState<IShopList[]>([])
-  const [filterData, setFilterData] = useState({} as Ifilter)
   const [filterParams, setFilterParams] = useState({} as FilterParams)
   const [isMove, setIsMove] = useState(true)
   const [offset, setOffset] = useState(0)
@@ -97,24 +96,6 @@ const Food = () => {
 
   // 初始数据
   const removeOffset = () => {}
-
-  // 筛选
-  const _getFilter = async () => {
-    const { err, res } = await API.reqGetBatchFilter()
-    if (err) {
-      if (err.code === 401) {
-        console.log(err.message)
-      }
-      return
-    }
-
-    if (res.code === 0) {
-      setFilterData(res.data)
-    }
-  }
-  useEffect(() => {
-    _getFilter()
-  }, [])
 
   // 获取商家列表
   useEffect(() => {
@@ -234,7 +215,6 @@ const Food = () => {
           <Fragment>
             {console.log()}
             <FilterBar
-              filterData={filterData}
               onChange={handleFilterChange}
               onScrollTop={handleScrollTop}
               onIsScroll={handleIsScroll}

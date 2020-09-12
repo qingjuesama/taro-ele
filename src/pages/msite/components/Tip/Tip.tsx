@@ -1,4 +1,5 @@
 import React from 'react'
+import Taro from '@tarojs/taro'
 import { useSelector } from 'react-redux'
 import NoDataTip from '../../../../components/NoDataTip/NoDataTip'
 import { Reducers } from '../../../../redux/interface'

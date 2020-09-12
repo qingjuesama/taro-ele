@@ -8,7 +8,9 @@ import React, {
 } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import classnames from 'classnames'
-
+import { useDispatch } from 'react-redux'
+import API from '../../api'
+import { removeToken } from '../../redux/actions/user'
 import imgUrl from '../../../src/utils/imgUrl'
 import { H5 } from '../../config/base'
 import getDom from '../../utils/getDom'
@@ -22,7 +24,6 @@ import './FilterBar.scss'
 
 interface FilterBarProps {
   title?: string
-  filterData: Ifilter
   onChange: (result: any) => void
   onScrollTop?: (top: number) => void
   onIsScroll: (isScroll: boolean) => void
@@ -48,7 +49,6 @@ if (H5) {
 const FilterBar: FC<FilterBarProps> = (props) => {
   const {
     title,
-    filterData,
     onChange,
     onScrollTop,
     onIsScroll,
@@ -56,6 +56,9 @@ const FilterBar: FC<FilterBarProps> = (props) => {
     className,
     clearShade,
   } = props
+  const dispatch = useDispatch()
+  const [filterData, setFilterData] = useState({} as Ifilter)
+
   const { nav, sort } = filterData
   // 排序状态
   const [sortShow, setSortShow] = useState(false)
@@ -105,6 +108,23 @@ const FilterBar: FC<FilterBarProps> = (props) => {
       setTimeout(_getDom, 0)
     }
   }, [filterData])
+
+  // 筛选
+  useEffect(() => {
+    API.reqGetBatchFilter().then((result) => {
+      const { err, res } = result
+      if (err) {
+        if (err.code === 401) {
+          dispatch(removeToken())
+        }
+        return
+      }
+
+      if (res.code === 0) {
+        setFilterData(res.data)
+      }
+    })
+  }, [dispatch])
 
   // 筛选 -> 当前拷贝数据是否已经有选项
   const isAtFilterActive = useMemo(() => {
